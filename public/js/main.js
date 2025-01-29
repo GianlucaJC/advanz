@@ -15,11 +15,12 @@
         } 
         //verifica altre casisitiche di validazione
         var check=check_else()
-        if (check==false) form.classList.add('was-validated')
-        else {
+        if (check==true) {
           event.preventDefault()
-          event.stopPropagation()
+          event.stopPropagation()          
         }
+        form.classList.add('was-validated')
+
       }, false)
     })
 })()

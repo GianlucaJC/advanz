@@ -68,7 +68,7 @@
                <div class="row mb-3">
                   <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='prefix' id='prefix' required>
+                        <select class="form-select" name='prefix' id='prefix'>
                            <option value="">Select...</option>
                            <option value="1">Dr.</option>
                            <option value="2">Mrs.</option>
