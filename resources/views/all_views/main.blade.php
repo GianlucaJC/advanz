@@ -152,7 +152,7 @@
                </div>           
 
                <div class="row mb-3">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
                         <select class="form-select" name='country' id='country'>
                            <option value="">Select...</option>
@@ -168,7 +168,7 @@
                      </div>
                   </div>
                  
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                         <div class="form-floating">
                            <input class="form-control" id="state" name='state' type="text" placeholder="State" required value=""  />
                            <label for="state">State *</label>
@@ -178,7 +178,7 @@
                         </div>                        
                   </div> 
                   
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                         <div class="form-floating">
                            <input class="form-control" id="city" name='city' type="text" placeholder="City" required value=""  />
                            <label for="state">City *</label>
@@ -186,11 +186,9 @@
                         <div class="invalid-feedback">
                            City is required.
                         </div>                        
-                  </div>                   
-               </div>         
-               
-               <div class="row mb-3">
-                 <div class="col-md-4">
+                  </div> 
+                  
+                  <div class="col-md-3">
                         <div class="form-floating">
                            <input class="form-control" id="postal_code" name='postal_code' type="text" placeholder="Postal Code" required value=""  />
                            <label for="state">Postal Code *</label>
@@ -198,8 +196,20 @@
                         <div class="invalid-feedback">
                            Postal Code is required.
                         </div>                        
-                  </div> 
+                  </div>                   
+               </div>         
+               
+               <div class="row mb-3">
 
+               <div class="col-md-4">
+                        <div class="form-floating">
+                           <input class="form-control" id="email_ref" name='email_ref' type="email" placeholder="Your Email" required value=""  />
+                           <label for="email_ref">Your Email *</label>
+                        </div>
+                        <div class="invalid-feedback">
+                           Your Email is required.
+                        </div>                        
+                  </div> 
                  
                   <div class="col-md-4">
                         <div class="form-floating">
