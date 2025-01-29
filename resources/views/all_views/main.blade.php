@@ -6,6 +6,7 @@
 @section('extra_style') 
 <!-- x button export -->
    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
+   <script async src="https://www.google.com/recaptcha/api.js"></script>
 <!-- -->
 @endsection
 
@@ -37,19 +38,21 @@
                </div>
               
                <div class="row mb-3">
-                     <div class="col-md-4">
+                     <div class="col-md-12">
                         <div class="form-floating">
                            <input class="form-control" id="istituto" name='istituto' type="text" placeholder="Institution Name" required  maxlength="100" value="" onkeyup="this.value = this.value.toUpperCase();"  />
                            <label for="istituto">Institution Name*</label>
                 						
                         </div>
                      </div>
+                     <!--
                      <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="liofsite" name='liofsite' type="text" placeholder="(if know)"  value=""  />
                            <label for="liofsite">IHMA Site ID</label>
                         </div>
                      </div>
+                     
                      <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="eori" name='eori' type="text" placeholder="EROI/CIF #" required value=""  />
@@ -59,6 +62,7 @@
                           EORI/CIF Number is required.
                         </div>                        
                      </div>
+                     !-->
             	</div>
 
                <div class="row mb-3">
@@ -209,16 +213,89 @@
                            <label for="state">Fax</label>
                         </div>
                   </div>                   
-               </div>                 
-               <div class="row mb-3">
-                  <div class="col-md-4">
-                     <button class="btn btn-primary" type="submit">Submit Registration</button>
+               </div>  
+
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <center>
+                        <a href='doc/france.pdf' target='_blank'> 
+                           <button type="button" class="btn btn-info" onclick="$('#read_terms').prop('disabled',false);$('#btn_reg').prop('disabled',false);">Click to view Terms & Conditions</button>
+                        </a>   
+                     </center>   
                   </div>
-               </div>     
+               </div>
+
+               <div class="row mb-1">
+                  <div class="col-md-12">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="read_terms" name="read_terms" required disabled>
+                        <label class="form-check-label" for="read_terms">
+                              I have read and agree to the Terms & Conditions
+                        </label>
+                     </div>
+                  </div>
+               </div>   
+               <div class="row mb-3">
+                  <div class="col-md-12">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="purpose" name="purpose" required>
+                        <label class="form-check-label" for="purpose">
+                        I hereby confirm that the ordered materials will only be used for the purpose of general epidemiological research.
+                        </label>
+                     </div> 
+                  </div>               
+               </div>
 
             </div>
          </div>
       </div>
+
+      <div class="appointment_section mt-3">
+         <div class="container">
+            <div class="appointment_box">
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <h3>My ADVANZ® PHARMA AVEP <span style="color: #0cb7d6;"> Account Creation Details</span></h3>
+                  </div>
+               </div>
+              
+               <div class="row mb-3">
+                  <div class="col-md-4">
+                     <div class="form-floating">
+                        <input class="form-control" id="email_user" name='email_user' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />
+                        <label for="istituto">User Email*</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-floating">
+                        <input class="form-control" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
+                        <label for="istituto">Password*</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-floating">
+                        <input class="form-control" id="password2" name='password2' type="password" placeholder="Confirm Password" required  maxlength="20" value="" />
+                        <label for="istituto">Confirm Password*</label>
+                     </div>
+                  </div>                                       
+               </div>
+
+
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <center>
+                        <button class="btn btn-primary" type="submit" id='btn_reg' name='btn_reg' disabled>Submit Registration</button>                        
+                     </center>   
+                  </div>
+               </div>               
+
+               <!-- Google Recaptcha Widget-->
+               <div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}          
+
+            </div>
+         </div>
+      </div>
+
    </form>   
 @endsection
 
