@@ -5,12 +5,8 @@
 
 @section('extra_style') 
 <!-- x button export -->
-   <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
-
 
    <script async src="https://www.google.com/recaptcha/api.js"></script>
-
-
 <!-- -->
 @endsection
 
@@ -72,7 +68,7 @@
                <div class="row mb-3">
                   <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='prefix' id='prefix'>
+                        <select class="form-select" name='prefix' id='prefix' required>
                            <option value="">Select...</option>
                            <option value="1">Dr.</option>
                            <option value="2">Mrs.</option>
@@ -84,6 +80,7 @@
                         <label for="prefix">Prefix</label>
                      </div>
                   </div>
+  
 
                   <div class="col-md-4">
                         <div class="form-floating">
@@ -154,20 +151,28 @@
                <div class="row mb-3">
                   <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='country' id='country'>
+                        <select class="form-select" name='country' id='country' required>
                            <option value="">Select...</option>
-                           <option value="1">France</option>
-                           <option value="2">Austria</option>
-                           <option value="3">Denmark</option>
-                           <option value="4">Germany</option>
-                           <option value="5">Ireland</option>
-                           <option value="6">Spain</option>
-                           <option value="7">United Kingdom</option>
+                           <option value="1">Italy</option>
+                           <option value="2">France</option>
+                           <option value="3">Austria</option>
+                           <option value="4">Denmark</option>
+                           <option value="5">Germany</option>
+                           <option value="6">Ireland</option>
+                           <option value="7">Spain</option>
+                           <option value="8">United Kingdom</option>
                         </select>
-                        <label for="countru">Country</label>
-                     </div>
+                        <label for="country">Country</label>
+                     
+                     <div class="invalid-feedback">
+                           Country is required.
+                     </div>                       
+                     </div> 
                   </div>
+
                  
+
+                  
                   <div class="col-md-3">
                         <div class="form-floating">
                            <input class="form-control" id="state" name='state' type="text" placeholder="State" required value=""  />
@@ -314,6 +319,74 @@
       </div>
 
    </form>   
+
+
+<form class="row g-3 needs-validation" novalidate>
+  <div class="col-md-4">
+    <label for="validationCustom01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom02" class="form-label">Last name</label>
+    <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustomUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend">@</span>
+      <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+      <div class="invalid-feedback">
+        Please choose a username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationCustom03" class="form-label">City</label>
+    <input type="text" class="form-control" id="validationCustom03" required>
+    <div class="invalid-feedback">
+      Please provide a valid city.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationCustom04" class="form-label">State</label>
+    <select class="form-select" id="validationCustom04" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+    <div class="invalid-feedback">
+      Please select a valid state.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationCustom05" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="validationCustom05" required>
+    <div class="invalid-feedback">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+      <label class="form-check-label" for="invalidCheck">
+        Agree to terms and conditions
+      </label>
+      <div class="invalid-feedback">
+        You must agree before submitting.
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+
+</form>
+
 @endsection
 
 <?php if (1==2) {?>
