@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('main', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@main']);
+Route::post('main', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@main']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

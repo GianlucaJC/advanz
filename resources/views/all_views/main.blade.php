@@ -6,7 +6,11 @@
 @section('extra_style') 
 <!-- x button export -->
    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
+
+
    <script async src="https://www.google.com/recaptcha/api.js"></script>
+
+
 <!-- -->
 @endsection
 
@@ -290,7 +294,10 @@
                </div>               
 
                <!-- Google Recaptcha Widget-->
-               <div class="g-recaptcha mt-4" data-sitekey={{config('services.recaptcha.key')}}          
+               <div class="g-recaptcha" data-sitekey={{config('services.recaptcha.key')}}          
+
+               <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+               <input type="hidden" name="action" value="validate_captcha">
 
             </div>
          </div>
