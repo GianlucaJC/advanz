@@ -112,7 +112,7 @@
       @yield('content_main')
       
       
-      <div class="about_section layout_padding">
+      <div class="about_section layout_padding mb-3">
          <div class="container">
             <div class="row">
                <div class="col-md-6">

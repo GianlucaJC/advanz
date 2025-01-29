@@ -299,6 +299,19 @@
                   </div>                                       
                </div>
 
+               <div class="row mb-2" style='display:none' id='err_pw' >
+                  <div class="col-md-4"></div>
+                  <div class="col-md-8" style='border-style: dotted;border-color:red'>
+                        <small>
+                           - Ensures at least one lowercase letter.<br>
+                           - Ensures at least one uppercase letter.<br>
+                           - Ensures at least one digit.<br>
+                           - Ensures at least one special character.<br>
+                           - Ensures the password is at least 8 characters long.
+                        </small>
+                  </div>
+               </div>
+               
 
                <div class="row mb-2">
                   <div class="col-md-12">
