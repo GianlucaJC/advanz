@@ -268,7 +268,62 @@
             </div>
          </div>
       </div>
+      
+      <!-- start section material !-->
+      <div class="appointment_section mt-3">
+         <div class="container">
+            <div class="appointment_box">
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
+                  </div>
+               </div>
+              
 
+
+
+               <div class="row mb-3">
+
+                  <h5 style="text-align:center">Please select either ceftobiprole disks or strips. </h5><hr>
+               
+                  <div class="col-md-4">
+                     <div class="form-floating mb-3 mb-md-0">
+                        <select class="form-select" name='material1' id='material1'>
+                           <option selected="selected" value="4">None (0 Ceftobiprole Strips)</option>
+                           <option value="8">10 Ceftobiprole Strips</option>
+                           <option value="21">30 Ceftobiprole Strips</option>
+                        </select>
+                        <label for="material1">Pack of Ceftobiprole Strips Qty:</label>
+                     </div>
+                  </div>     
+
+                  <div class="col-md-4">
+                     <div class="form-floating mb-3 mb-md-0">
+                        <select class="form-select" name='material2' id='material2'>
+                           <option selected="selected" value="30">None (0 cefepime/Enmetazobactam disks)</option>
+                           <option value="31">250 cefepime/Enmetazobactam disks</option>
+                        </select>
+                        <label for="material2">Pack of Cefepime/Enmetazobactam Disks (not-CE marked) Qty:</label>
+                     </div>
+                  </div>                   
+
+                  <div class="col-md-4">
+                     <div class="form-floating mb-3 mb-md-0">
+                        <select class="form-select" name='material3' id='material3'>
+                        <option selected="selected" value="32">None (0 Cefepime/Enmetazobactam Dry Panel)</option>
+                        <option value="33">10 Cefepime/Enmetazobactam plates</option>
+                        </select>
+                        <label for="material3">Pack of Cefepime/Enmetazobactam SENSITITRE® Dry Panel (CMP1ADV) Qty:</label>
+                     </div>
+                  </div> 
+               </div>
+
+            </div>
+         </div>
+      </div>       
+      <!--end section material !-->
+
+      <!-- start section account !-->
       <div class="appointment_section mt-3">
          <div class="container">
             <div class="appointment_box">
@@ -330,6 +385,7 @@
             </div>
          </div>
       </div>
+      <!-- end section account !-->
 
    </form>   
 
