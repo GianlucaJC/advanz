@@ -48,7 +48,7 @@ public function __construct()
 			return $resp;
 		} catch (\Exception $e) {
 			//dd($e);
-			if (stripos($e,"duplicate")>0) $e="The email has already been taken";
+			if (stripos($e,"dupl")>0) $e="The email has already been taken";
 			$resp['esito']=2;
 			$resp['err']=$e;
 			return $resp;
