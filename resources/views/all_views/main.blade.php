@@ -8,7 +8,10 @@
 
    <script async src="https://www.google.com/recaptcha/api.js"></script>
 <!-- -->
+
 @endsection
+
+
 
 <?php if (1==2) {?>
    @section('top')
@@ -117,8 +120,8 @@
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="department" name='pdepartmentosition' type="text" placeholder="Department" required value=""  />
-                        <label for="departmentposition">Department *</label>
+                        <input class="form-control" id="department" name='department' type="text" placeholder="Department" required value=""  />
+                        <label for="department">Department *</label>
                      </div>
                      <div class="invalid-feedback">
                            Department is required.
