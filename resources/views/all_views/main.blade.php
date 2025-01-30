@@ -23,11 +23,25 @@
    @include('all_views.components.banner')
 @endsection
 
-
+<div class="modal" id="modal_main" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Attention!</h5>
+      </div>
+      <div class="modal-body">
+        <p>Check the fields highlighted in red</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 @section('content_main')
    <?php
       $disp="";
-      if ($login==true || $save_user==1 || $save_user==2) $disp="display:none";
+      if ($login==true || $save_user==1) $disp="display:none";
       if (isset($errors) && count($errors)>0) {$disp="display:none";}
    ?>
    @if ($save_user==1 || $save_user==2)
@@ -44,6 +58,7 @@
                <div class="alert alert-warning" role="alert">
                      <h4><b>Attention!</b></h4>
                      <h5>An error occurred while creating your account. Repeat the operation or contact an Administrator</h5>
+                     <small><font color='red'>{{$save_user_err}}</font></small>
                </div>     
                @endif
 
@@ -71,7 +86,7 @@
                <div class="row mb-3">
                      <div class="col-md-12">
                         <div class="form-floating">
-                           <input class="form-control" id="istituto" name='istituto' type="text" placeholder="Institution Name" required  maxlength="100" value="" onkeyup="this.value = this.value.toUpperCase();"  />
+                           <input class="form-control" id="istituto" name='istituto' type="text" placeholder="Institution Name" required  maxlength="100" value="{{$post['istituto'] ?? ''}}" onkeyup="this.value = this.value.toUpperCase();"  />
                            <label for="istituto">Institution Name*</label>
                 						
                         </div>
@@ -115,7 +130,7 @@
 
                   <div class="col-md-4">
                         <div class="form-floating">
-                           <input class="form-control" id="first_name" name='first_name' type="text" placeholder="First name" required value=""  />
+                           <input class="form-control" id="first_name" value="{{$post['first_name'] ?? ''}}" name='first_name' type="text" placeholder="First name" required value=""  />
                            <label for="first_name">First Name *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -125,7 +140,7 @@
                   
                   <div class="col-md-4">
                         <div class="form-floating">
-                           <input class="form-control" id="last_name" name='last_name' type="text" placeholder="First name" required value=""  />
+                           <input class="form-control" id="last_name" value="{{$post['last_name'] ?? ''}}" name='last_name' type="text" placeholder="First name" required value=""  />
                            <label for="last_name">Last Name *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -139,7 +154,7 @@
                <div class="row mb-3">
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="position" name='position' type="text" placeholder="Position/Title" required value=""  />
+                        <input class="form-control" id="position" value="{{$post['position'] ?? ''}}" name='position' type="text" placeholder="Position/Title" required value=""  />
                         <label for="position">Position *</label>
                      </div>
                      <div class="invalid-feedback">
@@ -148,7 +163,7 @@
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="department" name='department' type="text" placeholder="Department" required value=""  />
+                        <input class="form-control" id="department" value="{{$post['department'] ?? ''}}" name='department' type="text" placeholder="Department" required value=""  />
                         <label for="department">Department *</label>
                      </div>
                      <div class="invalid-feedback">
@@ -160,7 +175,7 @@
                <div class="row mb-3">
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="shipping_address1" name='shipping_address1' type="text" placeholder="Shipping Address1" required value=""  />
+                        <input class="form-control" id="shipping_address1" value="{{$post['shipping_address1'] ?? ''}}" name='shipping_address1' type="text" placeholder="Shipping Address1" required value=""  />
                         <label for="shipping_address1">Shipping Address1 *</label>
                      </div>
                      <div class="invalid-feedback">
@@ -170,7 +185,7 @@
 
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="shipping_address2" name='shipping_address2' type="text" placeholder="Shipping Address2"  value=""  />
+                        <input class="form-control" id="shipping_address2" value="{{$post['shipping_address2'] ?? ''}}" name='shipping_address2' type="text" placeholder="Shipping Address2"  value=""  />
                         <label for="shipping_address2">Shipping Address2 </label>
                      </div>
                      <div class="invalid-feedback">
@@ -178,20 +193,40 @@
                      </div>     
                   </div>                  
                </div>           
-
+               <?php 
+                  $country="";
+                  if (isset($post['country'])) $country=$post['country'];
+               ?>
                <div class="row mb-3">
                   <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
                         <select class="form-select" name='country' id='country' required>
-                           <option value="">Select...</option>
-                           <option value="1">Italy</option>
-                           <option value="2">France</option>
-                           <option value="3">Austria</option>
-                           <option value="4">Denmark</option>
-                           <option value="5">Germany</option>
-                           <option value="6">Ireland</option>
-                           <option value="7">Spain</option>
-                           <option value="8">United Kingdom</option>
+                           <option value=""
+                           <?php if (strlen($country)==0) echo " selected "; ?>
+                           >Select...</option>
+                           <option value="1"
+                           <?php if ($country==1) echo " selected "; ?>
+                           >Italy</option>
+                           <?php if ($country==2) echo " selected "; ?><option value="2"
+                           >France</option>
+                           <option value="3"
+                           <?php if ($country==3) echo " selected "; ?>
+                           >Austria</option>
+                           <option value="4"
+                           <?php if ($country==4) echo " selected "; ?>
+                           >Denmark</option>
+                           <option value="5"
+                           <?php if ($country==5) echo " selected "; ?>
+                           >Germany</option>
+                           <option value="6"
+                           <?php if ($country==6) echo " selected "; ?>
+                           >Ireland</option>
+                           <option value="7"
+                           <?php if ($country==7) echo " selected "; ?>
+                           >Spain</option>
+                           <option value="8"
+                           <?php if ($country==8) echo " selected "; ?>
+                           >United Kingdom</option>
                         </select>
                         <label for="country">Country</label>
                      
@@ -206,7 +241,7 @@
                   
                   <div class="col-md-3">
                         <div class="form-floating">
-                           <input class="form-control" id="state" name='state' type="text" placeholder="State" required value=""  />
+                           <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State" required value=""  />
                            <label for="state">State *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -216,7 +251,7 @@
                   
                   <div class="col-md-3">
                         <div class="form-floating">
-                           <input class="form-control" id="city" name='city' type="text" placeholder="City" required value=""  />
+                           <input class="form-control" id="city" name='city' value="{{$post['city'] ?? ''}}" type="text" placeholder="City" required value=""  />
                            <label for="state">City *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -226,7 +261,7 @@
                   
                   <div class="col-md-3">
                         <div class="form-floating">
-                           <input class="form-control" id="postal_code" name='postal_code' type="text" placeholder="Postal Code" required value=""  />
+                           <input class="form-control" id="postal_code" value="{{$post['postal_code'] ?? ''}}" name='postal_code' type="text" placeholder="Postal Code" required value=""  />
                            <label for="state">Postal Code *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -239,7 +274,7 @@
 
                <div class="col-md-4">
                         <div class="form-floating">
-                           <input class="form-control" id="email_ref" name='email_ref' type="email" placeholder="Your Email" required value=""  />
+                           <input class="form-control" id="email_ref" value="{{$post['email_ref'] ?? ''}}" name='email_ref' type="email" placeholder="Your Email" required value=""  />
                            <label for="email_ref">Your Email *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -249,7 +284,7 @@
                  
                   <div class="col-md-4">
                         <div class="form-floating">
-                           <input class="form-control" id="phone" name='phone' type="text" placeholder="Phone" required value=""  />
+                           <input class="form-control" id="phone" value="{{$post['phone'] ?? ''}}" name='phone' type="text" placeholder="Phone" required value=""  />
                            <label for="state">Phone *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -259,7 +294,7 @@
                   
                   <div class="col-md-4">
                         <div class="form-floating">
-                           <input class="form-control" id="fax" name='fax' type="text" placeholder="Fax"  value=""  />
+                           <input class="form-control" id="fax" value="{{$post['fax'] ?? ''}}" name='fax' type="text" placeholder="Fax"  value=""  />
                            <label for="state">Fax</label>
                         </div>
                   </div>                   
@@ -367,19 +402,19 @@
                <div class="row mb-3">
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <input class="form-control" id="email_" name='email' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />
+                        <input class="form-control" id="email_" name='email' type="email" placeholder="Email User" required  maxlength="200" value="{{$post['email'] ?? ''}}" onkeyup="this.value = this.value.toLowerCase();"  />
                         <label for="email">User Email*</label>
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <input class="form-control" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
+                        <input class="form-control" id="password" value="{{$post['password'] ?? ''}}" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
                         <label for="password">Password*</label>
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <input class="form-control" id="password2" name='password2' type="password" placeholder="Confirm Password" required  maxlength="20" value="" />
+                        <input class="form-control" id="password2" value="{{$post['password2'] ?? ''}}" name='password2' type="password" placeholder="Confirm Password" required  maxlength="20" value="" />
                         <label for="password2">Confirm Password*</label>
                      </div>
                   </div>                                       
@@ -521,6 +556,7 @@
       <!-- end section login !-->
    </div> <!-- div_log !-->    
 
+
 @endsection
 
 <?php if (1==2) {?>
@@ -548,3 +584,4 @@
 @section('content_plugin')
    <script src="{{ URL::asset('/') }}js/main.js?ver=<?= time() ?>"></script>
 @endsection
+

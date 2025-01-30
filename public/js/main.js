@@ -12,12 +12,14 @@
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
+          $('#modal_main').modal("show")
         } 
         //verifica altre casisitiche di validazione
         var check=check_else()
         if (check==true) {
           event.preventDefault()
-          event.stopPropagation()          
+          event.stopPropagation()       
+          $('#modal_main').modal("show")
         }
         form.classList.add('was-validated')
 

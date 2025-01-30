@@ -20,6 +20,7 @@ public function __construct()
 	}
 
 	public function save_user($request) {
+		$resp=array();
 		try {
 			$pw_c=bcrypt($request->input("password"));
 			$user=new user;
@@ -42,22 +43,55 @@ public function __construct()
 			$user->email=$request->input("email");
 			$user->password=$pw_c;
 			$user->save();
-			return 1;	
+			$resp['esito']=1;
+			$resp['err']="";
+			return $resp;
 		} catch (\Exception $e) {
 			//dd($e);
-			return 2;
+			if (stripos($e,"duplicate")>0) $e="The email has already been taken";
+			$resp['esito']=2;
+			$resp['err']=$e;
+			return $resp;
 		}		
 	}	
 
+	public function post($request) {
+		$resp['istituto']=$request->input('istituto');
+		$resp['prefix']=$request->input('prefix');
+		$resp['name']=$request->input('name');
+		$resp['first_name']=$request->input('first_name');
+		$resp['last_name']=$request->input('last_name');
+		$resp['position']=$request->input('position');
+		$resp['department']=$request->input('department');
+		$resp['shipping_address1']=$request->input('shipping_address1');
+		$resp['shipping_address2']=$request->input('shipping_address2');
+		$resp['country']=$request->input('country');
+		$resp['state']=$request->input('state');
+		$resp['city']=$request->input('city');
+		$resp['postal_code']=$request->input('postal_code');
+		$resp['email_ref']=$request->input('email_ref');
+		$resp['phone']=$request->input('phone');
+		$resp['fax']=$request->input('fax');
+		$resp['email']=$request->input('email');
+		$resp['password']=$request->input('password');
+		$resp['password2']=$request->input('password2');
+		return $resp;
+
+	}
 	public function main(Request $request) {
 		$login=false;
 		if (Auth::user()) $login=true;
-		$save_user=0;
+		$save_user=0;$save_user_err="";
+		$post=array();
 		if ($request->has('btn_reg')) {
-			 $save_user=$this->save_user($request);
+			$post=$this->post($request);
+			$save=$this->save_user($request);
+			$save_user=$save['esito'];
+			$save_user_err=$save['err'];
 		}
 		
-		return view('all_views/main',compact('login','save_user'));
+		
+		return view('all_views/main',compact('login','save_user','save_user_err','post'));
 	}
 	
 	
