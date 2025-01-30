@@ -68,9 +68,6 @@
                         <a class="nav-link" href="">About</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="">Register</a>
-                     </li>
-                     <li class="nav-item">
                         <a class="nav-link" href="l">Privacy Policies</a>
                      </li>
                      <li class="nav-item">
@@ -88,18 +85,39 @@
                <div class="custom_menu">
                   <ul>
                      <li class="active"><a href="">Home</a></li>
-                     <li><a href="">Register</a></li>
                      <li><a href="">Privacy Policies</a></li>
                      <li><a href="">Contact Us</a></li>
                   </ul>
                </div>
-               <form class="form-inline my-2 my-lg-0">
-                  <div class="search_btn">
-                     <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
-                     <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
-                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                  </div>
-               </form>
+
+               <?php
+                  $disp="";
+                  if ($login==true) $disp="display:none";
+               ?>
+               <div id='div_sign_log' style='{{$disp}}' >     
+                     <div class="search_btn">
+                        <li><a href="#" onclick="$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
+                        <li><a href="#" onclick="$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
+                     </div>
+               </div>
+
+               @if ($login==true)
+
+                     <div>{{ Auth::user()->name }}</div>
+                     <div class="search_btn">
+                     <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                        @csrf                        
+                           <li>
+                              <a href="#" onclick="event.preventDefault();this.closest('form').submit();">
+                                 <i class="fa fa-user" aria-hidden="true"></i>
+                                 <span class="signup_text">Logout</span>
+                              </a>
+                           </li>
+                        </form>  
+                     </div>
+              @endif
+               
             </div>
          </div>
          <!-- header section end -->
@@ -111,7 +129,7 @@
 
       @yield('content_main')
       
-      
+
       <div class="about_section layout_padding mb-3">
          <div class="container">
             <div class="row">
@@ -200,9 +218,6 @@
                               <a href="#">Home</a>
                            </li>
                            <li>
-                              <a href="#">Register</a>
-                           </li>
-                           <li>
                               <a href="#">Privacy Policies</a>
                            </li>
                            <li>
@@ -217,12 +232,7 @@
                   </div>
                   <div class="col-lg-3 col-sm-6">
                      <h3 class="footer_taital">News</h3>
-                     ......
-                     <!--
-                        <div class="dryfood_text"><img src="images/img-4.png"><span class="padding_15">Normal distribution</span></div>
-                        <div class="dryfood_text"><img src="images/img-5.png"><span class="padding_15">Normal distribution</span></
-                        div>
-                     !-->   
+  
                   </div>
                </div>
             </div>

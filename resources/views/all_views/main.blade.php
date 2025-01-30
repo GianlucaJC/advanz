@@ -23,8 +23,37 @@
    @include('all_views.components.banner')
 @endsection
 
-@section('content_main')
 
+@section('content_main')
+   <?php
+      $disp="";
+      if ($login==true || $save_user==1 || $save_user==2) $disp="display:none";
+      if (isset($errors) && count($errors)>0) {$disp="display:none";}
+   ?>
+   @if ($save_user==1 || $save_user==2)
+      <div class="appointment_section" id='div_reg_log'>
+         <div class='container'>
+            <div class="appointment_box">
+               @if ($save_user==1)
+               <div class="alert alert-success" role="alert">
+                     <h4><b>Good! </b></h4>
+                     <h5>Your account has been created successfully. To log in <a href='#' onclick="$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);">click here</a></h5>
+               </div>     
+               @endif
+               @if ($save_user==2)
+               <div class="alert alert-warning" role="alert">
+                     <h4><b>Attention!</b></h4>
+                     <h5>An error occurred while creating your account. Repeat the operation or contact an Administrator</h5>
+               </div>     
+               @endif
+
+            </div>   
+         </div>
+      </div>
+   @endif
+
+   <div id='div_sign' style='{{$disp}}' >
+     
       <!-- header section end -->
       <!-- appointment section start -->
     <form method='post' action="{{ route('main') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
@@ -39,7 +68,6 @@
                      <h1 class="appointment_taital">User <span style="color: #0cb7d6;">Information</span></h1>
                   </div>
                </div>
-              
                <div class="row mb-3">
                      <div class="col-md-12">
                         <div class="form-floating">
@@ -339,20 +367,20 @@
                <div class="row mb-3">
                   <div class="col-md-4">
                      <div class="form-floating">
-                        <input class="form-control" id="email_user" name='email_user' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />
-                        <label for="istituto">User Email*</label>
+                        <input class="form-control" id="email_" name='email' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />
+                        <label for="email">User Email*</label>
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating">
                         <input class="form-control" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
-                        <label for="istituto">Password*</label>
+                        <label for="password">Password*</label>
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="form-floating">
                         <input class="form-control" id="password2" name='password2' type="password" placeholder="Confirm Password" required  maxlength="20" value="" />
-                        <label for="istituto">Confirm Password*</label>
+                        <label for="password2">Confirm Password*</label>
                      </div>
                   </div>                                       
                </div>
@@ -385,14 +413,113 @@
                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                <input type="hidden" name="action" value="validate_captcha">
 
-            </div>
+                </div>
          </div>
       </div>
+      </div> 
       <!-- end section account !-->
 
+
+
+      
    </form>   
+   </div> <!-- end div sign_up !-->
+   
+   <?php
+      $disp1="display:none";
+      if (isset($errors) && count($errors)>0) {$disp1="";}
+   ?>
+
+   <div id='div_log' style='{{$disp1}}'>
+   
+
+    <form method='post' action="{{ route('login') }}" id='frm_lo1' name='frm_log1' class="needs-validation2" autocomplete="off" novalidate>
+		
+    @csrf     
+
+      <!-- start section login !-->
+      <div class="appointment_section mt-3">
+         <div class="container">
+            <div class="appointment_box">
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <h3>My ADVANZ® PHARMA AVEP <span style="color: #0cb7d6;"> Access with account</span></h3>
+                  </div>
+               </div>
+
+               <!-- Remember Me -->
+               <!--
+               <div class="block mt-4">
+                     <label for="remember_me" class="inline-flex items-center">
+                        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                        <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                     </label>
+               </div>
+               !-->
 
 
+               <!--
+               <div class="flex items-center justify-end mt-4">
+                     @if (Route::has('password.request'))
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                           {{ __('Forgot your password?') }}
+                        </a>
+                     @endif
+
+                     <x-primary-button class="ms-3">
+                        {{ __('Log in') }}
+                     </x-primary-button>
+               </div> 
+               !-->
+
+
+               <div class="row mb-3">
+                  <div class="col-md-6">
+                     <div class="form-floating">
+                           <input class="form-control" id="email" name='email' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />
+                           <span class="mt-2"></span>
+                           <label for="email">User Email*</label>
+                     </div>
+                     <font color='red'><x-input-error :messages="$errors->get('email')" class="mt-2" /></font>
+
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-floating">
+                        <input class="form-control" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
+                        <label for="password">Password*</label>
+                     </div>
+                     <font color='red'><x-input-error :messages="$errors->get('password')" class="mt-2" /></font>
+                  </div>
+                                     
+               </div>
+
+               <div class="row mb-2" style='display:none' id='err_pw' >
+                  <div class="col-md-4"></div>
+                  <div class="col-md-8" style='border-style: dotted;border-color:red'>
+                        <small>
+                           - Ensures at least one lowercase letter.<br>
+                           - Ensures at least one uppercase letter.<br>
+                           - Ensures at least one digit.<br>
+                           - Ensures at least one special character.<br>
+                           - Ensures the password is at least 8 characters long.
+                        </small>
+                  </div>
+               </div>
+               
+
+               <div class="row mb-2">
+                  <div class="col-md-12">
+                     <center>
+                        <button class="btn btn-primary" type="submit" id='btn_log' name='btn_log'>Login</button>                        
+                     </center>   
+                  </div>
+               </div>               
+         </div>
+      </div>
+      </div> 
+     </form> 
+      <!-- end section login !-->
+   </div> <!-- div_log !-->    
 
 @endsection
 
