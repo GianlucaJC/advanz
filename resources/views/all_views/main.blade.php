@@ -39,13 +39,70 @@
   </div>
 </div>
 @section('content_main')
+
    <?php
-      $disp="";
-      if ($login==true || $save_user==1) $disp="display:none";
-      if (isset($errors) && count($errors)>0) {$disp="display:none";}
+      $disp_intro="";
+      if ($login==true || $save_user==1 || $save_user==2) $disp_intro="display:none";
+      if (isset($errors) && count($errors)>0) {$disp_intro="display:none";}
+      
    ?>
+   <div id='div_intro' style='{{$disp_intro}}'>
+      <div class="appointment_section">
+            <div class='container'>
+               <div class="appointment_box">
+                  <div class="jumbotron">
+                     <p style='text-align:justify'>
+                       <h3>Welcome to the ADVANZ® PHARMA Antimicrobial Voluntary Evaluation Program</h3>
+                     </p>
+                     <h1>(ADVANZ® PHARMA AVEP)</h1>
+                        coordinated by
+                     <hr class="my-2">
+                     ADVANZ® PHARMA - Liofilchem Srl
+                  
+                  </div>
+            </div> 
+          </div> 
+      </div>   
+      <div class="appointment_section mt-2">
+            <div class='container'>
+               <div class="appointment_box">
+                  <div class="jumbotron">
+                     <p style='text-align:justify'>
+                     All the information and personal data you share with us will be protected and kept confidential in line with our company policy on data protection accessible here <a href='https://www.advanzpharma.com/privacy-policy' target='blank'>https://www.advanzpharma.com/privacy-policy</a>. By clicking on the button “Register for Enrollment” or contacting us by phone or at the <a href='mailto:info@liofilchem.com'>info@liofilchem.com</a> address and submitting your personal information as requested in particular in the concerned form you consent to the processing of your personal data in accordance with our privacy policy. The collected information will be used only for the management of your request and will be stored for a limited period, proportionate to the aims pursued. You have a right of access to the personal data which we may hold about you as well as various other rights as outlined in our privacy policy. To exercise any of those rights, or if you have any comments or questions about our privacy policy, you can address your request to the following email address: <a href='mailto:enquiries@advanzpharma.com'>enquiries@advanzpharma.com</a>.
+                     </p>
+
+                     <hr class="my-2">
+                    
+                    <div class="about_bt" style='width:auto'><a href="#" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register for Enrollment</a></div>
+                  
+                  </div>
+            </div> 
+          </div> 
+      </div>
+
+      <div class="appointment_section mt-3">
+            <div class='container'>
+            <div class="appointment_box">
+               @foreach($molecole_info as $k=>$v)
+                  <div class="card mt-2">
+                     <div class="card-header">
+                        <h2>{{$molecola[$k]}}</h2>
+                     </div>
+                     <div class="card-body">
+                        <p class="card-text"><?php echo $v;?></p>
+                     </div>
+                  </div> 
+               @endforeach 
+            </div>     
+          </div> 
+      </div>  
+      
+      
+   </div>           
+
+
    @if ($save_user==1 || $save_user==2)
-      <div class="appointment_section" id='div_reg_log'>
+      <div class="appointment_section mb-2" id='div_reg_log'>
          <div class='container'>
             <div class="appointment_box">
                @if ($save_user==1)
@@ -67,6 +124,14 @@
       </div>
    @endif
 
+
+   <?php
+      $disp="display:none";
+      if (strlen($disp_intro)!=0) $disp="";
+      if ($login==true || $save_user==1) $disp="display:none";
+      if (isset($errors) && count($errors)>0) {$disp="display:none";}
+      
+   ?>   
    <div id='div_sign' style='{{$disp}}' >
      
       <!-- header section end -->
@@ -114,7 +179,7 @@
                <div class="row mb-3">
                   <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='prefix' id='prefix'>
+                        <select class="form-select nice" name='prefix' id='prefix'>
                            <option value="">Select...</option>
                            <option value="1">Dr.</option>
                            <option value="2">Mrs.</option>
@@ -200,7 +265,7 @@
                <div class="row mb-3">
                   <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='country' id='country' required>
+                        <select class="form-select nice" name='country' id='country' required>
                            <option value=""
                            <?php if (strlen($country)==0) echo " selected "; ?>
                            >Select...</option>
@@ -342,6 +407,7 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
+                     <h5<i>Please select the testing materials you wish to receive.</i></h5>
                   </div>
                </div>
               
@@ -350,18 +416,77 @@
 
                <div class="row mb-3">
 
-                  <h5 style="text-align:center">Please select either ceftobiprole disks or strips. </h5><hr>
+               <!--
+               <h5 style="text-align:center">Please select your choice</h5><hr>
+               !-->
+
                
-                  <div class="col-md-4">
-                     <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='material1' id='material1'>
-                           <option selected="selected" value="4">None (0 Ceftobiprole Strips)</option>
-                           <option value="8">10 Ceftobiprole Strips</option>
-                           <option value="21">30 Ceftobiprole Strips</option>
-                        </select>
-                        <label for="material1">Pack of Ceftobiprole Strips Qty:</label>
-                     </div>
-                  </div>     
+                  <?php 
+                     $view="";
+                     $id_old_mp="?";$id_old_mole="?";
+                     foreach ($molecole_in_allestimento as $mole_in_all) {
+                        $id_molecola=$mole_in_all->id_molecola;
+                        $id_pack=$mole_in_all->id_pack;
+                        if ($id_molecola!=$id_old_mole) {
+                           if ($id_old_mole!="?") $view.="</div>";
+                           $view.="<div class='row mt-4'>";
+                              
+                              if (isset($molecola[$id_molecola])) {
+                                 $view.="<h5>Please select either ".$molecola[$id_molecola]." ";
+                                 $descr_pack_in_mole=implode(" or ",$pack_in_mole[$id_molecola]);
+                                 $view.=$descr_pack_in_mole;
+                                 $view.="</h5><hr>";
+                              } else continue;
+                              
+                        }
+                        $id_old_mole=$id_molecola;
+                        $id_mole_pack=$id_molecola.$id_pack;
+                        if ($id_mole_pack!=$id_old_mp) {
+                           //creazione select di scelta riferita alla molecola/packaging
+                           $voci=$arr_info[$id_mole_pack]['voci_conf'];
+                           
+
+                           $view.="<div class='col-md-4 sm-12'>";
+                              $view.="<div class='form-floating mb-3 mb-md-0'>";
+                                 $view.="<select class='form-select molecola$id_molecola' name='material[]' id='material$id_mole_pack'  onchange=\"check_choice($id_molecola,'material$id_mole_pack',this.value)\">";
+                                 $view.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
+                                    for ($sca=0;$sca<count($voci);$sca++) {
+                                       $view.="<option value='".$voci[$sca]['id']."' ";
+                                       
+                                       $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$voci[$sca]['pack_descr'];
+
+                                       $view.=">".$voce;
+                                       $view.="</option>";
+                                    }
+                                
+                                 $view.="</select>";
+                                 $lbl=$arr_info[$id_mole_pack]['label'];
+                                 $view.="<label for='material$id_mole_pack'>$lbl</label>";
+                              $view.="</div>";
+                           $view.="</div>";
+
+
+                        }
+                        $id_old_mp=$id_mole_pack;
+
+                        
+                     }
+                     $view.="</div>"; //chiusura ultimo <div class='row'>
+                    echo $view;
+
+                  ?>
+
+
+                  <!-- OLD Static method
+
+                  <div class="form-floating mb-3 mb-md-0">
+                     <select class="form-select" name="material1" id="material1">
+                        <option selected="selected" value="4">None (0 Ceftobiprole Strips)</option>
+                        <option value="8">10 Ceftobiprole Strips</option>
+                        <option value="21">30 Ceftobiprole Strips</option>
+                     </select>
+                     <label for="material1">Pack of Ceftobiprole Strips Qty:</label>
+                  </div>
 
                   <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
@@ -382,6 +507,8 @@
                         <label for="material3">Pack of Cefepime/Enmetazobactam SENSITITRE® Dry Panel (CMP1ADV) Qty:</label>
                      </div>
                   </div> 
+                  !-->
+
                </div>
 
             </div>

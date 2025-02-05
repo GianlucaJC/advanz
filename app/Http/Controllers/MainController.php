@@ -11,11 +11,94 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Users;
 
+use App\Models\carrello;
+use App\Models\ordini;
+
 class mainController extends Controller
 {
 public function __construct()
 	{
 		//$this->middleware('auth')->except(['index']);
+		$info=DB::table('molecola as m')->select('*')->get();
+		$molecola=array();$molecole_info=array();
+		foreach ($info as $dato) {
+			$molecola[$dato->id]=$dato->descrizione;
+			$molecole_info[$dato->id]=$dato->info;
+		}
+		$this->molecola=$molecola;
+		$this->molecole_info=$molecole_info;
+
+		$info=DB::table('packaging as p')->select('*')->get();
+		$packaging=array();
+		foreach ($info as $dato) {
+			$packaging[$dato->id]=$dato->descrizione;
+		}		
+		$this->packaging=$packaging;
+
+		$info=DB::table('pack_qty as p')->select('*')->get();		
+		$pack_qty_id=array();
+		$pack_qty_ref=array();
+		$indice=0;
+		foreach ($info as $dato) {			
+			$pack_qty_id[$dato->id]=$dato->descrizione;
+			if (!isset($pack_qty_ref[$dato->id_pack])) $indice=0;
+			else $indice++;
+			$pack_qty_ref[$dato->id_pack][$indice]=$dato->descrizione;
+		}		
+		$this->pack_qty_id=$pack_qty_id;
+		$this->pack_qty_ref=$pack_qty_ref;
+	
+	}
+
+	public function load_allestimento() {
+		$molecole_in_allestimento=$this->molecole_in_allestimento;
+		$molecola=$this->molecola;
+		$pack_qty_id=$this->pack_qty_id;
+		$packaging=$this->packaging;
+		$arr_info=array();$pack_in_mole=array();
+		foreach ($molecole_in_allestimento as $mole_in_all) {
+			$id_molecola=$mole_in_all->id_molecola;
+			$id_pack=$mole_in_all->id_pack;
+			$id_mole_pack=$id_molecola.$id_pack;
+			$lbl=DB::table('label_group as l')
+			->select('label_custom')
+			->where('id_mole_pack','=',$id_mole_pack)
+			->first();
+			
+			if (isset($packaging[$id_pack])) $pack_in_mole[$id_molecola][]=$packaging[$id_pack];
+			else $pack_in_mole[$id_molecola][]="";
+
+			$molecola_descr=$id_molecola;
+			if (isset($molecola[$id_molecola])) $molecola_descr=$molecola[$id_molecola];
+
+			$pack_descr=$id_pack;
+			if (isset($packaging[$id_pack])) $pack_descr=$packaging[$id_pack];
+
+			$label="Pack of $molecola_descr $pack_descr Qty:"; //calcolo label automatica in funzione della molecola e packaging
+			if($lbl) $label=$lbl->label_custom; //se è stata definita una label ad hoc la recupero
+
+			$arr_info[$id_mole_pack]['label']=$label;
+			
+			//calcolo delle voci di confezionamento 
+			$conf_in_all=DB::table('allestimento as a')
+			->select('id','id_pack_qty')
+			->where('id_molecola','=',$id_molecola)
+			->where('id_pack','=',$id_pack)
+			->get();
+			$voci_conf=array();$indice=0;
+			foreach ($conf_in_all as $conf) {
+				$voci_conf[$indice]['id']=$conf->id;
+				//$voci_conf[$indice]['id_pack_qty']=$conf->id_pack_qty;
+				$voci_conf[$indice]['id_pack_qty']=$pack_qty_id[$conf->id_pack_qty];
+				$voci_conf[$indice]['molecola_descr']=$molecola_descr;
+				$voci_conf[$indice]['pack_descr']=$pack_descr;
+				$indice++;
+			}
+			$arr_info[$id_mole_pack]['voci_conf']=$voci_conf;
+		}
+		
+		$this->arr_info=$arr_info;
+		$this->pack_in_mole=$pack_in_mole;		
 
 	}
 
@@ -43,8 +126,22 @@ public function __construct()
 			$user->email=$request->input("email");
 			$user->password=$pw_c;
 			$user->save();
+			if ($request->has('material')) {
+				$id_user=$user->id;
+				$material=$request->input('material'); 
+				for ($sca=0;$sca<count($material);$sca++) {
+					$articolo=$material[$sca];
+					if (strlen($articolo)==0) continue;
+					$carrello=new carrello;
+					$carrello->id_articolo=$articolo;
+					$carrello->id_user=$id_user;
+					$carrello->save();
+				}
+			}
 			$resp['esito']=1;
 			$resp['err']="";
+
+			
 			return $resp;
 		} catch (\Exception $e) {
 			//dd($e);
@@ -83,17 +180,107 @@ public function __construct()
 		if (Auth::user()) $login=true;
 		$save_user=0;$save_user_err="";
 		$post=array();
+
+		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello
+		$molecola=$this->molecola;
+		$molecole_info=$this->molecole_info;		
+		$packaging=$this->packaging;
+
+		$pack_qty_id=$this->pack_qty_id;
+		$pack_qty_ref=$this->pack_qty_ref;
+
+
+		$molecole_in_allestimento=DB::table('allestimento as a')
+		->select('id_molecola','id_pack')
+		->groupBy('id_molecola','id_pack')
+		->orderBy('id_molecola')
+		->orderBy('id_pack')
+		->get();
+		$this->molecole_in_allestimento=$molecole_in_allestimento;
+		$this->load_allestimento();
+
+		$arr_info=$this->arr_info;
+		$pack_in_mole=$this->pack_in_mole;	
+		///
+
 		if ($request->has('btn_reg')) {
 			$post=$this->post($request);
 			$save=$this->save_user($request);
 			$save_user=$save['esito'];
 			$save_user_err=$save['err'];
 		}
-		
-		
-		return view('all_views/main',compact('login','save_user','save_user_err','post'));
+
+
+		return view('all_views/main',compact('login','save_user','save_user_err','post','molecola','molecole_info','packaging','pack_qty_id','pack_qty_ref','molecole_in_allestimento','arr_info','pack_in_mole'));
 	}
 	
-	
+
+	public function main_log(Request $request) {
+		$id_user = Auth::user()->id;
+
+		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello
+		$molecola=$this->molecola;
+		$molecole_info=$this->molecole_info;		
+		$packaging=$this->packaging;
+
+		$pack_qty_id=$this->pack_qty_id;
+		$pack_qty_ref=$this->pack_qty_ref;
+
+
+		$id_user = Auth::user()->id;
+
+
+
+		$molecole_in_allestimento=DB::table('allestimento as a')
+		->select('id_molecola','id_pack')
+		->groupBy('id_molecola','id_pack')
+		->orderBy('id_molecola')
+		->orderBy('id_pack')
+		->get();
+		
+		$this->molecole_in_allestimento=$molecole_in_allestimento;
+		$this->load_allestimento();		
+
+		$arr_info=$this->arr_info;
+		$pack_in_mole=$this->pack_in_mole;	
+		///
+
+
+		$count=carrello::select("id_articolo")->where('id_user','=',$id_user)->count();
+		$carrello=carrello::select("id_articolo")->where('id_user','=',$id_user)->get();
+		$id_in_carrello=array();
+		foreach ($carrello as $cart) {
+			$id_in_carrello[]=$cart->id_articolo;
+		}
+		
+		if ($request->has('material')) {
+			$material=$request->input('material'); 
+			for ($sca=0;$sca<count($material);$sca++) {
+				$articolo=$material[$sca];
+				if (strlen($articolo)==0) continue;
+				$ordini=new ordini;
+				$ordini->id_articolo=$articolo;
+				$ordini->id_user=$id_user;
+				$ordini->save();
+
+				//svuota carrelo
+				$dele_carrello=DB::table('carrello')->where('id_user','=',$id_user)->delete();
+				$id_in_carrello=array();
+				$count=0;
+			}
+		}
+
+
+		$id_escl=DB::table('allestimento as a')
+		->select('a.id')
+		->join('ordini as o','a.id','o.id_articolo')
+		->where('o.id_user','=',$id_user)
+		->get();
+		$id_in_ordini=array();
+		foreach ($id_escl as $escl) {
+			$id_in_ordini[]=$escl->id;
+		}		
+		return view('all_views/main_log',compact('packaging','id_user','count','carrello','molecola','molecole_info','packaging','pack_qty_id','pack_qty_ref','molecole_in_allestimento','arr_info','pack_in_mole','id_in_carrello','id_in_ordini'));
+	}
 
 }

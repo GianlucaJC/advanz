@@ -59,7 +59,7 @@ $(function () {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	
 	$(document).ready(function() {
-		$('select').niceSelect();
+		$('select.nice').niceSelect();
 	});	
 		
 	/* OwlCarousel - Blog Post slider

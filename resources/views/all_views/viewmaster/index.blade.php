@@ -9,16 +9,21 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/style.css?ver=1.234">
+      <link rel="stylesheet" type="text/css" href="css/style.css?ver=1.239">
       <!-- Responsive-->
       <link rel="stylesheet" href="css/responsive.css">
-      
+
+
       <!-- Scrollbar Custom CSS -->
       <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <!-- fonts -->
       <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
       <!-- owl stylesheets --> 
       <link rel="stylesheet" href="css/owl.carousel.min.css">
 
@@ -75,7 +80,18 @@
                      <li class="nav-item">
                         <a class="nav-link" href="">Contact Us</a>
                      </li>
-                     <li class="nav-item">
+                     @if ( Auth::user())
+                        <li class="nav-item">
+                           <a class="nav-link" href="">Your request</a>
+                        </li>
+                     @endif
+
+                     <?php
+                        $disp="";
+                        if ( Auth::user()) $disp="display:none";
+                     ?>
+                     
+                     <li class="nav-item" style='{{$disp}}'>
                         <a class="nav-link" href="">Login</a>
                      </li>
                   </ul>
@@ -89,22 +105,36 @@
                      <li class="active"><a href="">Home</a></li>
                      <li><a href="">Privacy Policies</a></li>
                      <li><a href="">Contact Us</a></li>
+                     @if ( Auth::user())
+                        <li class="nav-item">
+                           <a class="nav-link" href="">Your request</a>
+                        </li>
+                     @endif
+
                   </ul>
                </div>
 
                <?php
                   $disp="";
-                  if ($login==true) $disp="display:none";
+                  if ( Auth::user()) $disp="display:none";
                ?>
                <div id='div_sign_log' style='{{$disp}}' >     
                      <div class="search_btn">
-                        <li><a href="#" onclick="$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
-                        <li><a href="#" onclick="$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
+                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
+                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
                      </div>
                </div>
 
-               @if ($login==true)
 
+               @if ( Auth::user())
+                     <div class="search_btn">
+                     <li>
+                        <a href="profile">
+                           <i class="fas fa-university"></i>
+                           <span class="signup_text">Profile</span>
+                        </a>
+                     </li>
+                     </div>
                      <div>{{ Auth::user()->name }}</div>
                      <div class="search_btn">
                      <!-- Authentication -->
@@ -144,7 +174,7 @@
                      Our ambition is to be a partner of choice for the commercialisation of specialty, hospital, and rare disease medicines in Europe, Canada, and Australia. In line with our ambition, we are partnering with innovative biopharma and pharmaceutical development companies to bring medicines to patients.
 
                      Headquartered in London, UK, we have commercial sales in more than 90 countries globally and have a direct commercial presence in more than 20 countries, including key countries in Europe, the US, Canada, and Australia. </p>
-                                       <div class="about_bt"><a href="#">Read More</a></div>
+                     <div class="about_bt"><a href="#">Read More</a></div>
                </div>
                <div class="col-md-6">
                   <div class="about_img"><img src="images/piastre.jpg"></div>
@@ -198,16 +228,16 @@
                      <div class="footer_social_icon">
                         <ul>
                            <li>
-                              <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                              <a href="#"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                              <a href="#"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                              <a href="#"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                              <a href="#"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
                            </li>
                         </ul>
                      </div>
@@ -260,7 +290,7 @@
       <script src="js/plugin.js"></script>
       <!-- sidebar -->
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js?ver=1.10"></script>
+      <script src="js/custom.js?ver=1.14"></script>
       <!-- javascript --> 
       <!-- <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>  !-->
      

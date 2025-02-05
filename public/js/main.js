@@ -22,6 +22,7 @@
           $('#modal_main').modal("show")
         }
         form.classList.add('was-validated')
+        if (form.checkValidity() && check==false) $("#btn_reg").text('Please wait...')
 
       }, false)
     })
@@ -46,7 +47,9 @@
     
 })()
 
+$(document).ready( function () {
 
+})
 function check_else() {
   password=$("#password").val()
   password2=$("#password2").val()
@@ -82,4 +85,16 @@ function checkPwd(pwd) {
   ];
   let score = checks.reduce((acc, rgx) => acc + rgx.test(pwd), 0);
   return score
+}
+
+
+
+function check_choice(id_molecola,id,value) {
+  $(".molecola"+id_molecola).prop('disabled',false);
+  if (value.length>0) {
+    $(".molecola"+id_molecola).prop('disabled',true);
+    $("#"+id).prop('disabled',false);
+  }
+
+  
 }

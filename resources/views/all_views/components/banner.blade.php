@@ -2,7 +2,7 @@
 
 
 <div class="banner_section layout_padding">
-   <div class="container">
+   <div class="container" id='banner_enroll' style='display:none'>
 
      <div class="accordion" id="accordionExample">
         <div class="accordion-item">
