@@ -105,6 +105,8 @@
                      <li class="active"><a href="">Home</a></li>
                      <li><a href="">Privacy Policies</a></li>
                      <li><a href="">Contact Us</a></li>
+                     <li><a href="main">Register</a></li>
+                     
                      @if ( Auth::user())
                         <li class="nav-item">
                            <a class="nav-link" href="">Your request</a>
