@@ -530,7 +530,7 @@
             <div class="appointment_box">
                <div class="row mb-2">
                   <div class="col-md-12">
-                     <h3>My ADVANZ® PHARMA AVEP <span style="color: #0cb7d6;"> Account Creation Details</span></h3>
+                     <h3>My ADVANZ® PHARMA ASTIP <span style="color: #0cb7d6;"> Account Creation Details</span></h3>
                   </div>
                </div>
               
@@ -613,7 +613,7 @@
             <div class="appointment_box">
                <div class="row mb-2">
                   <div class="col-md-12">
-                     <h3>My ADVANZ® PHARMA AVEP <span style="color: #0cb7d6;"> Access with account</span></h3>
+                     <h3>My ADVANZ® PHARMA ASTIP <span style="color: #0cb7d6;"> Access with account</span></h3>
                   </div>
                </div>
 
