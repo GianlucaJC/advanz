@@ -174,7 +174,7 @@
                      Our ambition is to be a partner of choice for the commercialisation of specialty, hospital, and rare disease medicines in Europe, Canada, and Australia. In line with our ambition, we are partnering with innovative biopharma and pharmaceutical development companies to bring medicines to patients.
 
                      Headquartered in London, UK, we have commercial sales in more than 90 countries globally and have a direct commercial presence in more than 20 countries, including key countries in Europe, the US, Canada, and Australia. </p>
-                     <div class="about_bt"><a href="#">Read More</a></div>
+                     <div class="about_bt"><a href="https://www.advanzpharma.com" target='_blank'>Read More</a></div>
                </div>
                <div class="col-md-6">
                   <div class="about_img"><img src="images/piastre.jpg"></div>
@@ -201,10 +201,6 @@
       <!-- footer section start -->
       <div class="footer_section">
          <div class="container">
-            <div class="input_bt">
-               <input type="text" class="mail_bt" placeholder="Enter Your Email" name="Enter your email">
-               <span class="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
-            </div>
             <div class="footer_section_2">
                <div class="row">
                   <div class="col-lg-3 col-sm-6">
@@ -213,15 +209,15 @@
                         <ul>
                            <li>
                               <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                              <span class="padding_15">Via Scozia, Zona Industriale 64026 Roseto degli Abruzzi (TE) Italy</span></a>
+                              <span class="padding_15">11-15 Seaton Place St Helier Jersey JE4 0QH</span></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
-                              <span class="padding_15">Call : +39 0858930745</span></a>
+                              <span class="padding_15">Direct: +44 (0) 208 588 9100</span></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
-                              <span class="padding_15">Email : info@liofilchem.com</span></a>
+                              <span class="padding_15">Email : enquiries@advanzpharma.com</span></a>
                            </li>
                         </ul>
                      </div>
@@ -260,12 +256,9 @@
                   </div>
                   <div class="col-lg-3 col-sm-6">
                      <h3 class="footer_taital">Help & Support</h3>
-                     <p class="ipsum_text">To obtain support on using the services, contact Liofilchem ​​operators</p>
+                     <p class="ipsum_text">To obtain support on using the services, contact enquiries@advanzpharma.com</p>
                   </div>
-                  <div class="col-lg-3 col-sm-6">
-                     <h3 class="footer_taital">News</h3>
-  
-                  </div>
+
                </div>
             </div>
          </div>
@@ -274,7 +267,7 @@
       <!-- copyright section start -->
       <div class="copyright_section">
          <div class="container">
-            <p class="copyright_text"><?php echo date("Y"); ?> All Rights Reserved. Design by <a href="https://www.liofilchem.com">Liofilchem Srl</a></p>
+            <p class="copyright_text"><?php echo date("Y"); ?> All Rights Reserved. </p>
          </div>
       </div>
       <!-- copyright section end -->

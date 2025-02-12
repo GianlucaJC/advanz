@@ -52,12 +52,12 @@
                <div class="appointment_box">
                   <div class="jumbotron">
                      <p style='text-align:justify'>
-                       <h3>Welcome to the ADVANZ® PHARMA Antimicrobial Voluntary Evaluation Program</h3>
+                       <h3>Welcome to the ADVANZ® PHARMA AST Investigational Programme</h3>
                      </p>
-                     <h1>(ADVANZ® PHARMA AVEP)</h1>
+                     <h1>(ADVANZ® PHARMA ASTIP)</h1>
                         coordinated by
                      <hr class="my-2">
-                     ADVANZ® PHARMA - Liofilchem Srl
+                     ADVANZ® PHARMA
                   
                   </div>
             </div> 
@@ -68,7 +68,7 @@
                <div class="appointment_box">
                   <div class="jumbotron">
                      <p style='text-align:justify'>
-                     All the information and personal data you share with us will be protected and kept confidential in line with our company policy on data protection accessible here <a href='https://www.advanzpharma.com/privacy-policy' target='blank'>https://www.advanzpharma.com/privacy-policy</a>. By clicking on the button “Register for Enrollment” or contacting us by phone or at the <a href='mailto:info@liofilchem.com'>info@liofilchem.com</a> address and submitting your personal information as requested in particular in the concerned form you consent to the processing of your personal data in accordance with our privacy policy. The collected information will be used only for the management of your request and will be stored for a limited period, proportionate to the aims pursued. You have a right of access to the personal data which we may hold about you as well as various other rights as outlined in our privacy policy. To exercise any of those rights, or if you have any comments or questions about our privacy policy, you can address your request to the following email address: <a href='mailto:enquiries@advanzpharma.com'>enquiries@advanzpharma.com</a>.
+                     All the information and personal data you share with us will be protected and kept confidential in line with our company policy on data protection accessible here <a href='https://www.advanzpharma.com/privacy-policy' target='blank'>https://www.advanzpharma.com/privacy-policy</a>. By clicking on the button “Register for Enrollment” or contacting us by phone or at the <a href='mailto:info@advanz.com'>info@advanz.com</a> address and submitting your personal information as requested in particular in the concerned form you consent to the processing of your personal data in accordance with our privacy policy. The collected information will be used only for the management of your request and will be stored for a limited period, proportionate to the aims pursued. You have a right of access to the personal data which we may hold about you as well as various other rights as outlined in our privacy policy. To exercise any of those rights, or if you have any comments or questions about our privacy policy, you can address your request to the following email address: <a href='mailto:enquiries@advanzpharma.com'>enquiries@advanzpharma.com</a>.
                      </p>
 
                      <hr class="my-2">
@@ -408,6 +408,8 @@
                   <div class="col-md-12">
                      <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
                      <h5<i>Please select the testing materials you wish to receive.</i></h5>
+
+                     
                   </div>
                </div>
               
@@ -474,8 +476,14 @@
                      $view.="</div>"; //chiusura ultimo <div class='row'>
                     echo $view;
 
-                  ?>
+                    
 
+                  ?>
+                  <div class='container-fluid'>
+                     <div class="alert alert-dark mt-4" role="alert">
+                        Requests for Ceftobiprole and Enmetazobactam powder may be sent to Clinicaldevelopment@advanzpharma.  com      
+                     </div>
+                  </div>   
 
                   <!-- OLD Static method
 
