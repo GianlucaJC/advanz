@@ -103,9 +103,9 @@
                <div class="custom_menu">
                   <ul>
                      <li class="active"><a href="">Home</a></li>
-                     <li><a href="">Privacy Policies</a></li>
                      <li><a href="">Contact Us</a></li>
-                     <li><a href="main">Register</a></li>
+                     <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
+                     <li><a href="">Privacy Policies</a></li>
                      
                      @if ( Auth::user())
                         <li class="nav-item">
@@ -248,10 +248,10 @@
                               <a href="#">Home</a>
                            </li>
                            <li>
-                              <a href="#">Privacy Policies</a>
+                              <a href="#">Contact Us</a>
                            </li>
                            <li>
-                              <a href="#">Contact Us</a>
+                              <a href="#">Privacy Policies</a>
                            </li>
                         </ul>
                      </div>
