@@ -87,7 +87,23 @@ function checkPwd(pwd) {
   return score
 }
 
-
+function select_terms(value) {
+    if (value==2)
+      $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_FRANCE.pdf"); 
+    if (value==3)
+      $("#a_terms").attr("href","doc/2024 06 19 AVEP Terms & Conditions_ADVANZ PHARMA_GERMANY& AUSTRIA.pdf"); 
+    if (value==4)
+      $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_DENMARK.pdf"); 
+    if (value==5)
+      $("#a_terms").attr("href","doc/2024 06 19 AVEP Terms & Conditions_ADVANZ PHARMA_GERMANY& AUSTRIA.pdf"); 
+    if (value==6)
+      $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_IRELAND.pdf"); 
+    if (value==7)
+      $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_SP.pdf"); 
+    if (value==8)
+      $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_UK.pdf"); 
+      
+}
 
 function check_choice(id_molecola,id,value) {
   $(".molecola"+id_molecola).prop('disabled',false);

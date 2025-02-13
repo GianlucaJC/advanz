@@ -265,13 +265,15 @@
                <div class="row mb-3">
                   <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select nice" name='country' id='country' required>
+                        <select class="form-select nice" name='country' id='country' required onchange="select_terms(this.value)">
                            <option value=""
                            <?php if (strlen($country)==0) echo " selected "; ?>
                            >Select...</option>
+                           <!--
                            <option value="1"
                            <?php if ($country==1) echo " selected "; ?>
                            >Italy</option>
+                           !-->
                            <?php if ($country==2) echo " selected "; ?><option value="2"
                            >France</option>
                            <option value="3"
@@ -368,7 +370,7 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <center>
-                        <a href='doc/france.pdf' target='_blank'> 
+                        <a href='#' target='_blank' id='a_terms'> 
                            <button type="button" class="btn btn-info" onclick="$('#read_terms').prop('disabled',false);$('#btn_reg').prop('disabled',false);">Click to view Terms & Conditions</button>
                         </a>   
                      </center>   
