@@ -88,6 +88,16 @@ function checkPwd(pwd) {
 }
 
 function select_terms(value) {
+
+    $("#a_terms").removeAttr("target");
+    $("#a_terms").removeAttr("href");
+    $('#read_terms').prop('disabled',true);$('#btn_reg').prop('disabled',true);
+    
+    if (value.length>0) {
+      $("#a_terms").prop("target", "_blank");
+      
+    } else $('#read_terms').prop('checked',false);
+
     if (value==2)
       $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_FRANCE.pdf"); 
     if (value==3)
@@ -104,6 +114,7 @@ function select_terms(value) {
       $("#a_terms").attr("href","doc/AVEP Terms & Conditions_ADVANZ PHARMA_UK.pdf"); 
       
 }
+
 
 function check_choice(id_molecola,id,value) {
   $(".molecola"+id_molecola).prop('disabled',false);

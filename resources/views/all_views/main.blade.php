@@ -269,11 +269,7 @@
                            <option value=""
                            <?php if (strlen($country)==0) echo " selected "; ?>
                            >Select...</option>
-                           <!--
-                           <option value="1"
-                           <?php if ($country==1) echo " selected "; ?>
-                           >Italy</option>
-                           !-->
+                           
                            <?php if ($country==2) echo " selected "; ?><option value="2"
                            >France</option>
                            <option value="3"
@@ -370,7 +366,7 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <center>
-                        <a href='#' target='_blank' id='a_terms'> 
+                        <a href='javascript:void(0)' id='a_terms'> 
                            <button type="button" class="btn btn-info" onclick="$('#read_terms').prop('disabled',false);$('#btn_reg').prop('disabled',false);">Click to view Terms & Conditions</button>
                         </a>   
                      </center>   
