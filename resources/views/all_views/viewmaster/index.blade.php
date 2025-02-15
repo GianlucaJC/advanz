@@ -75,7 +75,7 @@
                         <a class="nav-link" href="">About</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="l">Privacy Policies</a>
+                        <a class="nav-link" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="">Contact Us</a>
@@ -103,9 +103,9 @@
                <div class="custom_menu">
                   <ul>
                      <li class="active"><a href="">Home</a></li>
-                     <li><a href="">Contact Us</a></li>
                      <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
-                     <li><a href="">Privacy Policies</a></li>
+                     <li><a href="">Contact Us</a></li>
+                     <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
                      
                      @if ( Auth::user())
                         <li class="nav-item">
@@ -251,7 +251,7 @@
                               <a href="#">Contact Us</a>
                            </li>
                            <li>
-                              <a href="#">Privacy Policies</a>
+                           <a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                            </li>
                         </ul>
                      </div>
@@ -265,6 +265,15 @@
             </div>
          </div>
       </div>
+
+      
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+
       <!-- footer section end -->
       <!-- copyright section start -->
       <div class="copyright_section">

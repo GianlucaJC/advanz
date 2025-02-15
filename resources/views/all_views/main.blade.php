@@ -685,10 +685,53 @@
          </div>
       </div>
       </div> 
+      
      </form> 
       <!-- end section login !-->
+       
    </div> <!-- div_log !-->    
 
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-xl"" role="dialog" id='div_modal'>
+	  <div class="modal-dialog modal-xl" style='max-width:4000px' role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+       
+			  <div id='modal-title'>Access Restricted</div>
+        
+			  <!--
+			  
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				!-->	
+		  </div>
+		  
+		  
+		  <div class="modal-body" id='modal_body'>
+            <center>
+            <p>
+               <h1>Are you a Healthcare Professional?</h1>
+            </p>
+            <h2>This website is intended for healthcare professionals only.</h2>
+            <small>Please confirm you are a Healthcare Professional.</small>
+            
+            <div class='mt-5'>
+               <button type="button" class="btn btn-success btn-lg btn-block" onclick="set_c(1)">YES, I am a Healthcare Professional.</button>
+               <button type="button" style='margin-left:10px' class="btn btn-danger btn-lg btn-block" onclick="set_c(2)">NO, I am not a Healthcare Professional.</button>
+            </div>
+            </center>
+
+         </div>
+
+
+		  <div class="modal-footer" id='div_foot'>
+		  </div>
+		</div>
+	  </div>
+	</div>  
 
 @endsection
 
