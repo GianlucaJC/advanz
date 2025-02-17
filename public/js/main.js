@@ -50,7 +50,7 @@
 $(document).ready( function () {
   let cookie_healt =getCookie("cookie_healt"); 
   if (!cookie_healt || cookie_healt=="2") {
-    $("#div_all").hide()
+    
     
     $("#div_modal").height($(window).height()*0.9);
 
@@ -92,7 +92,7 @@ function set_c(value) {
     window.location.href = "https://www.advanzpharma.com/";
   } else {
     $('#div_modal').modal("hide")
-    $("#div_all").show()
+
   }
 }
 function check_else() {
