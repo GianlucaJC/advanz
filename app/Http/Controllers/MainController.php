@@ -215,7 +215,15 @@ public function __construct()
 	}
 	
 
+	public function contact(Request $request) {
+		$login=false;
+
+		return view('all_views/contact',compact('login'));
+	}	
+
 	public function main_log(Request $request) {
+		if (!Auth::user()) return $this->main($request);
+
 		$id_user = Auth::user()->id;
 
 		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello

@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('main', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@main']);
 Route::post('main', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@main']);
 
+Route::get('contact', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@contact']);
+Route::post('contact', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainController@contact']);
+
+
 
 
 Route::group(['only_log' => ['auth']], function () {

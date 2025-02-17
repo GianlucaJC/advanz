@@ -69,7 +69,7 @@
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto">
                      <li class="nav-item active">
-                        <a class="nav-link" href="">Home</a>
+                        <a class="nav-link" href="main_log">Home</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="">About</a>
@@ -78,7 +78,7 @@
                         <a class="nav-link" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="">Contact Us</a>
+                        <a class="nav-link" href="contact">Contact Us</a>
                      </li>
                      @if ( Auth::user())
                         <li class="nav-item">
@@ -102,9 +102,9 @@
             <div class="custom_bg">
                <div class="custom_menu">
                   <ul>
-                     <li class="active"><a href="">Home</a></li>
+                     <li class="active"><a href="main_log">Home</a></li>
                      <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
-                     <li><a href="">Contact Us</a></li>
+                     <li><a href="contact">Contact Us</a></li>
                      <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
                      
                      @if ( Auth::user())
@@ -245,10 +245,10 @@
                      <div class="footer_menu">
                         <ul>
                            <li class="active">
-                              <a href="#">Home</a>
+                              <a href="main_log">Home</a>
                            </li>
                            <li>
-                              <a href="#">Contact Us</a>
+                              <a href="contact">Contact Us</a>
                            </li>
                            <li>
                            <a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
