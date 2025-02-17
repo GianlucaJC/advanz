@@ -23,6 +23,13 @@
    @include('all_views.components.banner')
 @endsection
 
+<style>
+.modal-backdrop
+{
+    opacity:1 !important;
+}
+</style>
+
 <div class="modal" id="modal_main" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -46,6 +53,7 @@
       if (isset($errors) && count($errors)>0) {$disp_intro="display:none";}
       
    ?>
+   <div id='div_all'>
    <div id='div_intro' style='{{$disp_intro}}'>
       <div class="appointment_section">
             <div class='container'>
@@ -598,7 +606,7 @@
       if (isset($errors) && count($errors)>0) {$disp1="";}
    ?>
 
-   <div id='div_log' style='{{$disp1}}'>
+   <div id='div_log' class='init'style='{{$disp1}}'>
    
 
     <form method='post' action="{{ route('login') }}" id='frm_lo1' name='frm_log1' class="needs-validation2" autocomplete="off" novalidate>
@@ -691,12 +699,12 @@
        
    </div> <!-- div_log !-->    
 
-
+</div>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-xl"" role="dialog" id='div_modal'>
-	  <div class="modal-dialog modal-xl" style='max-width:4000px' role="document">
-		<div class="modal-content">
+	  <div class="modal-dialog modal-xl" style='max-width:4000px;min-height:200px' role="document">
+		<div class="modal-content " style='max-width:4000px;min-height:400px'>
 		  <div class="modal-header">
        
 			  <div id='modal-title'>Access Restricted</div>
