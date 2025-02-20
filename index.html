@@ -1,3 +1,1 @@
-<?php
-   header('Location: https://www.advanz-astip.com/public/main') ;
-?>
+<META HTTP-EQUIV=REFRESH CONTENT="1; URL=https://www.advanz-astip.com/public/main">
