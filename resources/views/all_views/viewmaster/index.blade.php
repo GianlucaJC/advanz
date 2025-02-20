@@ -25,12 +25,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
       <!-- owl stylesheets --> 
-      <link rel="stylesheet" href="css/owl.carousel.min.css">
+      <link rel="stylesheet" href="css/owl.carousel.m.css">
 
       <!-- <link rel="stylesheet" href="css/owl.theme.default.min.css">!-->
       <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">!-->
       
       <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
    </head>
    <body>
       <!-- header top section start -->
@@ -40,6 +41,7 @@
       <div class="header_section">
          <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              
                <a class="navbar-brand"href="#">
                  
                   <svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -282,10 +284,14 @@
       <!-- Javascript files-->
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
+
+      
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+      
 
       <script src="js/jquery-3.0.0.min.js"></script>
       <script src="js/plugin.js"></script>
