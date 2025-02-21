@@ -144,7 +144,7 @@
      
       <!-- header section end -->
       <!-- appointment section start -->
-    <form method='post' action="{{ route('main') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
+   <form method='post' action="{{ route('main') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
 		
       <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
 
@@ -609,7 +609,7 @@
    <div id='div_log' class='init'style='{{$disp1}}'>
    
 
-    <form method='post' action="{{ route('login') }}" id='frm_lo1' name='frm_log1' class="needs-validation2" autocomplete="off" novalidate>
+    <form method='post' action="{{ route('login') }}" id='frm_log1' name='frm_log1' class="needs-validation2" autocomplete="off" novalidate>
 		
     @csrf     
 
@@ -759,11 +759,7 @@
    @endsection
 <?php } ?>   
 
-<?php if (1==2) {?>
-   @section('content5')
-      @include('all_views.components.contact')
-   @endsection
-<?php } ?>   
+
 
 @section('content_plugin')
    <script src="{{ URL::asset('/') }}js/main.js?ver=<?= time() ?>"></script>

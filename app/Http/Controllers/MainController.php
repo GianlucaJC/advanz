@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 use DB;
 use Users;
+use Mail;
 
 use App\Models\carrello;
 use App\Models\ordini;
@@ -47,6 +48,8 @@ public function __construct()
 		}		
 		$this->pack_qty_id=$pack_qty_id;
 		$this->pack_qty_ref=$pack_qty_ref;
+
+		
 	
 	}
 
@@ -105,6 +108,7 @@ public function __construct()
 	public function save_user($request) {
 		$resp=array();
 		try {
+			$email=$request->input("email");
 			$pw_c=bcrypt($request->input("password"));
 			$user=new user;
 			$user->istituto=$request->input("istituto");
@@ -123,7 +127,7 @@ public function __construct()
 			$user->email_ref=$request->input("email_ref");
 			$user->phone=$request->input("phone");
 			$user->fax=$request->input("fax");
-			$user->email=$request->input("email");
+			$user->email=$email;
 			$user->password=$pw_c;
 			$user->save();
 			if ($request->has('material')) {
@@ -137,10 +141,14 @@ public function __construct()
 					$carrello->id_user=$id_user;
 					$carrello->save();
 				}
+				$this->send_mail(2,$email,"send_customer_admin");
+						
 			}
 			$resp['esito']=1;
 			$resp['err']="";
-
+			$this->send_mail(1,$email,"send_customer_admin");
+			
+			
 			
 			return $resp;
 		} catch (\Exception $e) {
@@ -176,6 +184,7 @@ public function __construct()
 
 	}
 	public function main(Request $request) {
+
 		$login=false;
 		if (Auth::user()) $login=true;
 		$save_user=0;$save_user_err="";
@@ -209,7 +218,6 @@ public function __construct()
 			$save_user=$save['esito'];
 			$save_user_err=$save['err'];
 		}
-
 
 		return view('all_views/main',compact('login','save_user','save_user_err','post','molecola','molecole_info','packaging','pack_qty_id','pack_qty_ref','molecole_in_allestimento','arr_info','pack_in_mole'));
 	}
@@ -290,5 +298,47 @@ public function __construct()
 		}		
 		return view('all_views/main_log',compact('packaging','id_user','count','carrello','molecola','molecole_info','packaging','pack_qty_id','pack_qty_ref','molecole_in_allestimento','arr_info','pack_in_mole','id_in_carrello','id_in_ordini'));
 	}
+
+	public function send_mail($type,$email,$to) {
+		$admin_ref_email = env("ADMIN_REF_EMAIL", "test@gmail.com");
+		$status=array();
+		$num=1;
+		if ($to=="send_customer_admin") $num=2;
+		for ($sca=1;$sca<=$num;$sca++) {
+			if ($sca==2) $email=$admin_ref_email;
+			try {
+				$msg="";$template="emails.conferma_ordine";
+				$data["title"]="";$data["title"]="";
+				$data["email"] = $email;			
+				if ($type=="1")	{
+					$data["title"] = "User registration";
+					$msg = "Thank you for registering on the Advanz-Astip platform";
+					$template="emails.conferma_registrazione";
+				}
+				if ($type=="2")	{
+					$data["title"] = "Order confirmation";
+					$msg = "Thank you for ordering on the platform. Below is a summary of your order...";
+					$template="emails.conferma_ordine";
+				}
+				
+				$data["body"]=$msg;
+
+
+				Mail::send($template, $data, function($message)use($data) {
+					$message->to($data["email"], $data["email"])
+					->subject($data["title"]);
+				});
+				
+				$status['status']="OK";
+				$status['message']="Mail inviata con successo";
+				
+				
+				
+			} catch (Throwable $e) {
+				$status['status']="KO";
+				$status['message']="Errore occorso durante l'invio! $e";
+			}
+		}
+	}	
 
 }

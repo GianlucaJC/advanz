@@ -104,7 +104,7 @@
             <div class="custom_bg">
                <div class="custom_menu">
                   <ul>
-                     <li class="active"><a href="main_log">Home</a></li>
+                     <li class="active"><a href="main">Home</a></li>
                      <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
                      <li><a href="contact">Contact Us</a></li>
                      <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
