@@ -3,9 +3,11 @@ $(document).ready( function () {
 
 function check_choice(id_molecola,id,value) {
     $(".molecola"+id_molecola).prop('disabled',false);
+    $(".molecola"+id_molecola).val('')
     if (value.length>0) {
       $(".molecola"+id_molecola).prop('disabled',true);
       $("#"+id).prop('disabled',false);
+      $("#"+id).val(value)
     }
   
     

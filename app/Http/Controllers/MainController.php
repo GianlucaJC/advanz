@@ -133,7 +133,9 @@ public function __construct()
 			if ($request->has('material')) {
 				$id_user=$user->id;
 				$material=$request->input('material'); 
+				$entr=false;
 				for ($sca=0;$sca<count($material);$sca++) {
+					$entr=true;
 					$articolo=$material[$sca];
 					if (strlen($articolo)==0) continue;
 					$carrello=new carrello;
@@ -141,7 +143,7 @@ public function __construct()
 					$carrello->id_user=$id_user;
 					$carrello->save();
 				}
-				$this->send_mail(2,$email,"send_customer_admin");
+				//if ($entr==true) $this->send_mail(2,$email,"send_customer_admin");
 						
 			}
 			$resp['esito']=1;
@@ -243,7 +245,7 @@ public function __construct()
 		$pack_qty_ref=$this->pack_qty_ref;
 
 
-		$id_user = Auth::user()->id;
+	
 
 
 
@@ -271,7 +273,9 @@ public function __construct()
 		
 		if ($request->has('material')) {
 			$material=$request->input('material'); 
+			$entr=false;
 			for ($sca=0;$sca<count($material);$sca++) {
+				$entr=true;
 				$articolo=$material[$sca];
 				if (strlen($articolo)==0) continue;
 				$ordini=new ordini;
@@ -284,6 +288,11 @@ public function __construct()
 				$id_in_carrello=array();
 				$count=0;
 			}
+			if ($entr==true) {
+				$info_mail=DB::table('users')->select('email')->where('id','=',$id_user)->first();
+				if($info_mail)
+					$this->send_mail(2,$info_mail->email,"send_customer_admin");
+			}	 
 		}
 
 
