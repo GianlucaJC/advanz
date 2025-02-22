@@ -86,7 +86,7 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 function set_c(value) {
-  setCookie("cookie_healt",value,365)
+  setCookie("cookie_healt",value,1)
   
   if (value=="2") {
     window.location.href = "https://www.advanzpharma.com/";
