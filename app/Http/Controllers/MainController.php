@@ -226,10 +226,55 @@ public function __construct()
 	
 
 	public function contact(Request $request) {
-		$login=false;
+		$msg_send_mail=false; 
+		if ($request->has('btn_send')) {		
+			$msg_send_mail=true; 	
+			$admin_ref_email = env("ADMIN_REF_EMAIL", "test@gmail.com");
+			$txtInstitution=$request->input('txtInstitution');
+			$txtName=$request->input('txtName');
+			$txtPhone=$request->input('txtPhone');
+			$ddlTopic=$request->input('ddlTopic');
+			$txtMessage=$request->input('txtMessage');
+			$email=$request->input('txtEmail');
+		
+			
+			$status=array();
 
-		return view('all_views/contact',compact('login'));
+			for ($sca=1;$sca<=2;$sca++) {
+				if ($sca==2) $email=$admin_ref_email;
+				try {
+					$dx['body_title']="You have made a request to the advanz-astip.com website. Below is a summary of your request";
+					if ($sca==2)
+						$dx['body_title']="A contact request was sent by a visitor with this data";
+					$dx["txtInstitution"]=$txtInstitution;
+					$dx["txtName"]=$txtName;
+					$dx["txtPhone"]=$txtPhone;
+					$dx["txtEmail"]=$email;
+					$dx["ddlTopic"]=$ddlTopic;
+					$dx["txtMessage"]=$txtMessage;
+					$data['dati']=$dx;
+
+	
+					Mail::send("emails.contact", $data, function($message)use($email) {
+						$message->to($email, $email)
+						->subject("Request information advanz-astip.com");
+					});
+					
+					$status['status']="OK";
+					$status['message']="Mail inviata con successo";
+					
+					
+					
+				} catch (Throwable $e) {
+					$status['status']="KO";
+					$status['message']="Errore occorso durante l'invio! $e";
+				}
+			}			
+			
+		}
+		return view('all_views/contact',compact('msg_send_mail'));
 	}	
+
 
 	public function main_log(Request $request) {
 		if (!Auth::user()) return $this->main($request);

@@ -34,8 +34,9 @@
 </div>
 @section('content_main')
 
-
-   <div id='div_intro'>
+<form method='post' action="{{ route('contact') }}" id='frm_contact' name='frm_contact' class="needs-validation" autocomplete="off" novalidate>
+    <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
+    <div id='div_intro'>
       <div class="appointment_section">
             <div class='container'>
                <div class="appointment_box">
@@ -51,6 +52,12 @@
 
                     <h1>Contact Form</h1>
 
+                    @if ($msg_send_mail==true)
+                      <div class="alert alert-success mb-2 mt-2" role="alert">
+                      Your request has been sent successfully.<hr>
+                      You will shortly receive a confirmation email with a summary of the information sent
+                      </div>                      
+                    @endif
                     <div class="col-md-8 col-xs-12">
                         <div class="form-horizontal">
                             <fieldset>
@@ -60,34 +67,33 @@
                                         
                                     <label for="inputInstitution" class="col-lg-3 control-label">Institution Name</label>
                                     <div class="col-lg-9">
-                                        <input name="ctl00$MainContent$txtInstitution" type="text" id="MainContent_txtInstitution" class="form-control" placeholder="Institution Name" />
-                                        <span data-val-controltovalidate="MainContent_txtInstitution" data-val-errormessage="Please enter the name of your institution." data-val-display="Dynamic" data-val-validationGroup="ContactForm" id="MainContent_ctl00" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Please enter the name of your institution.</span>
+                                        <input name="txtInstitution" type="text" id="txtInstitution" class="form-control" placeholder="Institution Name" required />
+                                        
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                 <label for="inputInstitution" class="col-lg-3 control-label">Full Name</label>
                                 <div class="col-lg-5">
-                                    <input name="ctl00$MainContent$txtName" type="text" id="MainContent_txtName" class="form-control" placeholder="Full Name" />
-                                    <span data-val-controltovalidate="MainContent_txtName" data-val-errormessage="Please enter your name." data-val-display="Dynamic" data-val-validationGroup="ContactForm" id="MainContent_ctl01" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Please enter your name.</span>
+                                    <input name="txtName" type="text" id="txtName" class="form-control" placeholder="Full Name" required />
+                                    
                                 </div>
                                 </div>
 
                                 <div class="form-group">
                                 <label for="inputInstitution" class="col-lg-3 control-label">Phone Number</label>
                                 <div class="col-lg-5">
-                                    <input name="ctl00$MainContent$txtPhone" type="tel" id="MainContent_txtPhone" class="form-control" placeholder="Phone Number" />
+                                    <input name="txtPhone" type="tel" id="txtPhone" class="form-control" placeholder="Phone Number" required />
                                     
                                 </div>
                                 </div>
 
-                                <div id="MainContent_pEmail" class="form-group">
+                                <div id="pEmail" class="form-group">
                     
                                 
                                 <label for="inputEmail" class="col-lg-3 control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input name="ctl00$MainContent$txtEmail" type="email" id="MainContent_txtEmail" class="form-control" placeholder="Email" />
-                                    <span data-val-controltovalidate="MainContent_txtEmail" data-val-errormessage="Please enter your email address." data-val-display="Dynamic" data-val-validationGroup="ContactForm" id="MainContent_ctl02" class="text-danger" data-val="true" data-val-evaluationfunction="RequiredFieldValidatorEvaluateIsValid" data-val-initialvalue="" style="display:none;">Please enter your email address.</span>
+                                    <input name="txtEmail" type="email" id="txtEmail" class="form-control" placeholder="Email" required />
                                 </div>
                                 
                                     
@@ -95,8 +101,8 @@
                                 <div class="form-group">
                                 <label for="select" class="col-lg-3 control-label">Topic</label>
                                 <div class="col-lg-5">
-                                    <select name="ctl00$MainContent$ddlTopic" id="MainContent_ddlTopic" class="selectpicker form-control" style="font-weight:bold;">
-                                    <option value="Not Specified">--</option>
+                                    <select name="ddlTopic" id="ddlTopic" class="selectpicker form-control" style="font-weight:bold;" required>
+                                    <option value="">Please select...</option>
                                     <option value="Enrollment Registration">Enrollment Registration</option>
                                     <option value="Order Acknowledgement">Order Acknowledgement</option>
                                     <option value="Test Result Entry">Test Result Entry</option>
@@ -112,32 +118,22 @@
                                 <div class="form-group">
                                 <label for="textArea" class="col-lg-3 control-label">Message</label>
                                 <div class="col-lg-8">
-                                    <textarea name="ctl00$MainContent$txtMessage" rows="2" cols="20" id="MainContent_txtMessage" class="form-control" placeholder="Message">
+                                    <textarea name="txtMessage" rows="2" cols="20" id="txtMessage" class="form-control" placeholder="Message" required>
                                     </textarea>
                                     <span class="help-block">Please allow up to 48 hours for a reply.</span>
                                 </div>
-                                </div>
-                                <!-- Validation Summary -->
-                                <div class="form group">
-                                    <div class="row">
-                                        <div class="col-xs-offset-3 col-xs-6">
-                                            <div data-val-headertext="Contact form error summary:" data-val-showmessagebox="True" data-val-validationGroup="ContactForm" id="MainContent_ValidationSummary1" class="alert alert-dismissable alert-danger" data-valsummary="true" style="border-color:OrangeRed;border-width:1px;border-style:Solid;display:none;">
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 
                         </div>		
                     </div>                     
                   </div>
-                  <button type="button" class="btn btn-success mt-3"><i class="fas fa-paper-plane"></i> Send message</button>                  
+                  <button type="submit" class="btn btn-success mt-3" id="btn_send" name="btn_send"><i class="fas fa-paper-plane"></i> Send message</button>                  
             </div> 
           </div> 
       </div>  
       
    </div>           
-
+  </form>
 
    
 
@@ -186,6 +182,6 @@
 @endsection
 
 @section('content_plugin')
-   <script src="{{ URL::asset('/') }}js/main.js?ver=<?= time() ?>"></script>
+   <script src="{{ URL::asset('/') }}js/contact.js?ver=<?= time() ?>"></script>
 @endsection
 
