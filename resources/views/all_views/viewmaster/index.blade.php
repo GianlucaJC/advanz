@@ -84,7 +84,7 @@
                      </li>
                      @if ( Auth::user())
                         <li class="nav-item">
-                           <a class="nav-link" href="">Your request</a>
+                           <a class="nav-link" href="#" >Your request</a>
                         </li>
                      @endif
 
@@ -111,25 +111,31 @@
                      
                      @if ( Auth::user())
                         <li class="nav-item">
-                           <a class="nav-link" href="">Your request</a>
+                           <a class="nav-link" href="#" onclick="$('#your').toggle(200)">Your request</a>
                         </li>
+                      
                      @endif
 
                   </ul>
                </div>
-
                <?php
                   $disp="";
                   if ( Auth::user()) $disp="display:none";
                ?>
+
+
+  
+
                <div id='div_sign_log' style='{{$disp}}' >     
+
+                
                      <div class="search_btn">
                         <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
                         <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
                      </div>
                </div>
 
-
+                              
                @if ( Auth::user())
                      <div class="search_btn">
                      <li>
@@ -156,6 +162,15 @@
                
             </div>
          </div>
+            
+         <div class="about_section layout_padding mb-3" div id='your' style='display:none'>
+            <div class="container">
+               <div class="alert alert-warning" role="alert">
+                  Section under construction
+               </div> 
+            </div>
+         </div> 
+
          <!-- header section end -->
          <!-- banner section start --> 
           @yield('banner')
@@ -164,10 +179,14 @@
 
 
       @yield('content_main')
-      
+
+
+
 
       <div class="about_section layout_padding mb-3">
          <div class="container">
+
+
             <div class="row">
                <div class="col-md-6">
                   <h1 class="about_taital">About Advanz</h1>
