@@ -104,30 +104,10 @@
             <div class="custom_bg">
                <div class="custom_menu">
                   <ul>
-                     <li class="active"><a href="main">Home</a></li>
-                     <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
                      <li><a href="contact" target='_blank'>Contact Us</a></li>
-                     <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
-                     
-                     @if ( Auth::user())
-                        <li class="nav-item">
-                           <a class="nav-link" href="">Your request</a>
-                        </li>
-                     @endif
-
-                  </ul>
+                                       </ul>
                </div>
 
-               <?php
-                  $disp="";
-                  if ( Auth::user()) $disp="display:none";
-               ?>
-               <div id='div_sign_log' style='{{$disp}}' >     
-                     <div class="search_btn">
-                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
-                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
-                     </div>
-               </div>
 
 
                @if ( Auth::user())

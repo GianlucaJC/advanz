@@ -1,4 +1,5 @@
-@extends('all_views.viewmaster.index')
+@extends('all_views.viewmaster.index1')
+
 
 
 @section('title', 'Advanz')
