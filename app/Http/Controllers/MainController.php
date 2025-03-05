@@ -29,6 +29,7 @@ public function __construct()
 		$this->molecola=$molecola;
 		$this->molecole_info=$molecole_info;
 
+
 		$info=DB::table('packaging as p')->select('*')->get();
 		$packaging=array();
 		foreach ($info as $dato) {
@@ -49,6 +50,7 @@ public function __construct()
 		$this->pack_qty_id=$pack_qty_id;
 		$this->pack_qty_ref=$pack_qty_ref;
 
+		$this->info_order=null; //sarà popolato con le informazioni dell'ordine
 		
 	
 	}
@@ -317,7 +319,11 @@ public function __construct()
 		}
 		
 		if ($request->has('material')) {
+
+
 			$material=$request->input('material'); 
+
+
 			$entr=false;
 			for ($sca=0;$sca<count($material);$sca++) {
 				$entr=true;
@@ -328,15 +334,21 @@ public function __construct()
 				$ordini->id_user=$id_user;
 				$ordini->save();
 
-				//svuota carrelo
+				//svuota carrello
 				$dele_carrello=DB::table('carrello')->where('id_user','=',$id_user)->delete();
 				$id_in_carrello=array();
 				$count=0;
 			}
 			if ($entr==true) {
-				$info_mail=DB::table('users')->select('email')->where('id','=',$id_user)->first();
-				if($info_mail)
+				$info_mail=DB::table('users')->select('email','name')->where('id','=',$id_user)->first();
+				if($info_mail) {
+					$info_order['material']=$material;
+					$info_order['name']=$info_mail->name;
+					$info_order['delivery_date']=date("Y-m-d");
+					$this->info_order=$info_order;
+
 					$this->send_mail(2,$info_mail->email,"send_customer_admin");
+				}
 			}	 
 		}
 
@@ -354,6 +366,8 @@ public function __construct()
 	}
 
 	public function send_mail($type,$email,$to) {
+		$request=Request();
+		
 		$admin_ref_email = env("ADMIN_REF_EMAIL", "test@gmail.com");
 		$status=array();
 		$num=1;
@@ -365,17 +379,37 @@ public function __construct()
 				$data["title"]="";$data["title"]="";
 				$data["email"] = $email;			
 				if ($type=="1")	{
-					$data["title"] = "User registration";
-					$msg = "Thank you for registering on the Advanz-Astip platform";
-					$template="emails.conferma_registrazione";
+					if ($sca==1) {
+						$template="emails.conferma_registrazione";
+						$data["title"] = "ADVANZ ASTIP Registration Confirmation";
+						$name="New User";$mail_reg="";$pw_reg="";
+						if ($request->has("first_name")) {
+							$name=$request->input("first_name");
+							$mail_reg=$request->input("email");
+							$pw_reg=$request->input("password");						
+						}
+						$data["name"]=$name;
+						$data["mail_reg"]=$mail_reg;
+						$data["pw_reg"]=$pw_reg;
+					}
+					if ($sca==2) {
+						$template="emails.conferma_registrazione_admin";
+						$data["title"] = "ADVANZ ASTIP Registration Confirmation";
+						$name="New User";
+						if ($request->has("first_name")) $name=$request->input("first_name");
+						$data["name"]=$name;
+					}
+
 				}
 				if ($type=="2")	{
-					$data["title"] = "Order confirmation";
-					$msg = "Thank you for ordering on the platform. Below is a summary of your order...";
+					$info_order=$this->info_order;
+					$data["title"] = "ADVANZ ASTIP Order Confirmation";
 					$template="emails.conferma_ordine";
+					$msg="";
+					$data["info_order"]=$info_order;
 				}
 				
-				$data["body"]=$msg;
+				
 
 
 				Mail::send($template, $data, function($message)use($data) {
