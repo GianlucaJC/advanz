@@ -147,8 +147,9 @@
    <form method='post' action="{{ route('main') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
 		
       <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
-
-      <div class="appointment_section">
+	  <input type="hidden" value="{{url('/')}}" id="url" name="url">
+	
+	  <div class="appointment_section">
          <div class="container">
             <div class="appointment_box">
                <div class="row">
@@ -278,7 +279,8 @@
                            <?php if (strlen($country)==0) echo " selected "; ?>
                            >Select...</option>
                            
-                           <?php if ($country==2) echo " selected "; ?><option value="2"
+                           <?php if ($country==2) echo " selected "; ?>
+                           <option value="2"
                            >France</option>
                            <option value="3"
                            <?php if ($country==3) echo " selected "; ?>
@@ -414,121 +416,24 @@
                   <div class="col-md-12">
                      <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
                      <h5<i>Please select the testing materials you wish to receive.</i></h5>
-
-                     
                   </div>
                </div>
               
-
-
-
-               <div class="row mb-3">
-
-               <!--
-               <h5 style="text-align:center">Please select your choice</h5><hr>
-               !-->
-
-               
-                  <?php 
-                     $view="";
-                     $id_old_mp="?";$id_old_mole="?";
-                     foreach ($molecole_in_allestimento as $mole_in_all) {
-                        $id_molecola=$mole_in_all->id_molecola;
-                        $id_pack=$mole_in_all->id_pack;
-                        if ($id_molecola!=$id_old_mole) {
-                           if ($id_old_mole!="?") $view.="</div>";
-                           $view.="<div class='row mt-4'>";
-                              
-                              if (isset($molecola[$id_molecola])) {
-                                 $view.="<h5>Please select either ".$molecola[$id_molecola]." ";
-                                 $descr_pack_in_mole=implode(" or ",$pack_in_mole[$id_molecola]);
-                                 $view.=$descr_pack_in_mole;
-                                 $view.="</h5><hr>";
-                              } else continue;
-                              
-                        }
-                        $id_old_mole=$id_molecola;
-                        $id_mole_pack=$id_molecola.$id_pack;
-                        if ($id_mole_pack!=$id_old_mp) {
-                           //creazione select di scelta riferita alla molecola/packaging
-                           $voci=$arr_info[$id_mole_pack]['voci_conf'];
-                           
-
-                           $view.="<div class='col-md-4 sm-12'>";
-                              $view.="<div class='form-floating mb-3 mb-md-0'>";
-                                 $view.="<select class='form-select molecola$id_molecola' name='material[]' id='material$id_mole_pack'  onchange=\"check_choice($id_molecola,'material$id_mole_pack',this.value)\">";
-                                 $view.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
-                                    for ($sca=0;$sca<count($voci);$sca++) {
-                                       $view.="<option value='".$voci[$sca]['id']."' ";
-                                       
-                                       $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$voci[$sca]['pack_descr'];
-
-                                       $view.=">".$voce;
-                                       $view.="</option>";
-                                    }
-                                
-                                 $view.="</select>";
-                                 $lbl=$arr_info[$id_mole_pack]['label'];
-                                 $view.="<label for='material$id_mole_pack'>$lbl</label>";
-                              $view.="</div>";
-                           $view.="</div>";
-
-
-                        }
-                        $id_old_mp=$id_mole_pack;
-
-                        
-                     }
-                     $view.="</div>"; //chiusura ultimo <div class='row'>
-                    echo $view;
-
-                    
-
-                  ?>
+                  <div class='container' id='div_setup'></div> <!--div popolato dinamicamente !-->
+                  
                   <div class='container-fluid'>
                      <div class="alert alert-dark mt-4" role="alert">
                         Requests for Ceftobiprole and Enmetazobactam powder may be sent to Clinicaldevelopment@advanzpharma.  com      
                      </div>
                   </div>   
 
-                  <!-- OLD Static method
-
-                  <div class="form-floating mb-3 mb-md-0">
-                     <select class="form-select" name="material1" id="material1">
-                        <option selected="selected" value="4">None (0 Ceftobiprole Strips)</option>
-                        <option value="8">10 Ceftobiprole Strips</option>
-                        <option value="21">30 Ceftobiprole Strips</option>
-                     </select>
-                     <label for="material1">Pack of Ceftobiprole Strips Qty:</label>
-                  </div>
-
-                  <div class="col-md-4">
-                     <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='material2' id='material2'>
-                           <option selected="selected" value="30">None (0 cefepime/Enmetazobactam disks)</option>
-                           <option value="31">250 cefepime/Enmetazobactam disks</option>
-                        </select>
-                        <label for="material2">Pack of Cefepime/Enmetazobactam Disks (not-CE marked) Qty:</label>
-                     </div>
-                  </div>                   
-
-                  <div class="col-md-4">
-                     <div class="form-floating mb-3 mb-md-0">
-                        <select class="form-select" name='material3' id='material3'>
-                        <option selected="selected" value="32">None (0 Cefepime/Enmetazobactam Dry Panel)</option>
-                        <option value="33">10 Cefepime/Enmetazobactam plates</option>
-                        </select>
-                        <label for="material3">Pack of Cefepime/Enmetazobactam SENSITITRE® Dry Panel (CMP1ADV) Qty:</label>
-                     </div>
-                  </div> 
-                  !-->
 
                </div>
 
-            </div>
          </div>
-      </div>       
-      <!--end section material !-->
+      </div>
+
+        
 
       <!-- start section account !-->
       <div class="appointment_section mt-3">
@@ -593,11 +498,7 @@
          </div>
       </div>
       </div> 
-      <!-- end section account !-->
-
-
-
-      
+      <!-- end section account !-->      
    </form>   
    </div> <!-- end div sign_up !-->
    
@@ -605,6 +506,7 @@
       $disp1="display:none";
       if (isset($errors) && count($errors)>0) {$disp1="";}
    ?>
+
 
    <div id='div_log' class='init'style='{{$disp1}}'>
    

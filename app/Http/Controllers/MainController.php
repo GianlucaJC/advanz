@@ -194,27 +194,9 @@ public function __construct()
 		$save_user=0;$save_user_err="";
 		$post=array();
 
-		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
-		$packaging=$this->packaging;
 
-		$pack_qty_id=$this->pack_qty_id;
-		$pack_qty_ref=$this->pack_qty_ref;
-
-
-		$molecole_in_allestimento=DB::table('allestimento as a')
-		->select('id_molecola','id_pack')
-		->groupBy('id_molecola','id_pack')
-		->orderBy('id_molecola')
-		->orderBy('id_pack')
-		->get();
-		$this->molecole_in_allestimento=$molecole_in_allestimento;
-		$this->load_allestimento();
-
-		$arr_info=$this->arr_info;
-		$pack_in_mole=$this->pack_in_mole;	
-		///
 
 		if ($request->has('btn_reg')) {
 			$post=$this->post($request);
@@ -223,7 +205,7 @@ public function __construct()
 			$save_user_err=$save['err'];
 		}
 
-		return view('all_views/main',compact('login','save_user','save_user_err','post','molecola','molecole_info','packaging','pack_qty_id','pack_qty_ref','molecole_in_allestimento','arr_info','pack_in_mole'));
+		return view('all_views/main',compact('login','save_user','save_user_err','post','molecola','molecole_info'));
 	}
 	
 
@@ -292,12 +274,8 @@ public function __construct()
 		$pack_qty_ref=$this->pack_qty_ref;
 
 
-	
-
-
-
 		$molecole_in_allestimento=DB::table('allestimento as a')
-		->select('id_molecola','id_pack')
+		->select('id','id_molecola','id_pack')
 		->groupBy('id_molecola','id_pack')
 		->orderBy('id_molecola')
 		->orderBy('id_pack')

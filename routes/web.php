@@ -20,6 +20,8 @@ Route::post('main', [ 'as' => 'main', 'uses' => 'App\Http\Controllers\MainContro
 Route::get('contact', [ 'as' => 'contact', 'uses' => 'App\Http\Controllers\MainController@contact']);
 Route::post('contact', [ 'as' => 'contact', 'uses' => 'App\Http\Controllers\MainController@contact']);
 
+Route::post('check_allestimento', [ 'as' => 'check_allestimento', 'uses' => 'App\Http\Controllers\AjaxController@check_allestimento']);
+
 
 
 

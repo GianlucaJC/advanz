@@ -104,8 +104,14 @@
             <div class="custom_bg">
                <div class="custom_menu">
                   <ul>
-                     <li class="active"><a href="main">Home</a></li>
+                     @php
+                        $main_ref="main";
+                        if ( Auth::user()) $main_ref="main_log";
+                     @endphp
+                     <li class="active"><a href="{{$main_ref}}">Home</a></li>
+                     @if (!Auth::user())
                      <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
+                     @endif
                      <li><a href="contact" target='_blank'>Contact Us</a></li>
                      <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
                      
@@ -189,7 +195,7 @@
 
             <div class="row">
                <div class="col-md-6">
-                  <h1 class="about_taital">About Advanz</h1>
+                  <h1 class="about_taital">About Advanz Pharma</h1>
                   <p class="about_text"  style="text-align: justify;text-justify: inter-word;"> 
 
                      ADVANZ PHARMA is a global pharmaceutical company with the purpose to improve patients’ lives by providing the specialty, hospital, and rare disease medicines they depend on.
