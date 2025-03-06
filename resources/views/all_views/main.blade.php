@@ -9,6 +9,7 @@
    <script async src="https://www.google.com/recaptcha/api.js"></script>
 <!-- -->
 
+{!! RecaptchaV3::initJs() !!}
 @endsection
 
 
@@ -488,11 +489,7 @@
                   </div>
                </div>               
 
-               <!-- Google Recaptcha Widget-->
-               <div class="g-recaptcha" data-sitekey={{config('services.recaptcha.key')}}          
-
-               <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-               <input type="hidden" name="action" value="validate_captcha">
+               {!! RecaptchaV3::field('register') !!}
 
                 </div>
          </div>
