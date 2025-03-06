@@ -5,11 +5,11 @@
 
 @section('extra_style') 
 <!-- x button export -->
-
-   <script async src="https://www.google.com/recaptcha/api.js"></script>
+   <script src="https://www.google.com/recaptcha/api.js"></script>
+   
 <!-- -->
 
-{!! RecaptchaV3::initJs() !!}
+
 @endsection
 
 
@@ -484,12 +484,19 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <center>
-                        <button class="btn btn-primary" type="submit" id='btn_reg' name='btn_reg' disabled>Submit Registration</button>                        
+                        <button 
+                           data-sitekey="reCAPTCHA_site_key" 
+                           data-callback='onSubmit' 
+                           data-action='submit'                        
+                           class="btn btn-primary g-recaptcha" type="submit" id='btn_reg' name='btn_reg' 
+                           disabled
+                           >Submit Registration</button>                        
                      </center>   
                   </div>
                </div>               
 
-               {!! RecaptchaV3::field('register') !!}
+     
+
 
                 </div>
          </div>
