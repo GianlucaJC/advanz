@@ -4,15 +4,19 @@
 @section('title', 'Advanz')
 
 @section('extra_style') 
-<!-- x button export -->
-   <script src="https://www.google.com/recaptcha/api.js"></script>
-   
-<!-- -->
 
+   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+   
 
 @endsection
 
-
+<script type="text/javascript">
+      var onloadCallback = function() {
+        grecaptcha.render('html_element', {
+          'sitekey' : '6LcItusqAAAAABgAVnGu_eZQS51dCR0TTyVEgVsA'
+        });
+      };
+</script>
 
 <?php if (1==2) {?>
    @section('top')
@@ -484,15 +488,14 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <center>
+                        <div id="html_element"></div>
                         <button 
-                           data-sitekey="reCAPTCHA_site_key" 
-                           data-callback='onSubmit' 
-                           data-action='submit'                        
-                           class="btn btn-primary g-recaptcha" type="submit" id='btn_reg' name='btn_reg' 
+                           class="btn btn-primary" type="submit" id='btn_reg' name='btn_reg' 
                            disabled
                            >Submit Registration</button>                        
                      </center>   
                   </div>
+                  
                </div>               
 
      
@@ -504,6 +507,9 @@
       </div> 
       <!-- end section account !-->      
    </form>   
+   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>   
    </div> <!-- end div sign_up !-->
    
    <?php
