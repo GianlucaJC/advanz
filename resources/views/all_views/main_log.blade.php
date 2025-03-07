@@ -19,9 +19,6 @@
    @endsection
 <?php } ?>
 
-@section('banner')
-   @include('all_views.components.banner')
-@endsection
 
 <div class="modal" id="modal_main" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

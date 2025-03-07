@@ -24,10 +24,6 @@
    @endsection
 <?php } ?>
 
-@section('banner')
-   @include('all_views.components.banner')
-@endsection
-
 <style>
 .modal-backdrop
 {
@@ -190,7 +186,7 @@
                      !-->
             	</div>
 
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
                         <select class="form-select nice" name='prefix' id='prefix'>
@@ -230,7 +226,7 @@
                </div>
                
 
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-6">
                      <div class="form-floating">
                         <input class="form-control" id="position" value="{{$post['position'] ?? ''}}" name='position' type="text" placeholder="Position/Title" required value=""  />
@@ -251,7 +247,7 @@
                   </div>                  
                </div>
 
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-6">
                      <div class="form-floating">
                         <input class="form-control" id="shipping_address1" value="{{$post['shipping_address1'] ?? ''}}" name='shipping_address1' type="text" placeholder="Shipping Address1" required value=""  />
@@ -276,7 +272,7 @@
                   $country="";
                   if (isset($post['country'])) $country=$post['country'];
                ?>
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-3">
                      <div class="form-floating mb-3 mb-md-0">
                         <select class="form-select nice" name='country' id='country' required onchange="select_terms(this.value)">
@@ -348,7 +344,7 @@
                   </div>                   
                </div>         
                
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
 
                <div class="col-md-4">
                         <div class="form-floating">
@@ -378,7 +374,7 @@
                   </div>                   
                </div>  
 
-               <div class="row mb-2">
+               <div class="row mb-2 g-2">
                   <div class="col-md-12">
                      <center>
                         <a href='javascript:void(0)' id='a_terms'> 
@@ -388,7 +384,7 @@
                   </div>
                </div>
 
-               <div class="row mb-1">
+               <div class="row mb-1 g-2">
                   <div class="col-md-12">
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="read_terms" name="read_terms" required disabled>
@@ -398,7 +394,7 @@
                      </div>
                   </div>
                </div>   
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-12">
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="purpose" name="purpose" required>
@@ -444,13 +440,13 @@
       <div class="appointment_section mt-3">
          <div class="container">
             <div class="appointment_box">
-               <div class="row mb-2">
+               <div class="row mb-2 g-2">
                   <div class="col-md-12">
                      <h3>My ADVANZ® PHARMA ASTIP <span style="color: #0cb7d6;"> Account Creation Details</span></h3>
                   </div>
                </div>
               
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-4">
                      <div class="form-floating">
                         <input class="form-control" id="email_" name='email' type="email" placeholder="Email User" required  maxlength="200" value="{{$post['email'] ?? ''}}" onkeyup="this.value = this.value.toLowerCase();"  />
@@ -471,7 +467,7 @@
                   </div>                                       
                </div>
 
-               <div class="row mb-2" style='display:none' id='err_pw' >
+               <div class="row mb-2 g-2" style='display:none' id='err_pw' >
                   <div class="col-md-4"></div>
                   <div class="col-md-8" style='border-style: dotted;border-color:red'>
                         <small>
@@ -485,7 +481,7 @@
                </div>
                
 
-               <div class="row mb-2">
+               <div class="row mb-2 g-2">
                   <div class="col-md-12">
                      <center>
                         <div id="html_element" class='mb-2'></div>
@@ -561,7 +557,7 @@
                !-->
 
 
-               <div class="row mb-3">
+               <div class="row mb-3 g-2">
                   <div class="col-md-6">
                      <div class="form-floating">
                            <input class="form-control" id="email" name='email' type="email" placeholder="Email User" required  maxlength="200" value="" onkeyup="this.value = this.value.toLowerCase();"  />

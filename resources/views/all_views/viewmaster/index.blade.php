@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=1.239">
+      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=3001">
       <!-- Responsive-->
       <link rel="stylesheet" href="{{ URL::asset('/') }}css/responsive.css">
 
@@ -33,6 +33,9 @@
       <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
    </head>
+   
+   <style>
+   </style>   
    <body>
       <!-- header top section start -->
       @yield('top')      
@@ -40,10 +43,9 @@
       <!-- header section start -->
       <div class="header_section">
          <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              
+           
+              <center>
                <a class="navbar-brand"href="#">
-                 
                   <svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                      <g fill="#195C68" class="advnz-letters">
@@ -63,110 +65,101 @@
                            <path d="M156.147209,81.3440698 L150.237907,95.2398837 L161.877442,95.2398837 L156.147209,81.3440698 Z M155.036977,78.7654651 L157.472326,78.7654651 L168.144884,104.121744 L165.494651,104.121744 L162.736977,97.3887209 L149.306744,97.3887209 L146.441628,104.121744 L143.970465,104.121744 L155.036977,78.7654651 Z"></path>
                      </g>
                   </g>
-               </svg>                   
-               </a>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ml-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="main_log">Home</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="contact">Contact Us</a>
-                     </li>
-                     @if ( Auth::user())
+               </svg>  
+               </a>                 
+               </center>   
+               @php
+                  $main_ref="main";
+                  if ( Auth::user()) $main_ref="main_log";
+               @endphp              
+               <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+                  <button class="navbar-toggler" onclick="$('#menuItems').collapse('toggle');" type="button"  aria-controls="menuItems" aria-expanded="false"  aria-label="Toggle Navigation">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="menuItems">
+                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                           <a class="nav-link" href="#" >Your request</a>
+                           <a class="nav-link" href="{{$main_ref}}">Home</a>
                         </li>
-                     @endif
-
-                     <?php
-                        $disp="";
-                        if ( Auth::user()) $disp="display:none";
-                     ?>
-                     
-                     <li class="nav-item" style='{{$disp}}'>
-                        <a class="nav-link" href="">Login</a>
-                     </li>
-                  </ul>
-                  <form class="form-inline my-2 my-lg-0">
-                  </form>
-               </div>
-            </nav>
-            <div class="custom_bg">
-               <div class="custom_menu">
-                  <ul>
-                     @php
-                        $main_ref="main";
-                        if ( Auth::user()) $main_ref="main_log";
-                     @endphp
-                     <li class="active"><a href="{{$main_ref}}">Home</a></li>
-                     @if (!Auth::user())
-                     <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
-                     @endif
-                     <li><a href="contact" target='_blank'>Contact Us</a></li>
-                     <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
-                     
-                     @if ( Auth::user())
+                        @if (!Auth::user())
                         <li class="nav-item">
-                           <a class="nav-link" href="#" onclick="$('#your').toggle(200)">Your request</a>
+                           <a class="nav-link" href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a>
                         </li>
-                      
-                     @endif
-
-                  </ul>
-               </div>
-               <?php
-                  $disp="";
-                  if ( Auth::user()) $disp="display:none";
-               ?>
-
-
-  
-
-               <div id='div_sign_log' style='{{$disp}}' >     
-
-                
-                     <div class="search_btn">
-                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
-                        <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
-                     </div>
-               </div>
-
-                              
-               @if ( Auth::user())
-                     <div class="search_btn">
-                     <li>
-                        <a href="profile">
-                           <i class="fas fa-university"></i>
-                           <span class="signup_text">Profile</span>
-                        </a>
-                     </li>
-                     </div>
-                     <div>{{ Auth::user()->name }}</div>
-                     <div class="search_btn">
-                     <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                        @csrf                        
-                           <li>
-                              <a href="#" onclick="event.preventDefault();this.closest('form').submit();">
-                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                 <span class="signup_text">Logout</span>
-                              </a>
+                        @endif       
+                        
+                        <div>
+                           <li class="nav-item">
+                              <a class="nav-link" href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a>
                            </li>
-                        </form>  
-                     </div>
-              @endif
-               
-            </div>
+                           <li class="nav-item">
+                                 <a class="nav-link" href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a>
+                           </li>
+                        </div>                        
+                     </ul>
+
+                  </div>
+               </nav>
+
+
+           
+               <div class="custom_bg">
+                  <div class="custom_menu">
+                     <ul>
+                        <li class="active"><a href="{{$main_ref}}">Home</a></li>
+                        @if (!Auth::user())
+                        <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
+                        @endif
+                        <li><a href="contact" target='_blank'>Contact Us</a></li>
+                        <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
+                        
+                        @if ( Auth::user())
+                           <li class="nav-item">
+                              <a class="nav-link" href="#" onclick="$('#your').toggle(200)">Your request</a>
+                           </li>
+                        
+                        @endif
+
+                     </ul>
+                  </div>
+                  <?php
+                     $disp="";
+                     if ( Auth::user()) $disp="display:none";
+                  ?>
+
+                  <div id='div_sign_log' style='{{$disp}}' >  
+                        <div class="search_btn">
+                           <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
+                           <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
+                        </div>
+                  </div>
+
+                                 
+                  @if ( Auth::user())
+                        <div class="search_btn">
+                        <li>
+                           <a href="profile">
+                              <i class="fas fa-university"></i>
+                              <span class="signup_text">Profile</span>
+                           </a>
+                        </li>
+                        </div>
+                        <div>{{ Auth::user()->name }}</div>
+                        <div class="search_btn">
+                        <!-- Authentication -->
+                           <form method="POST" action="{{ route('logout') }}">
+                           @csrf                        
+                              <li>
+                                 <a href="#" onclick="event.preventDefault();this.closest('form').submit();">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span class="signup_text">Logout</span>
+                                 </a>
+                              </li>
+                           </form>  
+                        </div>
+               @endif
+                  
+               </div>
          </div>
             
          <div class="about_section layout_padding mb-3" div id='your' style='display:none'>
@@ -177,10 +170,8 @@
             </div>
          </div> 
 
-         <!-- header section end -->
-         <!-- banner section start --> 
-          @yield('banner')
-         <!-- banner section end -->
+         <div class="banner_section layout_padding"></div>
+         
       </div>   
 
 
