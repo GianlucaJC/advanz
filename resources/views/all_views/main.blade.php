@@ -488,7 +488,7 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <center>
-                        <div id="html_element"></div>
+                        <div id="html_element" class='mb-2'></div>
                         <button 
                            class="btn btn-primary" type="submit" id='btn_reg' name='btn_reg' 
                            disabled

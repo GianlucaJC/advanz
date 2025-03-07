@@ -9,18 +9,35 @@
   Array.prototype.slice.call(forms)
     .forEach(function (form) {
       form.addEventListener('submit', function (event) {
+        var check_no=false
         if (!form.checkValidity()) {
+          check_no=true
           event.preventDefault()
           event.stopPropagation()
           $('#modal_main').modal("show")
         } 
-        //verifica altre casisitiche di validazione
-        var check=check_else()
-        if (check==true) {
-          event.preventDefault()
-          event.stopPropagation()       
-          $('#modal_main').modal("show")
+        if (check_no==false) {
+          //verifica altre casisitiche di validazione
+          var check=check_else()
+          if (check==true) {
+            check_no=true
+            event.preventDefault()
+            event.stopPropagation()       
+            $('#modal_main').modal("show")
+          }
+        } 
+        if (check_no==false) {
+          //recapcha
+          var check=false
+          var response = grecaptcha.getResponse();
+          if(response.length == 0){
+            event.preventDefault()
+            event.stopPropagation()
+            alert("reCaptcha not verified!")
+          } else check=true
         }
+        
+
         form.classList.add('was-validated')
         if (form.checkValidity() && check==false) $("#btn_reg").text('Please wait...')
 
