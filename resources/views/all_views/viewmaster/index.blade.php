@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=3001">
+      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=3003">
       <!-- Responsive-->
       <link rel="stylesheet" href="{{ URL::asset('/') }}css/responsive.css">
 
@@ -86,7 +86,7 @@
                         <li class="nav-item">
                            <a class="nav-link" href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a>
                         </li>
-                        @endif       
+                              
                         
                         <div>
                            <li class="nav-item">
@@ -95,7 +95,8 @@
                            <li class="nav-item">
                                  <a class="nav-link" href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a>
                            </li>
-                        </div>                        
+                        </div>
+                        @endif                         
                      </ul>
 
                   </div>

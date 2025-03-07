@@ -25,11 +25,13 @@
 <?php } ?>
 
 <style>
+
 .modal-backdrop
 {
     opacity:1 !important;
 }
 </style>
+
 
 <div class="modal" id="modal_main" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
