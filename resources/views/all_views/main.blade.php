@@ -150,7 +150,7 @@
    <form method='post' action="{{ route('main') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
 		
       <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
-	  <input type="hidden" value="{{url('/')}}" id="url" name="url">
+	 
 	
 	  <div class="appointment_section">
          <div class="container">

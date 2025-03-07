@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\User;
+
+use App\Models\carrello;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -49,6 +50,26 @@ class AjaxController extends Controller
 
     public function check_allestimento(Request $request) {
         $id_country=$request->input('id_country');
+		//in caso di sessione loggata:
+		//recupero l'eventuale carrello precedente per precaricare dati
+		$arr_cart=array();
+		if (Auth::user()) {
+			$id_user = Auth::user()->id;
+			//recupero il country e metto in un array tutti gli id del carrello
+			//eventualmente presente per l'utente
+			$info=DB::table('users')->select('country')->where('id','=',$id_user)->first();
+			if($info)  {
+				$id_country=$info->country;
+				//calcolo delle voci di confezionamento 
+				$cart=DB::table('carrello as c')
+				->select('id_articolo')
+				->where('id_user','=',$id_user)
+				->get();
+				foreach ($cart as $row_cart) {
+					$arr_cart[]=$row_cart->id_articolo;
+				}
+			}	
+		}
 		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
@@ -106,7 +127,7 @@ class AjaxController extends Controller
                     $view.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
                        for ($sca=0;$sca<count($voci);$sca++) {
                           $view.="<option value='".$voci[$sca]['id']."' ";
-                          
+                          if (in_array($id_a, $arr_cart)) $view.=" selected ";
                           $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$voci[$sca]['pack_descr'];
 
                           $view.=">".$voce;

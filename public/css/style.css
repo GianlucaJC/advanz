@@ -378,23 +378,23 @@ button {
 
 
 
-.search_btn ul {
+.search_btn ul, .search_btn1 ul {
     margin: 0px;
     padding: 0px;
 }
 
-.search_btn li {
+.search_btn li,.search_btn1 li {
     float: left;
     font-size: 18px;
     color: #dedcdc;
     padding: 0px 10px 0px 10px;
 }
 
-.search_btn li a {
+.search_btn li a,.search_btn1 li a {
     color: #dedcdc;
 }
 
-.search_btn li a:hover {
+.search_btn li a:hover,.search_btn1 li a:hover {
     color: #0cb7d6;
 }
 

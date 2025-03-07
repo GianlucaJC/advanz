@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=3003">
+      <link rel="stylesheet" type="text/css" href="{{ URL::asset('/') }}css/style.css?ver=3007">
       <!-- Responsive-->
       <link rel="stylesheet" href="{{ URL::asset('/') }}css/responsive.css">
 
@@ -137,17 +137,18 @@
 
                                  
                   @if ( Auth::user())
-                        <div class="search_btn">
-                        <li>
-                           <a href="profile">
-                              <i class="fas fa-university"></i>
-                              <span class="signup_text">Profile</span>
-                           </a>
-                        </li>
+                        <div class="search_btn1">
+                           <li>
+                              <a href="profile">
+                                 <i class="fas fa-university"></i>
+                                 <span class="signup_text">Profile</span>
+                              </a>
+                           </li>
+                           <div>{{ Auth::user()->name }}</div>
                         </div>
-                        <div>{{ Auth::user()->name }}</div>
-                        <div class="search_btn">
-                        <!-- Authentication -->
+                        
+                        <div class="search_btn1">
+                          <!-- Authentication -->
                            <form method="POST" action="{{ route('logout') }}">
                            @csrf                        
                               <li>
@@ -175,7 +176,7 @@
          
       </div>   
 
-
+ <input type="hidden" value="{{url('/')}}" id="url" name="url">
       @yield('content_main')
 
 
