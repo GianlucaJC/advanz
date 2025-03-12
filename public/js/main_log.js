@@ -1,5 +1,6 @@
 $(document).ready( function () {
   load_allestimento(0)
+  set_table()
 })
 
 function check_choice(id_molecola,id,value) {
@@ -13,6 +14,43 @@ function check_choice(id_molecola,id,value) {
   
     
   }
+  
+  function set_table() {
+	
+  $('#tbl_articoli').DataTable({
+  pageLength: 10,
+
+  pagingType: 'full_numbers',
+  //dom: 'Bfrtip',
+  buttons: [
+    'excel', 'pdf'
+  ],		
+      initComplete: function () {
+          // Apply the search
+          this.api()
+              .columns()
+              .every(function () {
+                  var that = this;
+
+                  $('input', this.footer()).on('keyup change clear', function () {
+                      if (that.search() !== this.value) {
+                          that.search(this.value).draw();
+                      }
+                  });
+              });
+      },		
+      /*
+      language: {
+          lengthMenu: 'Visualizza _MENU_ records per pagina',
+          zeroRecords: 'Nessuna urgenza trovata',
+          info: 'Pagina _PAGE_ di _PAGES_',
+          infoEmpty: 'Non sono disponibili urgenze',
+          infoFiltered: '(Filtrati da _MAX_ urgenze totali)',
+      },
+      */
+  });	
+    
+}
 
 function load_allestimento(value) {
     //value serve per identificare il country
@@ -56,7 +94,7 @@ function load_allestimento(value) {
 
   function send_request() {
     check=false
-    $( ".mole" ).each(function( index ) {
+    $( ".allestimento" ).each(function( index ) {
         if (this.value.length>0) check=true
     })
     if (check==false) {        

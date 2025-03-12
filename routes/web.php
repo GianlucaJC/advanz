@@ -29,6 +29,9 @@ Route::group(['only_log' => ['auth']], function () {
     Route::get('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 	Route::post('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 
+    Route::post('upload', [ 'as' => 'upload', 'uses' => 'App\Http\Controllers\FileUploadController@upload']);
+
+
     Route::get('dashboard', [ 'as' => 'dashboard', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 });      
 

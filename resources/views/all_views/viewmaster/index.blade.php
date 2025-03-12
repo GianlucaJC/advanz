@@ -113,13 +113,6 @@
                         @endif
                         <li><a href="contact" target='_blank'>Contact Us</a></li>
                         <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
-                        
-                        @if ( Auth::user())
-                           <li class="nav-item">
-                              <a class="nav-link" href="#" onclick="$('#your').toggle(200)">Your request</a>
-                           </li>
-                        
-                        @endif
 
                      </ul>
                   </div>
@@ -164,13 +157,7 @@
                </div>
          </div>
             
-         <div class="about_section layout_padding mb-3" div id='your' style='display:none'>
-            <div class="container">
-               <div class="alert alert-warning" role="alert">
-                  Section under construction
-               </div> 
-            </div>
-         </div> 
+
 
          <div class="banner_section layout_padding"></div>
          

@@ -1,5 +1,4 @@
 <?php
-//test
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +45,8 @@ class AjaxController extends Controller
 		}		
 		$this->pack_qty_id=$pack_qty_id;
 		$this->pack_qty_ref=$pack_qty_ref;	
+
+		$this->no_art=array(); //articoli già ordinati da inibire
 	}
 
     public function check_allestimento(Request $request) {
@@ -53,6 +54,7 @@ class AjaxController extends Controller
 		//in caso di sessione loggata:
 		//recupero l'eventuale carrello precedente per precaricare dati
 		$arr_cart=array();
+		$no_art=array();
 		if (Auth::user()) {
 			$id_user = Auth::user()->id;
 			//recupero il country e metto in un array tutti gli id del carrello
@@ -69,7 +71,15 @@ class AjaxController extends Controller
 					$arr_cart[]=$row_cart->id_articolo;
 				}
 			}	
+			//in caso di ordini già effettuati dall'utente loggato, elimino (secondo la regola imposta),
+			//gli articoli già ordinati
+			$info=DB::table('ordini')->select('id_articolo')->where('id_user','=',$id_user)->get();
+			foreach ($info as $ord_prec) {
+				$no_art[]=$ord_prec->id_articolo;
+			}
+			$this->no_art=$no_art;
 		}
+		
 		//ricavo i dati dal costruttore per l'impostazione dell'allestimento/carrello
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
@@ -89,6 +99,7 @@ class AjaxController extends Controller
 		->get();
 
         $this->molecole_in_allestimento=$molecole_in_allestimento;
+		
         $this->load_allestimento();
        
         $arr_info=$this->arr_info;
@@ -119,26 +130,29 @@ class AjaxController extends Controller
            if ($id_mole_pack!=$id_old_mp) {
               //creazione select di scelta riferita alla molecola/packaging
               $voci=$arr_info[$id_mole_pack]['voci_conf'];
-              
-
-              $view.="<div class='col-md-4 sm-12 div_allestimento' id='div_material$id_mole_pack' >";
-                 $view.="<div class='form-floating mb-3 mb-md-0'>";
-                    $view.="<select class='form-select molecola$id_molecola allestimento' name='material[]'  id='material$id_mole_pack'  onchange=\"check_choice($id_molecola,'material$id_mole_pack',this.value)\">";
-                    $view.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
-                       for ($sca=0;$sca<count($voci);$sca++) {
-                          $view.="<option value='".$voci[$sca]['id']."' ";
-                          if (in_array($id_a, $arr_cart)) $view.=" selected ";
+			   $render_art=false;
+			   $view_art="";	
+               $view_art.="<div class='col-md-4 sm-12 div_allestimento' id='div_material$id_mole_pack' >";
+                 $view_art.="<div class='form-floating mb-3 mb-md-0'>";
+                    $view_art.="<select class='form-select molecola$id_molecola allestimento' name='material[]'  id='material$id_mole_pack'  onchange=\"check_choice($id_molecola,'material$id_mole_pack',this.value)\">";
+                    $view_art.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
+                       for ($sca=0;$sca<count($voci);$sca++) {						
+						  if (in_array($voci[$sca]['id'], $no_art)) continue;
+						  $render_art=true;
+                          $view_art.="<option value='".$voci[$sca]['id']."' ";
+                          if (in_array($id_a, $arr_cart)) $view_art.=" selected ";
                           $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$voci[$sca]['pack_descr'];
 
-                          $view.=">".$voce;
-                          $view.="</option>";
+                          $view_art.=">".$voce;
+                          $view_art.="</option>";
                        }
                    
-                    $view.="</select>";
+                    $view_art.="</select>";
                     $lbl=$arr_info[$id_mole_pack]['label'];
-                    $view.="<label for='material$id_mole_pack'>$lbl</label>";
-                 $view.="</div>";
-              $view.="</div>";
+                    $view_art.="<label for='material$id_mole_pack'>$lbl</label>";
+                 $view_art.="</div>";
+              $view_art.="</div>";
+			  if ($render_art==true) $view.=$view_art;
 
 
            }
@@ -158,7 +172,7 @@ class AjaxController extends Controller
 
 	public function load_allestimento() {
 		$molecole_in_allestimento=$this->molecole_in_allestimento;
-
+		$no_art=$this->no_art;
 		$molecola=$this->molecola;
 		$pack_qty_id=$this->pack_qty_id;
 		$packaging=$this->packaging;
