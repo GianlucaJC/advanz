@@ -1,6 +1,13 @@
+ismobile=false
+
 $(document).ready( function () {
   load_allestimento(0)
-  set_table()
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    ismobile=true
+  else
+    ismobile=false
+  
+   set_table()
 })
 
 function check_choice(id_molecola,id,value) {
@@ -16,15 +23,17 @@ function check_choice(id_molecola,id,value) {
   }
   
   function set_table() {
-	
-  $('#tbl_articoli').DataTable({
-  pageLength: 10,
-
-  pagingType: 'full_numbers',
-  //dom: 'Bfrtip',
-  buttons: [
-    'excel', 'pdf'
-  ],		
+    scroll=false;
+    if (ismobile==true)  scroll=true
+      
+    $('#tbl_articoli').DataTable({
+    pageLength: 10,
+    "scrollX": scroll,
+    pagingType: 'full_numbers',
+    //dom: 'Bfrtip',
+    buttons: [
+      'excel', 'pdf'
+    ],		
       initComplete: function () {
           // Apply the search
           this.api()

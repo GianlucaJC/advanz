@@ -13,7 +13,12 @@
 @endsection
 
 
-
+<style>
+   div.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+</style>
 <?php if (1==2) {?>
    @section('top')
       @include('all_views.components.top')
@@ -61,10 +66,9 @@
                 ?>  
                <div id='your' style='{{$disp}}'>
                   <!--gestione degli ordini precedenti con possibilità di inviare allegati di supporto !-->
-                  <table id='tbl_articoli' class="display nowrap" style='width:80%'>
+                  <table id='tbl_articoli' class="display nowrap">
                      <thead>
                         <tr>
-                          
                            <th>Date Order</th>
                            <th>Molecule</th>
                            <th>Packaging</th>  
