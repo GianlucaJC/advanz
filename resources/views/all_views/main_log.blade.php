@@ -18,6 +18,7 @@
     width: 100%;
     margin: 0 auto;
 }
+
 </style>
 <?php if (1==2) {?>
    @section('top')
@@ -74,7 +75,10 @@
                            <th>Packaging</th>  
                            <th>Attachments</th>
                         </tr>
-                     </thead>  
+                     </thead>
+                     <?php
+                        $fl_upload=array();
+                     ?>  
                      @foreach($lista_ordini as $ordine)
                         
                         <tr>
@@ -95,7 +99,39 @@
                                 ?>                              
                            </td>  
 
-                           <td></td>
+                           <td>
+                              <?php
+
+                                 if (isset($arr_up[$ordine->id_molecola][$ordine->id_pack])) {
+                                    if (!isset($fl_upload[$ordine->id_molecola][$ordine->id_pack])) {
+                                       $obj=$arr_up[$ordine->id_molecola][$ordine->id_pack];
+                                      
+                                       for ($sca=0;$sca<count($obj);$sca++) {
+                                          $info_ref=explode("|",$obj[$sca]);
+                                          $id_up=$info_ref[0];
+                                          $file_ref=$info_ref[1];
+                                          if ($sca!=0) echo "<br>";
+                                          echo "<div style='display:inline;' class='divup$id_up'>";
+                                             echo "<span id='spin$id_up' style='display:none'>";
+                                                echo "<i class='fas fa-spinner fa-spin'></i>";
+                                             echo "</span> ";
+                                             echo "<a href='#' onclick='delete_up($id_up)'>";
+                                                echo "<i class='fas fa-trash-alt'></i>";
+                                             echo "</a>";
+                                          echo "</div>";      
+                                          echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
+                                             echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
+                                                echo "Doc".($sca+1);
+                                             echo "</a>";               
+                                          echo "</div>";
+                                          
+                                       }
+                                       
+                                    } else echo "--";
+                                    $fl_upload[$ordine->id_molecola][$ordine->id_pack]=true;
+                                 } 
+                              ?>
+                           </td>
                        
 
                         </tr>
@@ -115,7 +151,7 @@
                      </div>
                   @endif
 
-                  <button type="button" class="btn btn-info mt-2" onclick="$('#div_up').toggle(200);">Click for send attachments</button>
+                  <button type="button" class="btn btn-info mt-2" onclick="$('#div_up').toggle(200);"><i class="fas fa-plus"></i> Add Test Result</button>
                   <div id='div_up' style='display:none'>    
                      <form action="upload" method="POST" enctype="multipart/form-data">
                         @csrf         

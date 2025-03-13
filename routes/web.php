@@ -22,15 +22,12 @@ Route::post('contact', [ 'as' => 'contact', 'uses' => 'App\Http\Controllers\Main
 
 Route::post('check_allestimento', [ 'as' => 'check_allestimento', 'uses' => 'App\Http\Controllers\AjaxController@check_allestimento']);
 
-
-
-
 Route::group(['only_log' => ['auth']], function () {
     Route::get('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 	Route::post('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
+	Route::post('delete_up', [ 'as' => 'delete_up', 'uses' => 'App\Http\Controllers\MainController@delete_up']);
 
     Route::post('upload', [ 'as' => 'upload', 'uses' => 'App\Http\Controllers\FileUploadController@upload']);
-
 
     Route::get('dashboard', [ 'as' => 'dashboard', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 });      
