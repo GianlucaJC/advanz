@@ -1,7 +1,7 @@
 ismobile=false
 
 $(document).ready( function () {
-  load_allestimento(0)
+ 
   if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     ismobile=true
   else
@@ -62,41 +62,4 @@ function check_choice(id_molecola,id,value) {
     
 }
 
-function load_allestimento(value) {
-    //value serve per identificare il country
-    //nel caso di un utente non loggato fa testo la tendina country valorizzata
-    //in caso di utente loggato lo recupero via ajax (quindi in questo caso invio 0)
-    let CSRF_TOKEN = $("#token_csrf").val();
-    html="<i class='fas fa-spinner fa-spin'></i>"
-    $("#div_setup").html(html)
-    base_path = $("#url").val();
-    timer = setTimeout(function() {	
-      fetch(base_path+"/check_allestimento", {
-          method: 'post',
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: "_token="+ CSRF_TOKEN+"&id_country="+value,
-      })
-      .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-      })
-      .then(resp=>{
-          if (resp.header=="OK") {
-            console.log(resp.view)
-              $("#div_setup").html(resp.view)
-          }
-          else {
-            $("#div_setup").html('')
-            alert("Error occurred while setting up")
-          }
 
-      })
-      .catch(status, err => {
-          return console.log(status, err);
-      })     
-
-    }, 800)	
-}

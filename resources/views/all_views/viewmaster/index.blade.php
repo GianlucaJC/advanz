@@ -35,6 +35,32 @@
    </head>
    
    <style>
+      .custom_lnk a:link {
+         color: gray;
+         }
+
+         /* visited link */
+      .custom_lnk a:visited {
+         color: gray;
+         }
+
+         /* mouse over link */
+      .custom_lnk a:hover {
+         color: blue;
+         }
+
+         /* selected link */
+      .custom_lnk a:active {
+         color: blue;
+         }      
+
+     .active_m {
+            background-color: #f2f4f4;
+            padding:10px;
+            border: 2px solid #aed6f1 ;
+            border-radius: 20px;'
+     }
+
    </style>   
    <body>
       <!-- header top section start -->
@@ -164,11 +190,50 @@
       </div>   
 
  <input type="hidden" value="{{url('/')}}" id="url" name="url">
+      <?php
+         $route=Route::currentRouteName();
+      ?>
+
+       @if ( Auth::user()) 
+       <div class="appointment_section">
+         <div class="container">
+            <div class="appointment_box">
+               <h3>
+                  <div class='custom_lnk'>
+                     <?php   
+                        $act="";
+                        if ($route=="main_log") $act="active_m";
+                     ?>   
+                     <span class='{{$act}}'>
+                        <a href="main_log">Cart <i class="fas fa-cart-plus"></i></a>
+                     </span>   
+                     <?php   
+                        $act="";
+                        if ($route=="order") $act="active_m";
+                     ?>
+                     <span class='{{$act}}' style='margin-left:20px'>
+                        <a href="order">Your Request <i class="fas fa-clipboard-list"></i></a>
+                     </span>   
+
+                     <?php   
+                        $act="";
+                        if ($route=="send_result") $act="active_m";
+                     ?>
+                     <span class='{{$act}}' style='margin-left:20px'>
+                        <a href="send_result">Test result <i class="fas fa-flask"></i></i></a>
+                     </span>  
+
+                  </div>   
+               </h3>
+            </div>  
+         </div>   
+       </div> 
+      @endif 
+
       @yield('content_main')
 
 
-
-
+      
       <div class="about_section layout_padding mb-3">
          <div class="container">
 

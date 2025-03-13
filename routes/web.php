@@ -25,7 +25,15 @@ Route::post('check_allestimento', [ 'as' => 'check_allestimento', 'uses' => 'App
 Route::group(['only_log' => ['auth']], function () {
     Route::get('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
 	Route::post('main_log', [ 'as' => 'main_log', 'uses' => 'App\Http\Controllers\MainController@main_log']);
-	Route::post('delete_up', [ 'as' => 'delete_up', 'uses' => 'App\Http\Controllers\MainController@delete_up']);
+    
+    Route::get('order', [ 'as' => 'order', 'uses' => 'App\Http\Controllers\orderController@order']);
+	Route::post('order', [ 'as' => 'order', 'uses' => 'App\Http\Controllers\orderController@order']);
+
+    Route::get('send_result', [ 'as' => 'send_result', 'uses' => 'App\Http\Controllers\resultController@send_result']);
+	Route::post('send_result', [ 'as' => 'send_result', 'uses' => 'App\Http\Controllers\resultController@send_result']);
+
+
+    Route::post('delete_up', [ 'as' => 'delete_up', 'uses' => 'App\Http\Controllers\resultController@delete_up']);
 
     Route::post('upload', [ 'as' => 'upload', 'uses' => 'App\Http\Controllers\FileUploadController@upload']);
 

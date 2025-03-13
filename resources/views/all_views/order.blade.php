@@ -43,47 +43,82 @@
   </div>
 </div>
 @section('content_main')
-   <div id='div_sign' style='' >
-     
-      <!-- header section end -->
-      <!-- appointment section start -->
 
-      <!-- start section material !-->
+   <div id='div_sign' style='' >
+
+      <div class="appointment_section mt-3">
+            <div class="container">
+               <div class="appointment_box">
+                  <div id='your_order'>
+                     <table id='tbl_order' class="display nowrap">
+                     </table>
+                  </div>
+               </div>
+            </div>
+      </div>
+
       <div class="appointment_section mt-3">
          <div class="container">
             <div class="appointment_box">
-               <div id='div_order'>     
-                  <form method='post' action="{{ route('main_log') }}" id='frm_main' name='frm_main' class="needs-validation" autocomplete="off" novalidate>
-                  <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>                         
-                     <div class="row mb-2">
-                        <div class="col-md-12">
-                           <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
-                           <h5<i>Please select the testing materials you wish to receive.</i></h5>
+               <h3>Order detail</h3></hr>
+               <div id='your'>
+                  <table id='tbl_articoli' class="display nowrap">
+                     <thead>
+                        <tr>
 
-                              <div class="alert alert-info" role="alert">
-                                 <i class="fas fa-cart-plus"></i> Your cart 
-                                 @if ($count==0) is empty! @endif
-                              </div>
+                           <th>Molecule</th>
+                           <th>Packaging</th>  
+                           <th>Quantity</th>
 
-                        </div>
-                     </div>
-                     
-                     <div class='container' id='div_setup'></div> <!--div popolato dinamicamente !-->
-                     
-                     <div class='container-fluid'>
-                        <div class="alert alert-dark mt-4" role="alert">
-                           Requests for Ceftobiprole and Enmetazobactam powder may be sent to Clinicaldevelopment@advanzpharma.com
-                        </div>
-                     </div>   
+                        </tr>
+                     </thead>
+                     <?php
+                        $fl_upload=array();
+                     ?>  
+                     @foreach($lista_ordini as $ordine)
+                        
+                        <tr>
+                        
+                          <td>
+                              <?php
+                                 if (isset($molecola[$ordine->id_molecola]))
+                                    echo $molecola[$ordine->id_molecola];
+                              ?>
+                           </td>
+                           <td>
+                              <?php
+                                 if (isset($packaging[$ordine->id_pack]))
+                                    echo $packaging[$ordine->id_pack];
+                                 ?>                              
+                           </td>  
+                           <td>
+                                 <?php
+                                  if (isset($pack_qty_id[$ordine->id_pack_qty]))
+                                      echo $pack_qty_id[$ordine->id_pack_qty];
+                                 ?>                              
+                           </td>
 
-                     <div class="about_bt"><a href="#" onclick="send_request()">Send Request</a></div>
+                       
 
-                  </form>   
+                        </tr>
+                           
+                     @endforeach  
+
+                  </table>
+
+
+
                </div>
+
             </div>   
          </div>
       </div>      
+
+    
       <!--end section material !-->
+
+      
+   
    </div> <!-- end div sign_up !-->
    
 
@@ -100,6 +135,6 @@
        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
     <!-- fine DataTables !-->
-   <script src="{{ URL::asset('/') }}js/main_log.js?ver=<?= time() ?>"></script>
+   <script src="{{ URL::asset('/') }}js/order.js?ver=<?= time() ?>"></script>
 @endsection
 
