@@ -198,7 +198,7 @@
        <div class="appointment_section">
          <div class="container">
             <div class="appointment_box">
-               <h3>
+              
                   <div class='custom_lnk'>
                      <?php   
                         $act="";
@@ -224,7 +224,7 @@
                      </span>  
 
                   </div>   
-               </h3>
+              
             </div>  
          </div>   
        </div> 
