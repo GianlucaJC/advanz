@@ -27,13 +27,13 @@ function check_choice(id_molecola,id,value) {
     scroll=false;
     if (ismobile==true)  scroll=true
       
-    $('#tbl_articoli').DataTable({
+    $('#tbl_articoli, #tbl_order').DataTable({
     pageLength: 10,
     "scrollX": scroll,
     pagingType: 'full_numbers',
-    //dom: 'Bfrtip',
+    dom: 'Bfrtip',
     buttons: [
-      'excel', 'pdf'
+      'excel'
     ],		
       initComplete: function () {
           // Apply the search

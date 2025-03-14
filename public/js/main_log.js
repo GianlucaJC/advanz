@@ -100,3 +100,17 @@ function load_allestimento(value) {
 
     }, 800)	
 }
+function send_request() {
+  check=false
+  $( ".allestimento" ).each(function( index ) {
+      if (this.value.length>0) check=true
+  })
+  if (check==false) {        
+      alert("Please select at last one choice")
+      event.preventDefault();
+      return false;
+  }
+  else {
+      if (confirm("Are you sure?")) $('#frm_main').submit()
+  }
+}

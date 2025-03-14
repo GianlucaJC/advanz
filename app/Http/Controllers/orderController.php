@@ -30,16 +30,24 @@ public function __construct()
 		$packaging=$this->packaging;
 
 		$id_user = Auth::user()->id;
-		
-		$lista_ordini=DB::table('ordini as o')
-		->join('allestimento as a','o.id_articolo','a.id')
-		->select('o.id','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
+		$id_order_view=$request->input('id_order_view');
+
+		$lista_ordini=DB::table('ordini_ref as o')
+		->select('o.id','o.stato','o.ship_date','o.ship_date_estimated','o.created_at')
 		->where('id_user','=',$id_user)
+		->get();	
 		
-		->get();		
+		$lista_articoli=array();
+		if ($id_order_view>0) {
+			$lista_articoli=DB::table('ordini as o')
+			->join('allestimento as a','o.id_articolo','a.id')
+			->select('o.id','o.lotto','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
+			->where('o.id_ordine','=',$id_order_view)
+			->get();		
+		}	
 
 
-		return view('all_views/order',compact('id_user','molecola','molecole_info','lista_ordini','packaging','pack_qty_id'));
+		return view('all_views/order',compact('id_user','molecola','molecole_info','lista_articoli','packaging','pack_qty_id','lista_ordini','id_order_view'));
 				
 	}
 

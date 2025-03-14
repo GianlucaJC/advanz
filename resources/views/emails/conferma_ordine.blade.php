@@ -29,7 +29,7 @@
 </p>
 
 Delivery Address: [HCP’s address]
-Estimated Delivery Date: <b>{{$delivery_date}}</b>
+Estimated Delivery Date: <b>+14 days from order date</b>
 Your order is now being processed and we will ensure its prompt preparation. You will receive a notification once your order has been shipped.
 Sincerely,
 The ADVANZ PHARMA ASTIP team

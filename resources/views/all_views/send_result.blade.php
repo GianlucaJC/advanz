@@ -59,7 +59,7 @@
                           
                            <th>Molecule</th>
                            <th>Packaging</th>  
-                           <th>Quantity</th>
+
                            <th>Attachments</th>
                         </tr>
                      </thead>
@@ -83,12 +83,7 @@
                                     echo $packaging[$ordine->id_pack];
                                  ?>                              
                            </td>  
-                           <td>
-                                 <?php
-                                  if (isset($pack_qty_id[$ordine->id_pack_qty]))
-                                      echo $pack_qty_id[$ordine->id_pack_qty];
-                                 ?>                              
-                           </td>
+
 
                            <td>
                               <?php

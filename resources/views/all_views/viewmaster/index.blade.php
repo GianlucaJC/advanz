@@ -55,11 +55,24 @@
          }      
 
      .active_m {
+            display:inline-block;
+            width:200px;
             background-color: #f2f4f4;
             padding:10px;
-            border: 2px solid #aed6f1 ;
-            border-radius: 20px;'
-     }
+            border: 3px solid #aed6f1 ;
+            border-radius: 20px;
+            color:blue;
+      }
+
+      .normal_m {
+            display:inline-block;
+            width:200px;
+            background-color:rgba(190, 206, 206, 0.07);
+            padding:10px;
+            border: 1px solid #aed6f1 ;
+            border-radius: 20px;
+            
+      }      
 
    </style>   
    <body>
@@ -198,34 +211,47 @@
        <div class="appointment_section">
          <div class="container">
             <div class="appointment_box">
-              
-                  <div class='custom_lnk'>
-                     <?php   
-                        $act="";
-                        if ($route=="main_log") $act="active_m";
-                     ?>   
-                     <span class='{{$act}}'>
-                        <a href="main_log">Cart <i class="fas fa-cart-plus"></i></a>
-                     </span>   
-                     <?php   
-                        $act="";
-                        if ($route=="order") $act="active_m";
-                     ?>
-                     <span class='{{$act}}' style='margin-left:20px'>
-                        <a href="order">Your Request <i class="fas fa-clipboard-list"></i></a>
-                     </span>   
-
-                     <?php   
-                        $act="";
-                        if ($route=="send_result") $act="active_m";
-                     ?>
-                     <span class='{{$act}}' style='margin-left:20px'>
-                        <a href="send_result">Test result <i class="fas fa-flask"></i></i></a>
-                     </span>  
-
+               <h3>
+               <div class="row g-4">
+                  <div class="col-md-3">
+                     <div class='custom_lnk'>
+                        <?php   
+                           $act="normal_m";
+                           if ($route=="main_log") $act="active_m";
+                        ?>   
+                        <span class='{{$act}}'>
+                           <a href="main_log">Cart <i class="fas fa-cart-plus"></i></a>
+                        </span>   
+                     </div>   
                   </div>   
-              
+
+                  <div class="col-md-3">
+                     <div class='custom_lnk'>
+                        <?php   
+                           $act="normal_m";
+                           if ($route=="order") $act="active_m";
+                        ?>
+                        <span class='{{$act}}''>
+                           <a href="order">Your Request <i class="fas fa-clipboard-list"></i></a>
+                        </span>   
+                     </div>   
+                  </div>
+
+                  <div class="col-md-3">
+                     <div class='custom_lnk'>
+                        <?php   
+                           $act="normal_m";
+                           if ($route=="send_result") $act="active_m";
+                        ?>
+                        <span class='{{$act}}'>
+                           <a href="send_result">Test result <i class="fas fa-flask"></i></i></a>
+                        </span>
+                     </div>   
+                  </div>                  
+               
+               </div> 
             </div>  
+            </h3>
          </div>   
        </div> 
       @endif 

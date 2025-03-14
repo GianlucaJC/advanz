@@ -13,6 +13,7 @@ use Mail;
 
 use App\Models\carrello;
 use App\Models\ordini;
+use App\Models\ordini_ref;
 
 class mainController extends AjaxController
 {
@@ -195,11 +196,18 @@ public function __construct()
 		if ($request->has('material')) {
 			$material=$request->input('material'); 
 			$entr=false;
+
+			$ordini_ref=new ordini_ref;
+			$ordini_ref->id_user=$id_user;
+			$ordini_ref->save();
+			$id_ordine = $ordini_ref->id;
+
 			for ($sca=0;$sca<count($material);$sca++) {
 				$entr=true;
 				$articolo=$material[$sca];
 				if (strlen($articolo)==0) continue;
 				$ordini=new ordini;
+				$ordini->id_ordine=$id_ordine;
 				$ordini->id_articolo=$articolo;
 				$ordini->id_user=$id_user;
 				$ordini->save();
