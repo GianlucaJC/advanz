@@ -76,69 +76,7 @@
 
    <div id='div_sign' style='' >
 
-      <div class="appointment_section mt-3">
-            <div class="container">
-               <div class="appointment_box">
-                  <div id='your_order'>
-                  <table id='tbl_order' class="display nowrap">
-                     <thead>
-                        <tr>
-                           <th>ID</th>
-                           <th>Status</th>
-                           <th>Date Order</th>
-                           <th>Date Shipping</th>  
-                           <th>Estimated Date Shipping</th>
-                           <th>Operation</th>
-                        </tr>
-                     </thead>
-                     <?php
-                        $fl_upload=array();
-                     ?>  
-                     <tbody>
-                     @foreach($lista_ordini as $ordine)
-                        
-                        <tr>
-                           <td>
-                              {{$ordine->id}}
-                           </td> 
-                           <td>
-                              <?php
-                                 $stato=$ordine->stato;
-                                 if ($stato==0)
-                                     echo "<div class='box box_new'>New</div>";
-                                 if ($stato==1)
-                                     echo "<div class='box box_ready'>Ready</div>";
-                                 if ($stato==2)
-                                     echo "<div class='box box_shipped'>Shipped</div>";                                    
-                              ?>
-                           </td>                            
-                           <td>
-                              {{$ordine->created_at}}
-                           </td> 
-                           <td>
-                              {{$ordine->ship_date}}
-                           </td> 
-                           <td>
-                              <!-- {{$ordine->ship_date_estimated}} !-->
-                               <small>+14 days from order date</small>
-
-                           </td> 
-                           <td style='text-align:center'>
-                              <button type="submit" onclick="$('#id_order_view').val({{$ordine->id}})" class="btn btn-info">View</button>
-                           </td> 
-                        </tr>
-                           
-                     @endforeach 
-                     </tbody> 
-
-                  </table>
-
-                  </div>
-               </div>
-            </div>
-      </div>
-      
-      <input type='hidden' name='id_order_view' id='id_order_view' value='{{$id_order_view}}'>
+   <input type='hidden' name='id_order_view' id='id_order_view' value='{{$id_order_view}}'>
       @if ($id_order_view>0)
       <div class="appointment_section mt-3">
          <div class="container">
@@ -203,6 +141,69 @@
          </div>
       </div> 
       @endif     
+      <div class="appointment_section mt-3">
+            <div class="container">
+               <div class="appointment_box">
+                  <div id='your_order'>
+                  <table id='tbl_order' class="display nowrap">
+                     <thead>
+                        <tr>
+                           <th>ID</th>
+                           <th>Status</th>
+                           <th>Date Order</th>
+                           <th>Date Shipping</th>  
+                           <th>Estimated Date Shipping</th>
+                           <th>Operation</th>
+                        </tr>
+                     </thead>
+                     <?php
+                        $fl_upload=array();
+                     ?>  
+                     <tbody>
+                     @foreach($lista_ordini as $ordine)
+                        
+                        <tr>
+                           <td>
+                              {{$ordine->id}}
+                           </td> 
+                           <td>
+                              <?php
+                                 $stato=$ordine->stato;
+                                 if ($stato==0)
+                                     echo "<div class='box box_new'>New</div>";
+                                 if ($stato==1)
+                                     echo "<div class='box box_ready'>Ready</div>";
+                                 if ($stato==2)
+                                     echo "<div class='box box_shipped'>Shipped</div>";                                    
+                              ?>
+                           </td>                            
+                           <td>
+                              {{$ordine->created_at}}
+                           </td> 
+                           <td>
+                              {{$ordine->ship_date}}
+                           </td> 
+                           <td>
+                              <!-- {{$ordine->ship_date_estimated}} !-->
+                               <small>+14 days from order date</small>
+
+                           </td> 
+                           <td style='text-align:center'>
+                              <button type="submit" onclick="$('#id_order_view').val({{$ordine->id}})" class="btn btn-info">View</button>
+                           </td> 
+                        </tr>
+                           
+                     @endforeach 
+                     </tbody> 
+
+                  </table>
+
+                  </div>
+               </div>
+            </div>
+      </div>
+      
+
 
     
       <!--end section material !-->
