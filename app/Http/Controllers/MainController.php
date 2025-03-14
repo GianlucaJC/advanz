@@ -191,11 +191,11 @@ public function __construct()
 		$id_user = Auth::user()->id;
 		$count=carrello::select("id_articolo")->where('id_user','=',$id_user)->count();
 
-
+		$new_ord=false;
 		//btn order (send request)
 		if ($request->has('material')) {
 			$material=$request->input('material'); 
-			$entr=false;
+			
 
 			$ordini_ref=new ordini_ref;
 			$ordini_ref->id_user=$id_user;
@@ -203,7 +203,7 @@ public function __construct()
 			$id_ordine = $ordini_ref->id;
 
 			for ($sca=0;$sca<count($material);$sca++) {
-				$entr=true;
+				$new_ord=true;
 				$articolo=$material[$sca];
 				if (strlen($articolo)==0) continue;
 				$ordini=new ordini;
@@ -217,7 +217,7 @@ public function __construct()
 
 				$count=0;
 			}
-			if ($entr==true) {
+			if ($new_ord==true) {
 				$info_mail=DB::table('users')->select('email','name')->where('id','=',$id_user)->first();
 				if($info_mail) {
 					$info_order['material']=$material;
@@ -229,7 +229,7 @@ public function __construct()
 				}
 			}	 
 		}
-		return view('all_views/main_log',compact('id_user','count','molecola','molecole_info','molecola','molecole_info','packaging'));
+		return view('all_views/main_log',compact('id_user','count','molecola','molecole_info','molecola','molecole_info','packaging','new_ord'));
 
 	}
 

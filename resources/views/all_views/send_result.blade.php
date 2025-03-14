@@ -59,7 +59,6 @@
                           
                            <th>Molecule</th>
                            <th>Packaging</th>  
-
                            <th>Attachments</th>
                         </tr>
                      </thead>
@@ -95,6 +94,7 @@
                                           $info_ref=explode("|",$obj[$sca]);
                                           $id_up=$info_ref[0];
                                           $file_ref=$info_ref[1];
+                                          $testo_ref=$info_ref[2];
                                           if ($sca!=0) echo "<br>";
                                           echo "<div style='display:inline;' class='divup$id_up'>";
                                              echo "<span id='spin$id_up' style='display:none'>";
@@ -106,7 +106,7 @@
                                           echo "</div>";      
                                           echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
                                              echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
-                                                echo "Doc".($sca+1);
+                                                echo $testo_ref;
                                              echo "</a>";               
                                           echo "</div>";
                                           
@@ -171,6 +171,12 @@
                               </div>
                            </div> 
 
+                           <div class="col-md-4">
+                              <div class="form-floating mb-3 mb-md-0">
+                                 <input class="form-control" id="testo_ref" name='testo_ref' type="text" placeholder="Custom text for attachment" required value=""  />
+                                 <label for="testo_ref">Associated text*</label>
+                              </div>
+                           </div> 
                         </div>
                         <hr>
                         <div class="mb-3">

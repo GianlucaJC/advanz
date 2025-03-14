@@ -37,7 +37,7 @@ public function __construct()
 
 
 		$lista_upload=DB::table('uploads as a')
-		->select('id','filereal','id_molecola','id_pack')
+		->select('id','filereal','testo_ref','id_molecola','id_pack')
 		->where('id_user','=',$id_user)
 		->get();
 		$arr_up=array();$indice=0;
@@ -46,10 +46,11 @@ public function __construct()
 			$id_mol=$uploads->id_molecola;
 			$id_p=$uploads->id_pack;
 			$filereal=$uploads->filereal;
+			$testo_ref=$uploads->testo_ref;
 			if (isset($arr_up[$id_mol][$id_p])) 
 				$indice=count($arr_up[$id_mol][$id_p]);
 			else $indice=0;
-			$arr_up[$id_mol][$id_p][$indice]=$id_up."|".$filereal;
+			$arr_up[$id_mol][$id_p][$indice]=$id_up."|".$filereal."|".$testo_ref;
 		}
 
 		return view('all_views/send_result',compact('id_user','molecola','molecole_info','lista_ordini','packaging','pack_qty_id','arr_up'));

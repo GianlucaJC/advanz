@@ -18,6 +18,7 @@ class FileUploadController extends AjaxController
         $id_user = Auth::user()->id;
         $id_molecola=$request->input('id_molecola');
         $id_pack=$request->input('id_pack');
+        $testo_ref=$request->input('testo_ref');
 
         // Validate the uploaded file
         $request->validate([
@@ -34,6 +35,7 @@ class FileUploadController extends AjaxController
             $uploads->id_molecola=$id_molecola;
             $uploads->id_pack=$id_pack;
             $uploads->filereal=$filereal;
+            $uploads->testo_ref=$testo_ref;
             $uploads->save();            
             // Return success response
             return back()->with('success', 'File uploaded successfully')->with('file', $filePath);

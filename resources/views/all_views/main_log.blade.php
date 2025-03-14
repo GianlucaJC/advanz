@@ -67,6 +67,12 @@
 
                         </div>
                      </div>
+
+                     @if ($new_ord==true)
+                        <div class="alert alert-success mt-2 mb-2" role="alert">
+                           <i class="far fa-paper-plane"></i> <strong>Order Sent!</strong>
+                        </div>              
+                     @endif       
                      
                      <div class='container' id='div_setup'></div> <!--div popolato dinamicamente !-->
                      
