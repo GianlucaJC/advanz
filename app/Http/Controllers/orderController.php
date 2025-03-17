@@ -33,7 +33,7 @@ public function __construct()
 		$id_order_view=$request->input('id_order_view');
 
 		$lista_ordini=DB::table('ordini_ref as o')
-		->select('o.id','o.stato','o.ship_date','o.ship_date_estimated','o.created_at')
+		->select('o.id','o.stato','o.ship_date','tracker','o.ship_date_estimated','o.created_at')
 		->where('id_user','=',$id_user)
 		->get();	
 		

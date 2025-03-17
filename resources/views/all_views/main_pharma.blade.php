@@ -1,4 +1,4 @@
-@extends('all_views.viewmaster.index')
+@extends('all_views.viewmaster.index_p')
 
 
 @section('title', 'Advanz')
@@ -71,7 +71,7 @@
   </div>
 </div>
 @section('content_main')
-   <form method='post' action="{{ route('order') }}" id='frm_order' name='frm_order' class="needs-validation" autocomplete="off" novalidate>
+   <form method='post' action="{{ route('main_pharma') }}" id='frm_order' name='frm_order' class="needs-validation" autocomplete="off" novalidate>
    <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'> 
 
    <div id='div_sign' style='' >
@@ -82,14 +82,25 @@
          <div class="container">
             <div class="appointment_box">
                <h3>Order detail #{{$id_order_view}}</h3></hr>
-               <div id='your'>
+               <div id='order_detail' style='max-width:auto;overflow-x: scroll'>
                   <table id='tbl_articoli' class="display nowrap">
                      <thead>
                         <tr>
+                           <th>HCP Name</th>
+                           <th>Institution</th>
+                           <th>Address</th>
+                           <th>City</th>
+                           <th>Country</th>
                            <th>Molecule</th>
-                           <th>Batch</th>
                            <th>Packaging</th>  
                            <th>Quantity</th>
+                           <th>Batch Num</th>
+                           <th>Remaining Advanz stock</th>
+                           <th>Expiration date</th>
+                           <th>Shipping date</th>
+                           <th>Shipping AWB</th>
+                           <th>Receipt date at site</th>
+                           <th>Comments</th>
                         </tr>
                      </thead>
                      <?php
@@ -97,18 +108,48 @@
                      ?>  
                      <tbody>
                      @foreach($lista_articoli as $articolo)
-                        
+                        <?php
+                            $id_ordine_ref=$articolo->id_ordine;
+                            $id_user_ref=$articolo->id_user;
+                            $name="";$istituto="";$shipping_address1="";$shipping_address2="";
+                            $data_ordine=$articolo->created_at;
+                            $city="";$country_view="";
+                            if (isset($arr_user[$id_user_ref])) {
+                              $name=$arr_user[$id_user_ref]->name;
+                              $istituto=$arr_user[$id_user_ref]->istituto;
+                              $shipping_address1=$arr_user[$id_user_ref]->shipping_address1;
+                              $shipping_address2=$arr_user[$id_user_ref]->shipping_address2;
+                              $city=$arr_user[$id_user_ref]->city;
+                              $country_code=$arr_user[$id_user_ref]->country;
+                              $country_view=$country_code;
+                              if (isset($country[$country_code])) $country_view=$country[$country_code];
+                           }
+                        ?>
                         <tr>
                         
+                           <td>
+                              {{$name}}
+                           </td>
+                           <td>
+                              {{$istituto}}
+                           </td>
+                           <td>
+                              {{$shipping_address1}} 
+                              <?php
+                               if (strlen($shipping_address2)!=0) echo " - $shipping_address2";
+                              ?>
+                           </td>
+                           <td>
+                              {{$city}}
+                           </td>
+                           <td>{{$country_view}}</td>
+
                           <td>
                               <?php
                                  if (isset($molecola[$articolo->id_molecola]))
                                     echo $molecola[$articolo->id_molecola];
                               ?>
                            </td>
-                           <td>
-                              {{$articolo->lotto}}                            
-                           </td>  
 
                            <td>
                            <?php
@@ -116,13 +157,29 @@
                                     echo $packaging[$articolo->id_pack];
                               ?>
                              
-                           </td>                           
+                             
                            <td>
                                  <?php
                                   if (isset($pack_qty_id[$articolo->id_pack_qty]))
                                       echo $pack_qty_id[$articolo->id_pack_qty];
                                  ?>                              
+                           </td>    
+
+                           <td>
+                              {{$articolo->lotto}}                            
+                           </td>  
+
+
+                           <td>Remaining Advanz stock</td>
+                           <td>Expiration date</td>
+                           <td>
+                                 Shipping date
+                              
                            </td>
+                           <td>Shipping AWB</td>
+                           <td>{{$data_ordine}}</td>
+                           <td>Comments</td>                          
+
 
                        
 
@@ -144,12 +201,14 @@
       <div class="appointment_section mt-3">
             <div class="container">
                <div class="appointment_box">
-                  <div id='your_order'>
+                  <div id='orders' style='max-width:auto;overflow-x: scroll'>
                   <table id='tbl_order' class="display nowrap">
                      <thead>
                         <tr>
                            <th>ID</th>
                            <th>Status</th>
+                           <th>ID user</th>
+                           <th>name</th>                           
                            <th>Date Order</th>
                            <th>Tracker Shipping</th>
                            <th>Date Shipping</th> 
@@ -177,7 +236,20 @@
                                  if ($stato==2)
                                      echo "<div class='box box_shipped'>Shipped</div>";                                    
                               ?>
-                           </td>                            
+                           </td>    
+                           <td>
+                              <?php
+                                 $id_user_ref=$ordine->id_user;
+                                 echo $id_user_ref;
+                              ?>
+                           </td>                        
+                           <td>
+                              <?php
+                                 if (isset($arr_user[$id_user_ref])) {
+                                    echo $arr_user[$id_user_ref]->name;
+                                 }
+                              ?>
+                           </td>
                            <td>
                               {{$ordine->created_at}}
                            </td> 
@@ -201,8 +273,21 @@
                            
                      @endforeach 
                      </tbody> 
-
+                     <tfoot>
+                        <tr>
+                           <th>ID</th>
+                           <th>Status</th>
+                           <th>ID user</th>
+                           <th>name</th>                           
+                           <th>Date Order</th>
+                           <th>Tracker Shipping</th>
+                           <th>Date Shipping</th> 
+                           <th>Estimated Date Shipping</th>
+                           <th>Operation</th>
+                        </tr>
+                     </tfoot>
                   </table>
+                  
 
                   </div>
                </div>
@@ -232,6 +317,6 @@
        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
     <!-- fine DataTables !-->
-   <script src="{{ URL::asset('/') }}js/order.js?ver=<?= time() ?>"></script>
+   <script src="{{ URL::asset('/') }}js/order_pharma.js?ver=<?= time() ?>"></script>
 @endsection
 

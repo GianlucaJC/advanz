@@ -182,13 +182,16 @@ public function __construct()
 
 
 	public function main_log(Request $request) {
-		if (!Auth::user()) return $this->main($request);
+		$id_user = Auth::user()->id;
+		$info=User::select("is_pharma")->where('id','=',$id_user)->first();
+		$is_pharma=0;
+		if($info) $is_pharma=$info->is_pharma;
+		if ($is_pharma==1) return redirect()->away("main_pharma");
 
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
 		$packaging=$this->packaging;
 
-		$id_user = Auth::user()->id;
 		$count=carrello::select("id_articolo")->where('id_user','=',$id_user)->count();
 
 		$new_ord=false;

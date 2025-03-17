@@ -31,13 +31,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('send_result', [ 'as' => 'send_result', 'uses' => 'App\Http\Controllers\resultController@send_result']);
 	Route::post('send_result', [ 'as' => 'send_result', 'uses' => 'App\Http\Controllers\resultController@send_result']);
-
-
     Route::post('delete_up', [ 'as' => 'delete_up', 'uses' => 'App\Http\Controllers\resultController@delete_up']);
-
     Route::post('upload', [ 'as' => 'upload', 'uses' => 'App\Http\Controllers\FileUploadController@upload']);
-
     Route::get('dashboard', [ 'as' => 'dashboard', 'uses' => 'App\Http\Controllers\MainController@main_log']);
+
+    Route::get('main_pharma', [ 'as' => 'main_pharma', 'uses' => 'App\Http\Controllers\mainPharmaController@main_pharma']);
+	Route::post('main_pharma', [ 'as' => 'main_pharma', 'uses' => 'App\Http\Controllers\mainPharmaController@main_pharma']);
+
+
 });      
 
 

@@ -176,7 +176,8 @@
                                  <span class="signup_text">Profile</span>
                               </a>
                            </li>
-                           <div>{{ Auth::user()->name }}</div>
+                           
+                           <div><span style='color:rgba(225, 217, 96, 0.97);'>{{ Auth::user()->name }}</div>
                         </div>
                         
                         <div class="search_btn1">
@@ -208,53 +209,32 @@
       ?>
 
        @if ( Auth::user()) 
-
+      
          <div class="appointment_section">
             <div class="container">
                <div class="appointment_box">
                   <h3>
                   <div class="row g-4">
+                    
                      <div class="col-md-3">
                         <div class='custom_lnk'>
                            <?php   
                               $act="normal_m";
-                              if ($route=="main_log") $act="active_m";
-                           ?>   
-                           <span class='{{$act}}'>
-                              <a href="main_log">Cart <i class="fas fa-cart-plus"></i></a>
-                           </span>   
-                        </div>   
-                     </div>   
-
-                     <div class="col-md-3">
-                        <div class='custom_lnk'>
-                           <?php   
-                              $act="normal_m";
-                              if ($route=="order") $act="active_m";
+                              if ($route=="main_pharma") $act="active_m";
                            ?>
                            <span class='{{$act}}''>
-                              <a href="order">Your Requests <i class="fas fa-clipboard-list"></i></a>
+                              <a href="main_pharma">Customer requests <i class="fas fa-clipboard-list"></i></a>
                            </span>   
                         </div>   
                      </div>
-
-                     <div class="col-md-3">
-                        <div class='custom_lnk'>
-                           <?php   
-                              $act="normal_m";
-                              if ($route=="send_result") $act="active_m";
-                           ?>
-                           <span class='{{$act}}'>
-                              <a href="send_result">Test result <i class="fas fa-flask"></i></i></a>
-                           </span>
-                        </div>   
-                     </div>                  
+                 
                   
                   </div> 
                </div>  
                </h3>
             </div>   
-         </div>        
+         </div> 
+       
       @endif 
 
       @yield('content_main')
