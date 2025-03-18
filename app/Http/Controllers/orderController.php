@@ -24,6 +24,12 @@ public function __construct()
 	}
 
 	public function order(Request $request) {
+		$id_user = Auth::user()->id;
+		$info=User::select("is_pharma")->where('id','=',$id_user)->first();
+		$is_pharma=0;
+		if($info) $is_pharma=$info->is_pharma;
+		if ($is_pharma==1) return redirect()->away("main_pharma");
+
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
 		$pack_qty_id=$this->pack_qty_id;
