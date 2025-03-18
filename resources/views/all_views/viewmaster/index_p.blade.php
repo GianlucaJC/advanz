@@ -109,7 +109,7 @@
                </center>   
                @php
                   $main_ref="main";
-                  if ( Auth::user()) $main_ref="main_log";
+                  if ( Auth::user()) $main_ref="main_pharma";
                @endphp              
                <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -227,7 +227,17 @@
                            </span>   
                         </div>   
                      </div>
-                 
+                     <div class="col-md-3">
+                        <div class='custom_lnk'>
+                           <?php   
+                              $act="normal_m";
+                              if ($route=="send_result_pharma") $act="active_m";
+                           ?>
+                           <span class='{{$act}}'>
+                              <a href="send_result_pharma">Customer Test <i class="fas fa-flask"></i></i></a>
+                           </span>
+                        </div>   
+                     </div>                  
                   
                   </div> 
                </div>  
@@ -324,7 +334,7 @@
                      <div class="footer_menu">
                         <ul>
                            <li class="active">
-                              <a href="main_log">Home</a>
+                              <a href="main_pharma">Home</a>
                            </li>
                            <li>
                               <a href="contact">Contact Us</a>

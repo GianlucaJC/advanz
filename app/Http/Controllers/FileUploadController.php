@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Models\uploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 //estendo AjaxController perchè potrebbero servirmi metodi e proprietà di quella classe
 class FileUploadController extends AjaxController
@@ -21,9 +23,19 @@ class FileUploadController extends AjaxController
         $testo_ref=$request->input('testo_ref');
 
         // Validate the uploaded file
+        /*
         $request->validate([
             'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
         ]);
+        */
+
+        $validatedData = Validator::make($request->all(), [
+            'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
+        ]);
+        if (!$validatedData->fails()) {
+            return back()->with('error', 'File upload failed');
+        }
+
         // Check if the file is valid
         if ($request->file('file')->isValid()) {
             // Store the file in the 'uploads' directory on the 'public' disk
@@ -39,10 +51,11 @@ class FileUploadController extends AjaxController
             $uploads->save();            
             // Return success response
             return back()->with('success', 'File uploaded successfully')->with('file', $filePath);
-        }
+        } 
         
-        // Return error response
         return back()->with('error', 'File upload failed');
+      
+        
     }
 }
 ?>

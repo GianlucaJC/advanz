@@ -124,7 +124,7 @@
                      @endforeach  
 
                   </table>
-                  
+
                   @if(session('success'))
                      <div class="alert alert-success mb-2 mt-2" role="alert">
                         <p>{{ session('success') }}</p>
