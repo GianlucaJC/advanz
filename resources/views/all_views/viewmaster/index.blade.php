@@ -176,7 +176,7 @@
                                  <span class="signup_text">Profile</span>
                               </a>
                            </li>
-                           <div>{{ Auth::user()->name }}</div>
+                           <div><span style='color:rgba(225, 217, 96, 0.97);'>{{ Auth::user()->name }}</div>
                         </div>
                         
                         <div class="search_btn1">
