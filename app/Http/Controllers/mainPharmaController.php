@@ -22,9 +22,17 @@ public function __construct()
 	{
 		parent::__construct();
 		//eredito questi valori dalla classe originaria
-		$molecola=$this->molecola;
-		$molecole_info=$this->molecole_info;
+
 		$this->country=$this->paesi();
+
+		$this->middleware(function ($request, $next) {			
+			$id_user = Auth::user()->id;
+			$info=User::select("is_pharma")->where('id','=',$id_user)->first();
+			$is_pharma=0;
+			if($info) $is_pharma=$info->is_pharma;
+			if ($is_pharma==0) return redirect()->away("main_log");	
+			return $next($request);	
+		});
 	}
 
 	public function paesi() {	
@@ -70,11 +78,7 @@ public function __construct()
 
 	public function main_pharma(Request $request) {
 		$country=$this->country;
-		$id_user = Auth::user()->id;
-		$info=User::select("is_pharma")->where('id','=',$id_user)->first();
-		$is_pharma=0;
-		if($info) $is_pharma=$info->is_pharma;
-		if ($is_pharma==0) return redirect()->away("main_log");
+
 
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		

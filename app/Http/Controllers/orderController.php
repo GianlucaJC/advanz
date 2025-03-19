@@ -21,20 +21,22 @@ public function __construct()
 	{
 		parent::__construct();
 		
+		$this->middleware(function ($request, $next) {			
+			$id_user = Auth::user()->id;
+			$info=User::select("is_pharma")->where('id','=',$id_user)->first();
+			$is_pharma=0;
+			if($info) $is_pharma=$info->is_pharma;
+			if ($is_pharma==1) return redirect()->away("main_pharma");		
+			return $next($request);
+		});
+		
 	}
 
 	public function order(Request $request) {
-		$id_user = Auth::user()->id;
-		$info=User::select("is_pharma")->where('id','=',$id_user)->first();
-		$is_pharma=0;
-		if($info) $is_pharma=$info->is_pharma;
-		if ($is_pharma==1) return redirect()->away("main_pharma");
-
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
 		$pack_qty_id=$this->pack_qty_id;
 		$packaging=$this->packaging;
-
 		$id_user = Auth::user()->id;
 		$id_order_view=$request->input('id_order_view');
 

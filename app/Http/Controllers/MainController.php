@@ -21,9 +21,8 @@ class mainController extends AjaxController
 public function __construct()
 	{
 		parent::__construct();
-		//eredito questi valori dalla classe originaria
-		$molecola=$this->molecola;
-		$molecole_info=$this->molecole_info;
+		//eredito valori dalla classe originaria
+
 		
 	}
 	public function save_user($request) {
