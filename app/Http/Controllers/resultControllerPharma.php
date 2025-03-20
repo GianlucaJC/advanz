@@ -22,9 +22,9 @@ public function __construct()
 			$info=User::select("is_pharma")->where('id','=',$id_user)->first();
 			$is_pharma=0;
 			if($info) $is_pharma=$info->is_pharma;
-			if ($is_pharma==0) return redirect()->away("main_log");		
-			return $next($request);
-		});		
+			if ($is_pharma==0) return response()->view('all_views/viewmaster/error',compact('id_user'));
+			return $next($request);	
+		});
 	}
 
 	

@@ -22,7 +22,20 @@ public function __construct()
 	{
 		parent::__construct();
 		//eredito valori dalla classe originaria
-
+		$this->middleware(function ($request, $next) {			
+			if (Auth::user()) {
+				$id_user = Auth::user()->id;
+				$info=User::select("is_pharma","is_admin")->where('id','=',$id_user)->first();
+				$is_pharma=0;$is_admin=0;
+				if($info) {
+					$is_pharma=$info->is_pharma;
+					$is_admin=$info->is_admin;
+				}	
+				if ($is_pharma==1) return redirect()->away("main_pharma");
+				if ($is_admin==1) return redirect()->away("main_admin_order");	
+			}
+			return $next($request);	
+		});
 		
 	}
 	public function save_user($request) {
@@ -182,10 +195,7 @@ public function __construct()
 
 	public function main_log(Request $request) {
 		$id_user = Auth::user()->id;
-		$info=User::select("is_pharma")->where('id','=',$id_user)->first();
-		$is_pharma=0;
-		if($info) $is_pharma=$info->is_pharma;
-		if ($is_pharma==1) return redirect()->away("main_pharma");
+
 
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		

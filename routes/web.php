@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('send_result_pharma', [ 'as' => 'send_result_pharma', 'uses' => 'App\Http\Controllers\resultControllerPharma@send_result_pharma']);
 	Route::post('send_result_pharma', [ 'as' => 'send_result_pharma', 'uses' => 'App\Http\Controllers\resultControllerPharma@send_result_pharma']);
+
+
+    Route::get('main_admin_order', [ 'as' => 'main_admin_order', 'uses' => 'App\Http\Controllers\MainAdminController@main_admin_order']);
+	Route::post('main_admin_order', [ 'as' => 'main_admin_order', 'uses' => 'App\Http\Controllers\MainAdminController@main_admin_order']);
+        
 });      
 
 

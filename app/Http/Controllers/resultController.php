@@ -17,12 +17,13 @@ class resultController extends AjaxController
 public function __construct()
 	{
 		parent::__construct();		
+		
 		$this->middleware(function ($request, $next) {			
 			$id_user = Auth::user()->id;
-			$info=User::select("is_pharma")->where('id','=',$id_user)->first();
-			$is_pharma=0;
-			if($info) $is_pharma=$info->is_pharma;
-			if ($is_pharma==1) return redirect()->away("main_pharma");	
+			$info=User::select("is_user")->where('id','=',$id_user)->first();
+			$is_user=0;
+			if($info) $is_user=$info->is_user;
+			if ($is_user==0) return response()->view('all_views/viewmaster/error',compact('id_user'));
 			return $next($request);	
 		});
 	}
