@@ -53,11 +53,13 @@ public function __construct()
 	
 	public function update_order(Request $request) {
 		$id_ordine=$request->input('id_ordine');
+		$stato=$request->input('stato');
 		$tracker=$request->input('tracker');
 		$ship_date=$request->input('ship_date');
 		$ship_date_estimated=$request->input('ship_date_estimated');
 		
 		$ordini_ref = ordini_ref::find($id_ordine);
+		$ordini_ref->stato = $request->input('stato');
 		$ordini_ref->tracker = $request->input('tracker');
 		$ordini_ref->ship_date = $request->input('ship_date');
 		$ordini_ref->ship_date_estimated = $request->input('ship_date_estimated');

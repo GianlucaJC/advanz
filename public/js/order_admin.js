@@ -81,6 +81,7 @@ function save_info(id_ordine) {
     $("#spin"+id_ordine).show(100)
     let spin = document.getElementById("spin"+id_ordine);
     spin.removeAttribute("hidden");
+    stato=$("#stato"+id_ordine).val()
     tracker=$("#tracker"+id_ordine).val()
     ship_date=$("#ship_date"+id_ordine).val()
     ship_date_estimated=$("#ship_date_estimated"+id_ordine).val()
@@ -93,7 +94,7 @@ function save_info(id_ordine) {
           headers: {
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
           },
-          body: "_token="+ CSRF_TOKEN+"&id_ordine="+id_ordine+"&tracker="+tracker+"&ship_date="+ship_date+"&ship_date_estimated="+ship_date_estimated,
+          body: "_token="+ CSRF_TOKEN+"&id_ordine="+id_ordine+"&stato="+stato+"&tracker="+tracker+"&ship_date="+ship_date+"&ship_date_estimated="+ship_date_estimated,
       })
       .then(response => {
           if (response.ok) {

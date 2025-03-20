@@ -18,34 +18,7 @@
       width: 100%;
       margin: 0 auto;
    }
-
-   .box {
-         display:inline-block;
-         width:70px;
-         padding:4px;
-         border-radius: 8px;
-         text-align: center;
-         font-size: 12px;
-   }
-   
-   .box_new {
-         background-color:rgba(251, 255, 5, 0.61);
-         border: 2px solid;
-         border-color: rgba(245, 186, 57, 0.93);
-         color:#CD7F32;
-   }
-   .box_ready {
-         background-color:rgba(57, 226, 245, 0.93);
-         border: 2px solid;
-         border-color: rgba(57, 73, 245, 0.93);
-         color:blue;
-   }
-   .box_shipped {
-         background-color:rgba(82, 245, 57, 0.93);
-         border: 2px solid;
-         border-color: rgb(121, 190, 98);
-         color:green;
-   }   
+ 
       
 </style>
 <?php if (1==2) {?>
@@ -229,13 +202,18 @@
                            <td>
                               <?php
                                  $stato=$ordine->stato;
-                                 if ($stato==0)
-                                     echo "<div class='box box_new'>New</div>";
-                                 if ($stato==1)
-                                     echo "<div class='box box_ready'>Ready</div>";
-                                 if ($stato==2)
-                                     echo "<div class='box box_shipped'>Shipped</div>";                                    
                               ?>
+                              <select class="form-select" style='width:auto' id='stato{{$ordine->id}}'>
+                                  <option value="0"
+                                  <?php if ($stato=="0") echo " selected ";?>
+                                  >New</option>
+                                 <option value="1"
+                                 <?php if ($stato=="1") echo " selected ";?>
+                                 >Ready</option>
+                                 <option value="2" 
+                                 <?php if ($stato=="2") echo " selected ";?>
+                                 >Shipped</option>
+                              </select>
                            </td>    
                            <td>
                               <?php
