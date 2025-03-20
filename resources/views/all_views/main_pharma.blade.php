@@ -262,9 +262,7 @@
                               {{$ordine->ship_date}}
                            </td> 
                            <td>
-                              <!-- {{$ordine->ship_date_estimated}} !-->
-                               <small>+14 days from order date</small>
-
+                                 {{$ordine->ship_date_estimated}}
                            </td> 
                            <td style='text-align:center'>
                               <button type="submit" onclick="$('#id_order_view').val({{$ordine->id}})" class="btn btn-info">View</button>
