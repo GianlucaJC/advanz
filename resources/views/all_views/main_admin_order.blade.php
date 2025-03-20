@@ -269,12 +269,18 @@
                               
                                <small>
 
-                                 <input type='text' placeholder="free text or date" class='form-control' id='ship_date_estimated{{$ordine->id}}' style='width:150px' value="{{$ordine->ship_date_estimated}}">                                
+                                 <input type='date' class='form-control' id='ship_date_estimated{{$ordine->id}}' style='width:auto' value="{{$ordine->ship_date_estimated}}">                                
                                </small>
 
                            </td> 
                            <td style='text-align:center'>
 
+                              
+                              
+                              <span id='spin{{$ordine->id}}' style='display:inline;' hidden>
+                                 <i class='fas fa-spinner fa-spin'></i>
+                              </span>
+                              
                                 <button type="button" onclick="save_info({{$ordine->id}})" class="btn btn-success">Save</button>
 
                                 <button type="submit" onclick="$('#id_order_view').val({{$ordine->id}})" class="btn btn-info">View</button>

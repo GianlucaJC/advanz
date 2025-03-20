@@ -62,6 +62,7 @@ public function __construct()
 			$user->fax=$request->input("fax");
 			$user->email=$email;
 			$user->password=$pw_c;
+			$user->is_user=1;
 			$user->save();
 			if ($request->has('material')) {
 				$id_user=$user->id;

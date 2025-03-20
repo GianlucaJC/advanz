@@ -77,5 +77,43 @@ function check_choice(id_molecola,id,value) {
 
 
 function save_info(id_ordine) {
-  
+    let CSRF_TOKEN = $("#token_csrf").val();
+    $("#spin"+id_ordine).show(100)
+    let spin = document.getElementById("spin"+id_ordine);
+    spin.removeAttribute("hidden");
+    tracker=$("#tracker"+id_ordine).val()
+    ship_date=$("#ship_date"+id_ordine).val()
+    ship_date_estimated=$("#ship_date_estimated"+id_ordine).val()
+
+    base_path = $("#url").val();
+
+    timer = setTimeout(function() {	
+      fetch(base_path+"/update_order", {
+          method: 'post',
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          body: "_token="+ CSRF_TOKEN+"&id_ordine="+id_ordine+"&tracker="+tracker+"&ship_date="+ship_date+"&ship_date_estimated="+ship_date_estimated,
+      })
+      .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+      })
+      .then(resp=>{
+          spin.setAttribute("hidden", "hidden");
+          if (resp.header=="OK") {
+            
+          }
+          else {
+            alert("Error occurred while deleting file")
+          }
+
+      })
+      .catch(status, err => {
+          return console.log(status, err);
+      })     
+
+    }, 800)	    
+    
 }

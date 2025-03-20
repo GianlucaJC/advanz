@@ -50,7 +50,23 @@ public function __construct()
 		return $paesi;
 
 	}
+	
+	public function update_order(Request $request) {
+		$id_ordine=$request->input('id_ordine');
+		$tracker=$request->input('tracker');
+		$ship_date=$request->input('ship_date');
+		$ship_date_estimated=$request->input('ship_date_estimated');
+		
+		$ordini_ref = ordini_ref::find($id_ordine);
+		$ordini_ref->tracker = $request->input('tracker');
+		$ordini_ref->ship_date = $request->input('ship_date');
+		$ordini_ref->ship_date_estimated = $request->input('ship_date_estimated');
+		$ordini_ref->save();
 
+		$risp=array();
+		$risp['header']="OK";
+		return json_encode($risp);					
+	}
     public function main_admin_order(Request $request) {
 		$country=$this->country;
 
