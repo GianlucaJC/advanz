@@ -81,15 +81,15 @@
 
    <div  id='div_stat' style="display:none">
       <div class="appointment_section mt-3" style='display:flex;'>
-               <div class="container">
-                  <div class="appointment_box">
-                     <div>
-                        <button type="button" onclick="$('#div_stat').hide(100)" class="btn btn-outline-dark">Close Statistics</button>
-                     </div>
-                     <hr>
-                     <small>Section under construction. The data are purely indicative</small>
-                  </div>  
-               </div> 
+            <div class="container">
+               <div class="appointment_box">
+                  <div>
+                     <button type="button" onclick="$('#div_stat').hide(100)" class="btn btn-outline-dark">Close Statistics</button>
+                  </div>
+                  <hr>
+                  <small>Section under construction. The data are purely indicative</small>
+               </div>  
+            </div> 
       </div>
       <div class="appointment_section mt-3" style='display:flex;'>
             <div class="container">
