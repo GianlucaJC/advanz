@@ -35,7 +35,7 @@ function LoadGoogle(){
 
     // Set Data
     const data1 = google.visualization.arrayToDataTable([
-      ['Molecule', 'Units'],
+      ['', 'Units'],
       ['Ceftobiprole ',20],
       ['Dalbavancin ',15],
       ['Cefepime/Enmetazobactam',18],
@@ -43,7 +43,7 @@ function LoadGoogle(){
 
     // Set Options
     const options1 = {
-      title:'Molecule',
+      title:'',
       is3D:true
     };
 
