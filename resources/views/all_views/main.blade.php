@@ -426,7 +426,7 @@
                   
                   <div class='container-fluid'>
                      <div class="alert alert-dark mt-4" role="alert">
-                        Requests for Ceftobiprole and Enmetazobactam powder may be sent to Clinicaldevelopment@advanzpharma.  com      
+                        Requests for Ceftobiprole and Enmetazobactam powder may be sent to clinicaldevelopment@advanzpharma.com
                      </div>
                   </div>   
 
