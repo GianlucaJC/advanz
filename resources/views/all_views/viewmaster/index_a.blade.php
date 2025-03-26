@@ -228,7 +228,7 @@
       @yield('content_main')
 
 
-      
+      @if ( !Auth::user())
       <div class="about_section layout_padding mb-3">
          <div class="container">
 
@@ -251,6 +251,7 @@
             </div>
          </div>
     </div>
+    @endif
 
       <!-- treatment section start -->
       @yield('content2')
