@@ -244,7 +244,7 @@
                            </span>
                         </div>   
                      </div>       
-                     
+                     @if ($route=="main_pharma") 
                      <div class="col-md-3">
                         <div class='custom_lnk'>
                            <span class='normal_m'>
@@ -252,6 +252,7 @@
                            </span>
                         </div>   
                      </div>                     
+                     @endif
                   
                   </div> 
                </div>  
@@ -262,6 +263,7 @@
       @endif 
 
 
+      
       @yield('content_main')
 
 
