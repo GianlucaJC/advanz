@@ -35,7 +35,19 @@
 <form method='post' action="{{ route('contact') }}" id='frm_contact' name='frm_contact' class="needs-validation" autocomplete="off" novalidate>
     <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
     <div id='div_intro'>
-      <div class="appointment_section">
+
+    <div class="appointment_section">
+            <div class='container'>    
+               <div class="appointment_box"> 
+
+                    <a href="main">
+                      <button type="button" class="btn btn-info">Back to home</button>
+                    </a>
+                  
+               </div>
+            </div> 
+      </div>          
+      <div class="appointment_section mt-2">
             <div class='container'>
                <div class="appointment_box">
                   <div class="jumbotron">

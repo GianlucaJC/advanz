@@ -145,16 +145,19 @@
            
                <div class="custom_bg">
                   <div class="custom_menu">
+                  @if (!Auth::user())
                      <ul>
                         <li class="active"><a href="{{$main_ref}}">Home</a></li>
-                        @if (!Auth::user())
+                        
                         <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
-                        @endif
-                        <li><a href="contact" target='_blank'>Contact Us</a></li>
+                       
+                        <li><a href="contact">Contact Us</a></li>
                         <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
 
                      </ul>
+                     @endif
                   </div>
+                  
                   <?php
                      $disp="";
                      if ( Auth::user()) $disp="display:none";
@@ -260,7 +263,7 @@
       @yield('content_main')
 
 
-      
+      @if ( !Auth::user())
       <div class="about_section layout_padding mb-3">
          <div class="container">
 
@@ -283,6 +286,7 @@
             </div>
          </div>
     </div>
+    @endif
 
       <!-- treatment section start -->
       @yield('content2')

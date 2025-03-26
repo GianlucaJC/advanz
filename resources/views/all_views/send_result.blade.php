@@ -125,6 +125,7 @@
 
                   </table>
 
+
                   @if(session('success'))
                      <div class="alert alert-success mb-2 mt-2" role="alert">
                         <p>{{ session('success') }}</p>
@@ -134,9 +135,22 @@
                 
                   @if(session('error'))
                      <div class="alert alert-warning mb-2 mt-2" role="alert">
-                        <p>{{ session('error') }}</p>
+                        <p>
+                           <h3><b>Attention!</b> File not sent</h3><hr>
+                           Check size attachents. <b>Max length is 2048 Bytes (2MB)</b><br>
+                           Only this format are accepted: <b>png, jpg, pdf</b>
+                        </p>
                      </div>
                   @endif
+                  @if (!session('error') && !session('success')) 
+                       <div class="alert alert-info mb-2 mt-2" role="alert">
+                        <p>
+                           Check size attachents. <b>Max length is 2048 Bytes (2MB)</b><br>
+                           Only this format are accepted: <b>png, jpg, pdf</b>
+                        </p>
+                     </div>                  
+                  @endif
+
 
                   <button type="button" class="btn btn-info mt-2" onclick="$('#div_up').toggle(200);"><i class="fas fa-plus"></i> Add Test Result</button>
                   <div id='div_up' style='display:none'>    

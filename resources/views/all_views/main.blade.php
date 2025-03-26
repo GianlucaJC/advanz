@@ -466,7 +466,7 @@
                         <input class="form-control" id="password2" value="{{$post['password2'] ?? ''}}" name='password2' type="password" placeholder="Confirm Password" required  maxlength="20" value="" />
                         <label for="password2">Confirm Password*</label>
                      </div>
-                  </div>                                       
+                  </div> 
                </div>
 
                <div class="row mb-2 g-2" style='display:none' id='err_pw' >
@@ -571,10 +571,17 @@
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating">
-                        <input class="form-control" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
+                        <input class="form-control pw" id="password" name='password' type="password" placeholder="Password" required  maxlength="20" value="" />
                         <label for="password">Password*</label>
                      </div>
                      <font color='red'><x-input-error :messages="$errors->get('password')" class="mt-2" /></font>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="view_pw">
+                        <label class="form-check-label" for="view_pw">
+                           View Password
+                        </label>
+                  </div>                  
+
                   </div>
                                      
                </div>

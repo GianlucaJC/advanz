@@ -65,6 +65,11 @@
 })()
 
 $(document).ready( function () {
+
+  $('#view_pw').on('change', function(){
+    $('.pw').attr('type',$('#view_pw').prop('checked')==true?"text":"password"); 
+  });
+
   let cookie_healt =getCookie("cookie_healt"); 
   if (!cookie_healt || cookie_healt=="2") {
     

@@ -32,8 +32,8 @@ class FileUploadController extends AjaxController
         $validatedData = Validator::make($request->all(), [
             'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
         ]);
-        if (!$validatedData->fails()) {
-            return back()->with('error', 'File upload failed');
+        if ($validatedData->fails()) {
+            return back()->with('error', 'Failed');
         }
 
         // Check if the file is valid

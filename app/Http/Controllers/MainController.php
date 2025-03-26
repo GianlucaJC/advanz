@@ -196,6 +196,7 @@ public function __construct()
 
 	public function main_log(Request $request) {
 		$id_user = Auth::user()->id;
+		$info_mail=DB::table('users')->select('email','name')->where('id','=',$id_user)->first();
 
 
 		$molecola=$this->molecola;
