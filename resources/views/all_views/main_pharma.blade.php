@@ -7,11 +7,10 @@
 <!-- x button export -->
 
    <script async src="https://www.google.com/recaptcha/api.js"></script>
-<!-- -->
+   <script src="https://www.gstatic.com/charts/loader.js"></script>
    
    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
 @endsection
-
 
 <style>
    div.dataTables_wrapper {
@@ -48,11 +47,16 @@
    }   
       
 </style>
+
+
+
+
 <?php if (1==2) {?>
    @section('top')
       @include('all_views.components.top')
    @endsection
 <?php } ?>
+
 
 
 <div class="modal" id="modal_main" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -70,12 +74,40 @@
     </div>
   </div>
 </div>
+
+
+
 @section('content_main')
+
+   <div  id='div_stat' style="display:none">
+      <div class="appointment_section mt-3" style='display:flex;'>
+               <div class="container">
+                  <div class="appointment_box">
+                     <div>
+                        <button type="button" onclick="$('#div_stat').hide(100)" class="btn btn-outline-dark">Close Statistics</button>
+                     </div>
+                     <hr>
+                     <small>Section under construction. The data are purely indicative</small>
+                  </div>  
+               </div> 
+      </div>
+      <div class="appointment_section mt-3" style='display:flex;'>
+            <div class="container">
+               <div class="appointment_box">
+                  <div id="myChart1" style="max-width:auto; height:auto;display:inline-block"></div> 
+                  <div id="myChart2" style="max-width:auto; height:auto;display:inline-block"></div> 
+               </div>
+            </div>
+      </div>
+
+   </div>
+
    <form method='post' action="{{ route('main_pharma') }}" id='frm_order' name='frm_order' class="needs-validation" autocomplete="off" novalidate>
    <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'> 
 
    <div id='div_sign' style='' >
 
+   
    <input type='hidden' name='id_order_view' id='id_order_view' value='{{$id_order_view}}'>
       @if ($id_order_view>0)
       <div class="appointment_section mt-3">
@@ -303,6 +335,8 @@
    </form>
 
 @endsection
+
+
 
 @section('content_plugin')
 	<!-- inclusione standard

@@ -1,7 +1,63 @@
 ismobile=false
 
+
+function LoadGoogle(){
+  google.charts.load('current', {
+    callback: drawChart,
+    packages:['corechart']
+  });
+
+
+  function drawChart() {
+
+    // Set Data
+    const data = google.visualization.arrayToDataTable([
+      ['Country', 'Units'],      
+      ['France', 60],
+      ['Austria',55],
+      ['Denmark',49],
+      ['Germany',44],
+      ['Ireland',24],
+      ['Spain',15],
+      ['United Kingdom',10]
+    ]);
+    
+    // Set Options
+    const options = {
+      title:'Orders 2025'
+    };
+    
+    // Draw1
+    const chart = new google.visualization.BarChart(document.getElementById('myChart1'));
+    chart.draw(data, options);
+
+    //Image 2
+
+    // Set Data
+    const data1 = google.visualization.arrayToDataTable([
+      ['Molecule', 'Units'],
+      ['Ceftobiprole ',20],
+      ['Dalbavancin ',15],
+      ['Cefepime/Enmetazobactam',18],
+    ]);
+
+    // Set Options
+    const options1 = {
+      title:'Molecule',
+      is3D:true
+    };
+
+    // Draw
+    const chart1 = new google.visualization.PieChart(document.getElementById('myChart2'));
+    chart1.draw(data1, options1);
+
+    
+    }
+   
+} 
 $(document).ready( function () {
- 
+  LoadGoogle();
+
   if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
     ismobile=true
   else

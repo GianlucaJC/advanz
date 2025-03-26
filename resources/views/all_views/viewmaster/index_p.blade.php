@@ -6,6 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="theme-color" content="#dc3545"/>
       <!-- bootstrap css -->
+      <title>@yield('title')</title>
+       
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!-- style css -->
@@ -29,9 +31,11 @@
 
       <!-- <link rel="stylesheet" href="css/owl.theme.default.min.css">!-->
       <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">!-->
-      
-      <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+      @yield('extra_style')  
 
+      <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    </head>
    
    <style>
@@ -239,7 +243,15 @@
                               <a href="send_result_pharma">Customer Test <i class="fas fa-flask"></i></i></a>
                            </span>
                         </div>   
-                     </div>                  
+                     </div>       
+                     
+                     <div class="col-md-3">
+                        <div class='custom_lnk'>
+                           <span class='normal_m'>
+                              <a href="#" onclick="$('#div_stat').toggle(150)">Statistics <i class="fa-solid fa-chart-pie"></i></a>
+                           </span>
+                        </div>   
+                     </div>                     
                   
                   </div> 
                </div>  
@@ -248,6 +260,7 @@
          </div> 
        
       @endif 
+
 
       @yield('content_main')
 
