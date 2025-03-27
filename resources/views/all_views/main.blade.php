@@ -1,7 +1,7 @@
 @extends('all_views.viewmaster.index')
 
 
-@section('title', 'Advanz')
+@section('title', 'ADVANZ PHARMA')
 
 @section('extra_style') 
 

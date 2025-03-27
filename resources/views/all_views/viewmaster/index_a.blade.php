@@ -236,7 +236,7 @@
 
             <div class="row">
                <div class="col-md-6">
-                  <h1 class="about_taital">About Advanz Pharma</h1>
+                  <h1 class="about_taital">About ADVANZ PHARMA</h1>
                   <p class="about_text"  style="text-align: justify;text-justify: inter-word;"> 
 
                      ADVANZ PHARMA is a global pharmaceutical company with the purpose to improve patients’ lives by providing the specialty, hospital, and rare disease medicines they depend on.
@@ -278,9 +278,12 @@
                      <h3 class="footer_taital">Address</h3>
                      <div class="location_main">
                         <ul>
-                           <li>
+                          <li>
                               <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                              <span class="padding_15">11-15 Seaton Place St Helier Jersey JE4 0QH</span></a>
+                              <span class="padding_15">
+                                 <b>Corporate Headquarters</b>,<br>
+                                 Dashwood House, 2nd Floor, 69 Old Broad Street, London, EC2M 1QS 
+                              </span></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
@@ -294,6 +297,7 @@
                      </div>
                      <div class="footer_social_icon">
                         <ul>
+                           <!--
                            <li>
                               <a href="#"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
                            </li>
@@ -301,10 +305,11 @@
                               <a href="#"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-                           </li>
-                           <li>
                               <a href="#"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                           </li>
+                           !-->   
+                           <li>
+                              <a href="https://www.linkedin.com/company/advanz-pharma/about/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
                            </li>
                         </ul>
                      </div>
