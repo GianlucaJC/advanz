@@ -213,6 +213,8 @@ public function __construct()
 
 			$ordini_ref=new ordini_ref;
 			$ordini_ref->id_user=$id_user;
+			$estim=date('Y-m-d', strtotime("+14 days"));
+			$ordini_ref->ship_date_estimated=$estim;
 			$ordini_ref->save();
 			$id_ordine = $ordini_ref->id;
 
