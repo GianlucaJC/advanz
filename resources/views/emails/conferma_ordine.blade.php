@@ -28,8 +28,7 @@
                         echo $art_in_order[$articolo]['descr_molecola'];
                     if (isset($art_in_order[$articolo]['descr_pack']))
                         echo " - ".$art_in_order[$articolo]['descr_pack'];
-                    if (isset($art_in_order[$articolo]['descr_qty']))
-                        echo " - ".$art_in_order[$articolo]['descr_qty'];
+
                 echo "</li>";
             }    
         echo "</ul>";
