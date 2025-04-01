@@ -11,6 +11,7 @@ use DB;
 use Users;
 use Mail;
 
+use App\Models\allestimento;
 use App\Models\carrello;
 use App\Models\ordini;
 use App\Models\ordini_ref;
@@ -217,7 +218,7 @@ public function __construct()
 			$ordini_ref->ship_date_estimated=$estim;
 			$ordini_ref->save();
 			$id_ordine = $ordini_ref->id;
-
+				
 			for ($sca=0;$sca<count($material);$sca++) {
 				$new_ord=true;
 				$articolo=$material[$sca];
@@ -241,6 +242,8 @@ public function __construct()
 					$info_order['delivery_date']=date("Y-m-d");
 					$estim=date('Y-m-d', strtotime("+14 days"));
 					$info_order['estim']=$estim;
+					$art_in_order=$this->art_in_order($material);
+					$info_order['art_in_order']=$art_in_order;
 					$this->info_order=$info_order;
 
 					$this->send_mail(2,$info_mail->email,"send_customer_admin");
@@ -249,6 +252,38 @@ public function __construct()
 		}
 		return view('all_views/main_log',compact('id_user','count','molecola','molecole_info','molecola','molecole_info','packaging','new_ord'));
 
+	}
+
+	public function art_in_order($material) {
+		$resp=array();
+		
+		for ($sca=0;$sca<count($material);$sca++) {
+			$id_all=$material[$sca];
+			$info_all=DB::table('allestimento')
+			->select("id_molecola","id_pack","id_pack_qty")
+			->where('id',"=",$id_all)
+			->first();
+			if($info_all) {
+				$id_molecola=$info_all->id_molecola;
+				$id_pack=$info_all->id_pack;
+				$id_pack_qty=$info_all->id_pack_qty;
+
+				$resp[$id_all]['id_molecola']=$id_molecola;
+				if (isset($this->molecola[$id_molecola])) $resp[$id_all]['descr_molecola']=$this->molecola[$id_molecola];
+				else $resp[$id_all]['descr_molecola']=$id_molecola;
+
+				$resp[$id_all]['id_pack']=$id_pack;
+				if (isset($this->packaging[$id_pack])) $resp[$id_all]['descr_pack']=$this->packaging[$id_pack];
+				else $resp[$id_all]['descr_pack']=$id_pack;
+				
+				$resp[$id_all]['id_pack_qty']=$id_pack_qty;
+
+			}
+			
+		
+		}
+		
+		return $resp;
 	}
 
 	public function send_mail($type,$email,$to) {

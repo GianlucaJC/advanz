@@ -6,6 +6,7 @@
 <?php
     $name=$info_order['name'];
     $material=$info_order['material'];
+    $art_in_order=$info_order['art_in_order'];
     $delivery_date=$info_order['delivery_date'];
     $estim=$info_order['estim'];
 ?>
@@ -14,20 +15,25 @@
 <p>Thank you for your order!</p><br>
 <p>Order details:</p><br>
 <hr>
-<p>Item(s):[List of Ordered items]
+<p>Item(s):
 <?php
-    if (1==2) {
+
         echo "<br>";
         echo "<ul>";
             for ($sca=0;$sca<count($material);$sca++) {
                 $articolo=$material[$sca];
                 if (strlen($articolo)==0) continue;
                 echo "<li>";
-                    echo $articolo;
+                    if (isset($art_in_order[$articolo]['descr_molecola']))
+                        echo $art_in_order[$articolo]['descr_molecola'];
+                    if (isset($art_in_order[$articolo]['descr_pack']))
+                        echo " - ".$art_in_order[$articolo]['descr_pack'];
+                    if (isset($art_in_order[$articolo]['descr_qty']))
+                        echo " - ".$art_in_order[$articolo]['descr_qty'];
                 echo "</li>";
             }    
         echo "</ul>";
-    }
+
 ?>
 </p>
 

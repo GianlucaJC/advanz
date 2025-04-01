@@ -47,6 +47,7 @@ class AjaxController extends Controller
 		$this->pack_qty_ref=$pack_qty_ref;	
 
 		$this->no_art=array(); //articoli già ordinati da inibire
+		
 	}
 
     public function check_allestimento(Request $request) {
@@ -169,6 +170,8 @@ class AjaxController extends Controller
        return json_encode($risp);	 
 
     }
+
+
 
 	public function load_allestimento() {
 		$molecole_in_allestimento=$this->molecole_in_allestimento;
