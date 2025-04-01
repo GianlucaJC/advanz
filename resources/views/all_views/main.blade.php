@@ -79,7 +79,7 @@
                <div class="appointment_box">
                   <div class="jumbotron">
                      <p style='text-align:justify'>
-                     All the information and personal data you share with us will be protected and kept confidential in line with our company policy on data protection accessible here <a href='https://www.advanzpharma.com/privacy-policy' target='blank'>https://www.advanzpharma.com/privacy-policy</a>. By clicking on the button “Register for Enrollment” or contacting us by phone or at the <a href='mailto:info@advanz.com'>info@advanz.com</a> address and submitting your personal information as requested in particular in the concerned form you consent to the processing of your personal data in accordance with our privacy policy. The collected information will be used only for the management of your request and will be stored for a limited period, proportionate to the aims pursued. You have a right of access to the personal data which we may hold about you as well as various other rights as outlined in our privacy policy. To exercise any of those rights, or if you have any comments or questions about our privacy policy, you can address your request to the following email address: <a href='mailto:enquiries@advanzpharma.com'>enquiries@advanzpharma.com</a>.
+                     All the information and personal data you share with us will be protected and kept confidential in line with our company policy on data protection accessible here <a href='https://www.advanzpharma.com/privacy-policy' target='blank'>https://www.advanzpharma.com/privacy-policy</a>. By clicking on the button “Register for Enrollment” or contacting us by phone or at the <a href='mailto:info@advanz.com'>info@advanz.com</a> address and submitting your personal information as requested in particular in the concerned form you consent to the processing of your personal data in accordance with our privacy policy. The collected information will be used only for the management of your request and will be stored for a limited period, proportionate to the aims pursued. You have a right of access to the personal data which we may hold about you as well as various other rights as outlined in our privacy policy. To exercise any of those rights, or if you have any comments or questions about our privacy policy, you can address your request to the following email address: <a href='mailto:enquiries@advanz-astip.com'>enquiries@advanz-astip.com</a>.
                      </p>
 
                      <hr class="my-2">
@@ -152,14 +152,21 @@
       <input name="_token" type="hidden" value="{{ csrf_token() }}" id='token_csrf'>
 	 
 	
+      <div class="appointment_section mb-3">
+         <div class="container">
+            <div class="appointment_box">
+               <h2>INTRODUCTION</h2>
+                  <p style='text-align:justify'>            
+                     ADVANZ PHARMA offers you the opportunity to join the antimicrobial susceptibility Investigational Program (ASTIP). The ASTIP provides In Vitro Diagnostics (IVD) materials for susceptibility testing at no cost. The goal is to help healthcare institutions to better understand the susceptibility of pathogens, the appropriate use of antibiotics and the prevention of antimicrobial resistances in your healthcare institution. By registering to ASTIP you can order a limited quantity of in vitro testing material for research use only and upload anonymised results. Disks and Strips are manufactured by Liofilchem® s.r.l. (<a href='https://www.liofilchem.com' class='link-info'>https://www.liofilchem.com</a>) and automated testing plates by Thermo Fisher Scientific (<a href='https://www.thermofisher.com' class='link-info'>https://www.thermofisher.com</a>)
+                  </p>
+               </div>
+         </div>
+      </div>
+
 	  <div class="appointment_section">
 
          <div class="container">
             <div class="appointment_box">
-            <p style='background-color:rgba(158, 190, 242, 0.11);padding:8px; border: 2px solid;color:rgb(29, 107, 231);border-radius: 1.25rem;text-align:justify'>            
-               ADVANZ PHARMA offers you the opportunity to join the antimicrobial susceptibility Investigational Program (ASTIP). The ASTIP provides In Vitro Diagnostics (IVD) materials for susceptibility testing at no cost. The goal is to help healthcare institutions to better understand the susceptibility of pathogens, the appropriate use of antibiotics and the prevention of antimicrobial resistances in your healthcare institution. By registering to ASTIP you can order a limited quantity of in vitro testing material for research use only and upload anonymised results. Disks and Strips are manufactured by Liofilchem® s.r.l. (<a href='https://www.liofilchem.net' class='link-info'>https://www.liofilchem.net</a>) and automated testing plates by Thermo Fisher Scientific (<a href='https://www.thermofisher.com' class='link-info'>https://www.thermofisher.com</a>)
-            </p>
-
                <div class="row">
                   <div class="col-md-12">
                      <h1 class="appointment_taital">User <span style="color: #0cb7d6;">Information</span></h1>

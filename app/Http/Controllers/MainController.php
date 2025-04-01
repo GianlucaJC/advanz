@@ -237,6 +237,8 @@ public function __construct()
 					$info_order['material']=$material;
 					$info_order['name']=$info_mail->name;
 					$info_order['delivery_date']=date("Y-m-d");
+					$estim=date('Y-m-d', strtotime("+14 days"));
+					$info_order['estim']=$estim;
 					$this->info_order=$info_order;
 
 					$this->send_mail(2,$info_mail->email,"send_customer_admin");

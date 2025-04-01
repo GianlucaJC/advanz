@@ -329,7 +329,7 @@
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
-                              <span class="padding_15">Email : enquiries@advanzpharma.com</span></a>
+                              <span class="padding_15">Email : enquiries@advanz-astip.com</span></a>
                            </li>
                         </ul>
                      </div>
@@ -370,7 +370,7 @@
                   </div>
                   <div class="col-lg-3 col-sm-6">
                      <h3 class="footer_taital">Help & Support</h3>
-                     <p class="ipsum_text">To obtain support on using the services, contact enquiries@advanzpharma.com</p>
+                     <p class="ipsum_text">To obtain support on using the services, contact enquiries@advanz-astip.com</p>
                   </div>
 
                </div>
