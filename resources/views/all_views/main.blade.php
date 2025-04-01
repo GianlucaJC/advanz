@@ -84,7 +84,7 @@
 
                      <hr class="my-2">
                     
-                    <div class="about_bt" style='width:auto'><a href="#" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register for Enrollment</a></div>
+                    <div class="about_bt" style='width:auto'><a href="#" onclick="$('#about').hide();$('#div_intro').hide();$('#div_sign').show(200);">Register for Enrollment</a></div>
                   
                   </div>
             </div> 
