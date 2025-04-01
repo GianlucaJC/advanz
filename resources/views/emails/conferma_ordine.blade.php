@@ -14,19 +14,21 @@
 <p>Thank you for your order!</p><br>
 <p>Order details:</p><br>
 <hr>
-<p>Item(s):<br>
-    <ul>
-        <?php
-        
-        for ($sca=0;$sca<count($material);$sca++) {
-            $articolo=$material[$sca];
-            if (strlen($articolo)==0) continue;
-            echo "<li>";
-                echo $articolo;
-            echo "</li>";
-        }    
-        ?>
-    </ul>
+<p>Item(s):[List of Ordered items]
+<?php
+    if (1==2) {
+        echo "<br>";
+        echo "<ul>";
+            for ($sca=0;$sca<count($material);$sca++) {
+                $articolo=$material[$sca];
+                if (strlen($articolo)==0) continue;
+                echo "<li>";
+                    echo $articolo;
+                echo "</li>";
+            }    
+        echo "</ul>";
+    }
+?>
 </p>
 
 Delivery Address: [HCP’s address]<br><br>
