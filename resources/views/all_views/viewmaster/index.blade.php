@@ -124,16 +124,16 @@
                         </li>
                         @if (!Auth::user())
                         <li class="nav-item">
-                           <a class="nav-link" href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a>
+                           <a class="nav-link" href="javascript:void(0)" onclick="$('#about').hide();$('#div_intro').hide();$('#div_sign').show(200);">Register</a>
                         </li>
                               
                         
                         <div>
                            <li class="nav-item">
-                              <a class="nav-link" href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a>
+                              <a class="nav-link" href="#" onclick="$('#about').hide();$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a>
                            </li>
                            <li class="nav-item">
-                                 <a class="nav-link" href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a>
+                                 <a class="nav-link" href="#" onclick="$('#about').hide();$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a>
                            </li>
                         </div>
                         @endif                         
@@ -150,7 +150,7 @@
                      <ul>
                         <li class="active"><a href="{{$main_ref}}">Home</a></li>
                         
-                        <li><a href="javascript:void(0)" onclick="$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
+                        <li><a href="javascript:void(0)" onclick="$('#about').hide();$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
                        
                         <li><a href="contact">Contact Us</a></li>
                         <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
@@ -166,8 +166,8 @@
 
                   <div id='div_sign_log' style='{{$disp}}' >  
                         <div class="search_btn">
-                           <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
-                           <li><a href="#" onclick="$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
+                           <li><a href="#" onclick="$('#about').hide();$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Login</span></a></li>
+                           <li><a href="#" onclick="$('#about').hide();$('#div_intro').hide();$('#div_reg_log').hide(100);$('#div_sign').show(250);$('#div_log').hide();"><i class="fa fa-user" aria-hidden="true"></i><span class="signup_text">Sign Up</span></a></li>
                         </div>
                   </div>
 
@@ -265,7 +265,7 @@
 
 
       @if ( !Auth::user())
-      <div class="about_section layout_padding mb-3">
+      <div class="about_section layout_padding mb-3" id='about'>
          <div class="container">
 
 

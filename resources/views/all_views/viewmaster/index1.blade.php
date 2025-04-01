@@ -157,27 +157,6 @@
       @yield('content_main')
       
 
-      <div class="about_section layout_padding mb-3">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-6">
-                  <h1 class="about_taital">About ADVANZ PHARMA</h1>
-                  <p class="about_text"  style="text-align: justify;text-justify: inter-word;"> 
-
-                     ADVANZ PHARMA is a global pharmaceutical company with the purpose to improve patients’ lives by providing the specialty, hospital, and rare disease medicines they depend on.
-
-                     Our ambition is to be a partner of choice for the commercialisation of specialty, hospital, and rare disease medicines in Europe, Canada, and Australia. In line with our ambition, we are partnering with innovative biopharma and pharmaceutical development companies to bring medicines to patients.
-
-                     Headquartered in London, UK, we have commercial sales in more than 90 countries globally and have a direct commercial presence in more than 20 countries, including key countries in Europe, the US, Canada, and Australia. </p>
-                     <div class="about_bt"><a href="https://www.advanzpharma.com" target='_blank'>Read More</a></div>
-               </div>
-               <div class="col-md-6">
-                  <div class="about_img"><img src="{{ URL::asset('/') }}images/piastre.jpg"></div>
-               </div>
-            </div>
-         </div>
-    </div>
-
       <!-- treatment section start -->
       @yield('content2')
       <!-- treatment section end -->
