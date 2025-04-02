@@ -235,10 +235,18 @@ public function __construct()
 				$count=0;
 			}
 			if ($new_ord==true) {
-				$info_mail=DB::table('users')->select('email','name')->where('id','=',$id_user)->first();
+				$info_mail=DB::table('users')
+				->select('email','name','istituto','shipping_address1','shipping_address2','state','city','postal_code')
+				->where('id','=',$id_user)->first();
 				if($info_mail) {
 					$info_order['material']=$material;
 					$info_order['name']=$info_mail->name;
+					$info_order['istituto']=$info_mail->istituto;
+					$info_order['shipping_address1']=$info_mail->shipping_address1;
+					$info_order['shipping_address2']=$info_mail->shipping_address2;
+					$info_order['state']=$info_mail->state;
+					$info_order['city']=$info_mail->city;
+					$info_order['postal_code']=$info_mail->postal_code;
 					$info_order['delivery_date']=date("Y-m-d");
 					$estim=date('Y-m-d', strtotime("+14 days"));
 					$info_order['estim']=$estim;
