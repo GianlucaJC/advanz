@@ -46,8 +46,10 @@ public function __construct()
 
 
 		$lista_upload=DB::table('uploads as a')
-		->select('id','filereal','testo_ref','id_molecola','id_pack')
+		->select('id','filereal','testo_ref','culture_date','species_name','infection_source','test_method','test_result','id_molecola','id_pack')
 		->where('id_user','=',$id_user)
+		->orderBy('id_molecola')
+		->orderBy('id_pack')
 		->get();
 		$arr_up=array();$indice=0;
 		foreach($lista_upload as $uploads) {
@@ -56,13 +58,21 @@ public function __construct()
 			$id_p=$uploads->id_pack;
 			$filereal=$uploads->filereal;
 			$testo_ref=$uploads->testo_ref;
-			if (isset($arr_up[$id_mol][$id_p])) 
-				$indice=count($arr_up[$id_mol][$id_p]);
+
+			$culture_date=$uploads->culture_date;
+			$species_name=$uploads->species_name;
+			$infection_source=$uploads->infection_source;
+			$test_method=$uploads->test_method;
+			$test_result=$uploads->test_result;
+			$id_ref=$id_mol."_".$id_p;
+			if (isset($arr_up[$id_ref])) 
+				$indice=count($arr_up[$id_ref]);
 			else $indice=0;
-			$arr_up[$id_mol][$id_p][$indice]=$id_up."|".$filereal."|".$testo_ref;
+
+			$arr_up[$id_ref][$indice]=$uploads;
 		}
 
-		return view('all_views/send_result',compact('id_user','molecola','molecole_info','lista_ordini','packaging','pack_qty_id','arr_up'));
+		return view('all_views/send_result',compact('id_user','molecola','molecole_info','packaging','pack_qty_id','arr_up'));
 				
 	}
 

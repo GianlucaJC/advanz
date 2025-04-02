@@ -21,6 +21,12 @@ class FileUploadController extends AjaxController
         $id_molecola=$request->input('id_molecola');
         $id_pack=$request->input('id_pack');
         $testo_ref=$request->input('testo_ref');
+        $culture_date=$request->input('culture_date');
+        $species_name=$request->input('species_name');
+        $infection_source=$request->input('infection_source');
+        $test_method=$request->input('test_method');
+        $test_result=$request->input('test_result');
+
 
         // Validate the uploaded file
         /*
@@ -48,6 +54,13 @@ class FileUploadController extends AjaxController
             $uploads->id_pack=$id_pack;
             $uploads->filereal=$filereal;
             $uploads->testo_ref=$testo_ref;
+
+            $uploads->culture_date=$culture_date;
+            $uploads->species_name=$species_name;
+            $uploads->infection_source=$infection_source;
+            $uploads->test_method=$test_method;
+            $uploads->test_result=$test_result;
+
             $uploads->save();            
             // Return success response
             return back()->with('success', 'File uploaded successfully')->with('file', $filePath);
