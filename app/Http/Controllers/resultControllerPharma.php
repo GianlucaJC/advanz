@@ -36,24 +36,35 @@ public function __construct()
 		$pack_qty_id=$this->pack_qty_id;
 		$packaging=$this->packaging;
 
-		$lista_upload=DB::table('uploads as u')
-		->select('id','id_user','filereal','testo_ref','id_molecola','id_pack')
-		->orderBy('u.id_molecola')
-		->orderBy('u.id_pack')
-		->get();
-		$indice=0;
-		$arr_up=array();
-		foreach($lista_upload as $lista) {
-			$id_molecola=$lista->id_molecola;
-			$id_pack=$lista->id_pack;
-			$id_union=$id_molecola."_".$id_pack;
 
-			if (!array_key_exists($id_union,$arr_up)) $indice=0;
-			else $indice=count($arr_up[$id_union]);
-			$arr_up[$id_union][$indice]=$lista;
+
+		$lista_upload=DB::table('uploads as a')
+		->select('id','filereal','testo_ref','culture_date','species_name','infection_source','test_method','test_result','id_molecola','id_pack')
+		->orderBy('id_molecola')
+		->orderBy('id_pack')
+		->get();
+		$arr_up=array();$indice=0;
+		foreach($lista_upload as $uploads) {
+			$id_up=$uploads->id;
+			$id_mol=$uploads->id_molecola;
+			$id_p=$uploads->id_pack;
+			$filereal=$uploads->filereal;
+			$testo_ref=$uploads->testo_ref;
+
+			$culture_date=$uploads->culture_date;
+			$species_name=$uploads->species_name;
+			$infection_source=$uploads->infection_source;
+			$test_method=$uploads->test_method;
+			$test_result=$uploads->test_result;
+			$id_ref=$id_mol."_".$id_p;
+			if (isset($arr_up[$id_ref])) 
+				$indice=count($arr_up[$id_ref]);
+			else $indice=0;
+
+			$arr_up[$id_ref][$indice]=$uploads;
 		}
 
-		return view('all_views/send_result_pharma',compact('molecola','molecole_info','lista_upload','packaging','pack_qty_id','arr_up'));
+		return view('all_views/send_result_pharma',compact('molecola','molecole_info','packaging','pack_qty_id','arr_up'));
 				
 	}
 

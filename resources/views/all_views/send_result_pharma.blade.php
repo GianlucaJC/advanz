@@ -59,60 +59,114 @@
          <div class="container">
             <div class="appointment_box">
   
-               <div id='your'>
+            <div id='your' style='overflow-x:scroll'>
                   <table id='tbl_articoli' class="display nowrap">
                      <thead>
                         <tr>
+                           
                            <th>Molecule</th>
                            <th>Packaging</th>  
+                           <th>Culture date</th>  
+                           <th>Species name</th>  
+                           <th>Infection source</th>  
+                           <th>Test method</th>  
+                           <th>Test result</th>  
                            <th>Attachments</th>
                         </tr>
                      </thead>
+                     <?php
+                        $fl_upload=array();
+                        $keys=array_keys($arr_up);
+                       
+                     ?>  
+                     @foreach($keys as $key)
+                     <?php
 
-                     @foreach(array_keys($arr_up) as $id_ref) 
-                         <tr>
+                        for ($ii=0;$ii<count($arr_up[$key]);$ii++) {
+                           $info_k=explode("_",$key);
+                           $id_molecola=$info_k[0];
+                           $id_pack=$info_k[1];
+                           $file_ref=$arr_up[$key][$ii]->filereal;
+                           $testo_ref=$arr_up[$key][$ii]->testo_ref;
+                           $id_up=$arr_up[$key][$ii]->id;
+
+                           $culture_date=$arr_up[$key][$ii]->culture_date;
+                           $species_name=$arr_up[$key][$ii]->species_name;
+                           $infection_source=$arr_up[$key][$ii]->infection_source;
+                           $test_method=$arr_up[$key][$ii]->test_method;
+                           $test_result=$arr_up[$key][$ii]->test_result;
+                     ?>
+                        <tr id='row_{{$id_up}}'>
+
+                              
 
                            <td>
                               <?php
-                                 $id_molecola=$arr_up[$id_ref][0]->id_molecola;
                                  if (isset($molecola[$id_molecola]))
                                     echo $molecola[$id_molecola];
+                                
                               ?>
                            </td>
                            <td>
                               <?php
-                                 $id_pack=$arr_up[$id_ref][0]->id_pack;
                                  if (isset($packaging[$id_pack]))
                                     echo $packaging[$id_pack];
                                  ?>                              
                            </td>  
 
 
+                           <td>{{$culture_date}}</td>  
+                           <td>{{$species_name}}</td>  
+                           <td>{{$infection_source}}</td>  
                            <td>
-                              <?php
-                              for ($sca=0;$sca<count($arr_up[$id_ref]);$sca++) {
-                              ?>
-
                                  <?php
-                                    $id_up=$arr_up[$id_ref][$sca]->id;
-                                    $file_ref=$arr_up[$id_ref][$sca]->filereal;
-                                    $testo_ref=$arr_up[$id_ref][$sca]->testo_ref;
-                                    if ($sca/3==intval($sca/5) && $sca!=0) echo "<hr>";
-                                    echo "<div class='box divup$id_up' >";
+                                    $um="ug/ml";
+                                    if ($test_method=="gs") echo "Gradient strips";
+                                    if ($test_method=="bm") echo "Broth microdilution";
+                                    if ($test_method=="ds") {echo "Disks";$um="mm";}
+                                    if ($test_method=="ap") echo "Automated plates";
+                                 ?>   
+                           </td>  
+                           <td>
+                                 <?php 
+
+                                    if (intval($test_result)!=0)
+                                       echo number_format($test_result,2)." $um"; 
+                                 ?>
+                           </td>  
+                           
+                        
+
+   
+
+                           <td>
+                             <?php
+                                 if (strlen($file_ref)>0) {
+                                    echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
                                        echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
-                                          echo "<i class='fas fa-paperclip'></i> $testo_ref";
+                                          echo "<u>$testo_ref</u>";
                                        echo "</a>";               
-                                    echo "</div>";
-                               
-                              }   
-                              ?>
+                                    echo "</div>";            
+                                 }                 
+                             ?>
                            </td>
                         </tr>
+                      <?php } ?>     
                      @endforeach  
-
+                     <tfoot>
+                        <tr>
+                           
+                           <th>Molecule</th>
+                           <th>Packaging</th>  
+                           <th>Culture date</th>  
+                           <th>Species name</th>  
+                           <th>Infection source</th>  
+                           <th>Test method</th>  
+                           <th>Test result</th>  
+                           <th>Attachments</th>
+                        </tr>
+                        </tfoot>
                   </table>
- 
-
 
                </div>
 

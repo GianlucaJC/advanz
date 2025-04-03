@@ -38,14 +38,6 @@ public function __construct()
 		$packaging=$this->packaging;
 
 		$id_user = Auth::user()->id;
-		
-		$lista_ordini=DB::table('ordini as o')
-		->join('allestimento as a','o.id_articolo','a.id')
-		->select('o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
-		->where('id_user','=',$id_user)
-		->groupBy('o.id')
-		->get();		
-
 
 		$lista_upload=DB::table('uploads as a')
 		->select('id','filereal','testo_ref','culture_date','species_name','infection_source','test_method','test_result','id_molecola','id_pack')
