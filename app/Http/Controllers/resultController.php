@@ -30,6 +30,8 @@ public function __construct()
 
 	
 	public function send_result(Request $request) {
+		//il $_POST viene gestito dal controller FileUploadController
+
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;		
 		$pack_qty_id=$this->pack_qty_id;

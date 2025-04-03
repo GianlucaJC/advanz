@@ -34,20 +34,24 @@ class FileUploadController extends AjaxController
             'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
         ]);
         */
-
-        $validatedData = Validator::make($request->all(), [
-            'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
-        ]);
-        if ($validatedData->fails()) {
-            return back()->with('error', 'Failed');
+        if ($request->has('wf')) {
+            $validatedData = Validator::make($request->all(), [
+                'file' => 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx,zip|max:2048',
+            ]);
+            if ($validatedData->fails()) {
+                return back()->with('error', 'Failed');
+            }
         }
 
         // Check if the file is valid
-        if ($request->file('file')->isValid()) {
-            // Store the file in the 'uploads' directory on the 'public' disk
-            $filePath = $request->file('file')->store('uploads', 'public');
-            $info=explode("/",$filePath);
-            $filereal=$info[1];
+        if ($request->has('nof') || $request->file('file')->isValid()) {
+            if ($request->has('wf')) {
+             // Store the file in the 'uploads' directory on the 'public' disk
+                $filePath = $request->file('file')->store('uploads', 'public');
+                $info=explode("/",$filePath);
+                $filereal=$info[1];
+            } else {$filereal="";$filePath="";}
+
             $uploads=new uploads;
             $uploads->id_user=$id_user;
             $uploads->id_molecola=$id_molecola;
@@ -63,9 +67,10 @@ class FileUploadController extends AjaxController
 
             $uploads->save();            
             // Return success response
-            return back()->with('success', 'File uploaded successfully')->with('file', $filePath);
+            return back()->with('success', 'Form sent successfully')->with('file', $filePath);
         } 
-        
+
+
         return back()->with('error', 'File upload failed');
       
         

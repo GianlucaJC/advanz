@@ -63,32 +63,23 @@
          <div class="container">
             <div class="appointment_box">
 
-                  @if (!session('error') && !session('success')) 
-                       <div class="alert alert-info mb-2 mt-2" role="alert">
-                        <p>
-                           Check size attachents. <b>Max length is 2048 Bytes (2MB)</b><br>
-                           Only this format are accepted: <b>png, jpg, pdf</b>
-                        </p>
-                     </div>                  
-                  @endif
-
-
-                  @if(session('success'))
-                     <div class="alert alert-success mb-2 mt-2" role="alert">
-                        <p>{{ session('success') }}</p>
-                     </div>
-                  @endif   
-
                 
                   @if(session('error'))
                      <div class="alert alert-warning mb-2 mt-2" role="alert">
                         <p>
                            <h3><b>Attention!</b> File not sent</h3><hr>
                            Check size attachents. <b>Max length is 2048 Bytes (2MB)</b><br>
-                           Only this format are accepted: <b>png, jpg, pdf</b>
+                           Only this format are accepted: <b>png, jpg, pdf, doc, xls, zip</b>
                         </p>
                      </div>
                   @endif                  
+
+
+                  @if(session('success'))
+                     <div class="alert alert-success mb-2 mt-2" role="alert">
+                        <p>{{ session('success') }}</p>
+                     </div>
+                  @endif  
 
                   <button type="button" class="btn btn-info mt-2" onclick="$('#your').toggle(200);$('#div_up').toggle(200);"><i class="fas fa-plus"></i> Add Test Result</button>
                   <div id='div_up' style='display:none'>    
@@ -180,17 +171,28 @@
                        
                         <hr>
                         <div class="mb-3">
-                           <input class="form-control form-control-sm" name="file" type="file">
+                           <input class="form-control form-control-sm" name="file" type="file" id='fileup'>
                         </div>
-                        <button type="submit" class='btn btn-outline-secondary'>Upload attachment for this Molecola</button>                  
+                        <button type="submit" name='wf' class='btn btn-outline-secondary' onclick="$('#fileup').prop('required', true);">Upload and submit</button>                  
+                        <button type="submit" name='nof' class='btn btn-outline-secondary' onclick="$('#fileup').prop('required', false);">Submit with no file</button>
                      </form>
-                  </div>             
+                     @if (!session('error') && !session('success')) 
+                        <div class="alert alert-info mb-2 mt-2" role="alert">
+                           <p>
+                              Check size attachents. <b>Max length is 2048 Bytes (2MB)</b><br>
+                              Only this format are accepted: <b>png, jpg, pdf, doc, xls, zip</b>
+                           </p>
+                        </div>                  
+                     @endif
+
+ 
+                  </div>      
                <hr>
                <div id='your' style='overflow-x:scroll'>
                   <table id='tbl_articoli' class="display nowrap">
                      <thead>
                         <tr>
-                          
+                           <th style='max-width:100px'><i class='fas fa-trash-alt'></i></th>
                            <th>Molecule</th>
                            <th>Packaging</th>  
                            <th>Culture date</th>  
@@ -224,7 +226,16 @@
                            $test_result=$arr_up[$key][$ii]->test_result;
                      ?>
                         <tr id='row_{{$id_up}}'>
-                          
+
+                           <td style='max-width:100px'>
+                              <div style='display:inline;' class='divup{{$id_up}}'>
+                                 <span id='spin{{$id_up}}' style='display:none'>
+                                    <i class='fas fa-spinner fa-spin'></i>
+                                 </span>
+
+                                 <button type='button' ><i onclick='delete_up({{$id_up}})' class='fas fa-trash-alt'></i></button>
+                              </div>            
+                           </td>                          
 
                            <td>
                               <?php
@@ -263,21 +274,17 @@
                            
                         
 
+   
+
                            <td>
                              <?php
-                                 echo "<div style='display:inline;' class='divup$id_up'>";
-                                    echo "<span id='spin$id_up' style='display:none'>";
-                                       echo "<i class='fas fa-spinner fa-spin'></i>";
-                                    echo "</span> ";
-                                    
-                                       echo "<button type='button' ><i onclick='delete_up($id_up)' class='fas fa-trash-alt'></i></button>";
-                                    
-                                 echo "</div>";      
-                                 echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
-                                    echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
-                                       echo $testo_ref;
-                                    echo "</a>";               
-                                 echo "</div>";                             
+                                 if (strlen($file_ref)>0) {
+                                    echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
+                                       echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
+                                          echo "<u>$testo_ref</u>";
+                                       echo "</a>";               
+                                    echo "</div>";            
+                                 }                 
                              ?>
                            </td>
                               <?php
@@ -320,7 +327,7 @@
                      @endforeach  
                      <tfoot>
                         <tr>
-                          
+                           <th style='max-width:100px'></th>
                            <th>Molecule</th>
                            <th>Packaging</th>  
                            <th>Culture date</th>  
