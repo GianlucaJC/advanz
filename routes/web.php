@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('update_order', [ 'as' => 'update_order', 'uses' => 'App\Http\Controllers\mainAdminController@update_order']);
         
+    Route::post('update_art', [ 'as' => 'update_art', 'uses' => 'App\Http\Controllers\mainAdminController@update_art']);
+
 });      
 
 

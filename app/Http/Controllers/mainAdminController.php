@@ -50,6 +50,18 @@ public function __construct()
 		return $paesi;
 
 	}
+	public function update_art(Request $request) {
+		$id_art=$request->input('id_art');
+		
+		$ordini = ordini::find($id_art);
+		$ordini->lotto = $request->input('lotto');
+		$ordini->expiration_date = $request->input('exp_date');
+		$ordini->save();
+
+		$risp=array();
+		$risp['header']="OK";
+		return json_encode($risp);					
+	}
 	
 	public function update_order(Request $request) {
 		$id_ordine=$request->input('id_ordine');
@@ -94,16 +106,22 @@ public function __construct()
 		
 
 		$lista_articoli=array();
+		$info_ordine=array();
 		if ($id_order_view>0) {
 			$lista_articoli=DB::table('ordini as o')
 			->join('allestimento as a','o.id_articolo','a.id')
-			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
+			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
 			->where('o.id_ordine','=',$id_order_view)
-			->get();		
+			->get();	
+
+			$info_ordine=DB::table('ordini_ref as o')
+			->select('o.id','o.stato','o.id_user','o.ship_date','tracker','o.ship_date_estimated','o.created_at')
+			->where('id','=',$id_order_view)
+			->get();			
 		}	
 
 
-		return view('all_views/main_admin_order',compact('id_user','molecola','molecole_info','lista_articoli','packaging','pack_qty_id','lista_ordini','id_order_view','arr_user','country'));
+		return view('all_views/main_admin_order',compact('id_user','molecola','molecole_info','lista_articoli','info_ordine','packaging','pack_qty_id','lista_ordini','id_order_view','arr_user','country'));
         
     }
 

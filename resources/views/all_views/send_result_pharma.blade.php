@@ -142,9 +142,10 @@
                            <td>
                              <?php
                                  if (strlen($file_ref)>0) {
-                                    echo "<div class='divup$id_up' style='display:inline;margin-left:7px'>";
+                                    echo "<div class='divup$id_up' style='display:inline;margin-left:7px;border: 1px solid;padding:4px;border-radius:6px'>";
                                        echo "<a class='link-underline-primary' href=".asset('storage/uploads/'.$file_ref)." target='_blank'>";
-                                          echo "<u>$testo_ref</u>";
+                                          echo "<i class='fas fa-paperclip'></i> ";
+                                          echo "$testo_ref";
                                        echo "</a>";               
                                     echo "</div>";            
                                  }                 

@@ -176,6 +176,8 @@
                            </td>
                            <td>{{$country_view}}</td>
 
+
+
                           <td>
                               <?php
                                  if (isset($molecola[$articolo->id_molecola]))
@@ -203,14 +205,29 @@
 
 
                            <td>Remaining Advanz stock</td>
-                           <td>Expiration date</td>
                            <td>
-                                 Shipping date
-                              
+                              {{$articolo->expiration_date}}                            
                            </td>
-                           <td>Shipping AWB</td>
+                           <td>
+                             <?php 
+                              if (count($info_ordine)>0 && $info_ordine[0]->ship_date) {
+                                    $ship=$info_ordine[0]->ship_date;
+                                    echo  $ship;
+                              }
+                              ?>   
+                           </td>
+                           <td>
+                           <?php 
+                                 if (count($info_ordine)>0 && $info_ordine[0]->tracker) {
+                                    $track=$info_ordine[0]->tracker;
+                                    if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
+                                    echo  $track;
+                                    if (substr($track,0,4)=="http") echo "</a>";
+                                 }
+                              ?>   
+                           </td>
                            <td>{{$data_ordine}}</td>
-                           <td>Comments</td>                          
+                           <td></td>                          
 
 
                        
@@ -242,7 +259,7 @@
                            <th>ID user</th>
                            <th>name</th>                           
                            <th>Date Order</th>
-                           <th>Tracker Shipping</th>
+                           <th>FedEx Tracker Shipping</th>
                            <th>Date Shipping</th> 
                            <th>Estimated Date Shipping</th>
                            <th>Operation</th>
@@ -283,15 +300,22 @@
                               ?>
                            </td>
                            <td>
-                              {{$ordine->created_at}}
+                           
+                              <?php echo substr($ordine->created_at,0,10); ?>
                            </td> 
                            <td>
-                              <a href='https://www.exampletracker.en' target='_blank'>
-                                 {{$ordine->tracker}}
-                              </a>
+                              <?php 
+                                 if ($ordine->tracker) {
+                                    $track=$ordine->tracker;
+                                    if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
+                                    echo  $track;
+                                    if (substr($track,0,4)=="http") echo "</a>";
+                                 }
+                              ?>
                            </td>
                            <td>
                               {{$ordine->ship_date}}
+
                            </td> 
                            <td>
                                  {{$ordine->ship_date_estimated}}
@@ -310,7 +334,7 @@
                            <th>ID user</th>
                            <th>name</th>                           
                            <th>Date Order</th>
-                           <th>Tracker Shipping</th>
+                           <th>FedEx Tracker Shipping</th>
                            <th>Date Shipping</th> 
                            <th>Estimated Date Shipping</th>
                            <th>Operation</th>

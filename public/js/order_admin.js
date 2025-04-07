@@ -38,7 +38,7 @@ function check_choice(id_molecola,id,value) {
 		}
     });	
         
-    $('#tbl_articoli, #tbl_order').DataTable({
+    $('#tbl_order').DataTable({
     order: [[0, 'desc']],
     pageLength: 10,
     "scrollX": scroll,
@@ -72,9 +72,71 @@ function check_choice(id_molecola,id,value) {
       },
       */
   });	
+
+  $('#tbl_articoli').DataTable({
+    order: [[0, 'desc']],
+    pageLength: 10,
+    "scrollX": scroll,
+    pagingType: 'full_numbers',
+    dom: 'Bfrtip',
+    buttons: [
+      'excel'
+    ],		
+     		 
+      /*
+      language: {
+          lengthMenu: 'Visualizza _MENU_ records per pagina',
+          zeroRecords: 'Nessuna urgenza trovata',
+          info: 'Pagina _PAGE_ di _PAGES_',
+          infoEmpty: 'Non sono disponibili urgenze',
+          infoFiltered: '(Filtrati da _MAX_ urgenze totali)',
+      },
+      */
+  });	
+      
     
 }
 
+function save_art(id_art) {
+  let CSRF_TOKEN = $("#token_csrf").val();
+  $("#spin_art"+id_art).show(100)
+  let spin = document.getElementById("spin_art"+id_art);
+  spin.removeAttribute("hidden");
+  lotto=$("#lotto"+id_art).val()
+  exp_date=$("#exp_date"+id_art).val()
+
+  base_path = $("#url").val();
+
+  timer = setTimeout(function() {	
+    fetch(base_path+"/update_art", {
+        method: 'post',
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        body: "_token="+ CSRF_TOKEN+"&id_art="+id_art+"&lotto="+lotto+"&exp_date="+exp_date,
+    })
+    .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+    })
+    .then(resp=>{
+        spin.setAttribute("hidden", "hidden");
+        if (resp.header=="OK") {
+          
+        }
+        else {
+          alert("Error occurred while deleting file")
+        }
+
+    })
+    .catch(status, err => {
+        return console.log(status, err);
+    })     
+
+  }, 800)	    
+  
+}
 
 function save_info(id_ordine) {
     let CSRF_TOKEN = $("#token_csrf").val();

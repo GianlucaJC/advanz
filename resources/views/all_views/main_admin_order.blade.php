@@ -64,6 +64,9 @@
                            <th>Address</th>
                            <th>City</th>
                            <th>Country</th>
+                           <th>Postal Code</th>
+                           <th>Email</th>
+                           <th>Phone</th>                           
                            <th>Molecule</th>
                            <th>Packaging</th>  
                            <th>Quantity</th>
@@ -74,6 +77,7 @@
                            <th>Shipping AWB</th>
                            <th>Receipt date at site</th>
                            <th>Comments</th>
+                           <th>Operation</th>
                         </tr>
                      </thead>
                      <?php
@@ -86,7 +90,7 @@
                             $id_user_ref=$articolo->id_user;
                             $name="";$istituto="";$shipping_address1="";$shipping_address2="";
                             $data_ordine=$articolo->created_at;
-                            $city="";$country_view="";
+                            $city="";$country_view="";$postal_code="";$email_ref="";$phone="";
                             if (isset($arr_user[$id_user_ref])) {
                               $name=$arr_user[$id_user_ref]->name;
                               $istituto=$arr_user[$id_user_ref]->istituto;
@@ -96,7 +100,12 @@
                               $country_code=$arr_user[$id_user_ref]->country;
                               $country_view=$country_code;
                               if (isset($country[$country_code])) $country_view=$country[$country_code];
+                              $postal_code=$arr_user[$id_user_ref]->postal_code;
+                              $email_ref=$arr_user[$id_user_ref]->email_ref;
+                              $phone=$arr_user[$id_user_ref]->phone;
+
                            }
+
                         ?>
                         <tr>
                         
@@ -116,7 +125,9 @@
                               {{$city}}
                            </td>
                            <td>{{$country_view}}</td>
-
+                           <td>{{$postal_code}}</td>
+                           <td>{{$email_ref}}</td>
+                           <td>{{$phone}}</td>
                           <td>
                               <?php
                                  if (isset($molecola[$articolo->id_molecola]))
@@ -139,19 +150,45 @@
                            </td>    
 
                            <td>
-                              {{$articolo->lotto}}                            
+                              
+                              <input type='text' placeholder='Batch Num.' class='form-control' id='lotto{{$articolo->id}}' style='width:auto' value="{{$articolo->lotto}}"> 
+                                                        
                            </td>  
 
 
                            <td>Remaining Advanz stock</td>
-                           <td>Expiration date</td>
                            <td>
-                                 Shipping date
-                              
+
+                           <input type='date' class='form-control' id='exp_date{{$articolo->id}}' style='width:auto' value="{{$articolo->expiration_date}}"> 
+
                            </td>
-                           <td>Shipping AWB</td>
+                           <td>
+                              <?php 
+                              if (count($info_ordine)>0 && $info_ordine[0]->ship_date) {
+                                    $ship=$info_ordine[0]->ship_date;
+                                    echo  $ship;
+                              }
+                              ?>                               
+                           </td>
+                           <td>
+                              <?php 
+                              if (count($info_ordine)>0 && $info_ordine[0]->tracker) {
+                                    $track=$info_ordine[0]->tracker;
+                                    if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
+                                    echo  $track;
+                                    if (substr($track,0,4)=="http") echo "</a>";
+                              }
+                              ?>                                 
+                           </td>
                            <td>{{$data_ordine}}</td>
-                           <td>Comments</td>                          
+                           <td></td>                          
+                           <td>
+                              <span id='spin_art{{$articolo->id}}' style='display:inline;' hidden>
+                              <i class='fas fa-spinner fa-spin'></i>
+                              </span>
+
+                              <button type="button" onclick="save_art({{$articolo->id}})" class="btn btn-success">Save</button>                              
+                           </td> 
 
 
                        
@@ -183,7 +220,7 @@
                            <th>ID user</th>
                            <th>name</th>                           
                            <th>Date Order</th>
-                           <th>Tracker Shipping</th>
+                           <th>FedEx Tracker Shipping</th>
                            <th>Date Shipping</th> 
                            <th>Estimated Shipping</th>
                            <th>Operation</th>
@@ -274,7 +311,7 @@
                            <th>ID user</th>
                            <th>name</th>                           
                            <th>Date Order</th>
-                           <th>Tracker Shipping</th>
+                           <th>FedEx Tracker Shipping</th>
                            <th>Date Shipping</th> 
                            <th>Estimated Date Shipping</th>
                            <th>Operation</th>
