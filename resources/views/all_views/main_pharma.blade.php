@@ -145,6 +145,7 @@
                             $id_user_ref=$articolo->id_user;
                             $name="";$istituto="";$shipping_address1="";$shipping_address2="";
                             $data_ordine=$articolo->created_at;
+                           
                             $city="";$country_view="";
                             if (isset($arr_user[$id_user_ref])) {
                               $name=$arr_user[$id_user_ref]->name;
@@ -204,7 +205,9 @@
                            </td>  
 
 
-                           <td>Remaining Advanz stock</td>
+                           <td>
+                              {{$articolo->remaining}}
+                           </td>
                            <td>
                               {{$articolo->expiration_date}}                            
                            </td>

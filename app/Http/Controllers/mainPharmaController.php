@@ -14,6 +14,7 @@ use Mail;
 use App\Models\carrello;
 use App\Models\ordini;
 use App\Models\ordini_ref;
+use App\Models\allestimento;
 
 class mainPharmaController extends AjaxController
 {
@@ -80,7 +81,7 @@ public function __construct()
 		if ($id_order_view>0) {
 			$lista_articoli=DB::table('ordini as o')
 			->join('allestimento as a','o.id_articolo','a.id')
-			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
+			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.remaining','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
 			->where('o.id_ordine','=',$id_order_view)
 			->get();	
 			
@@ -89,6 +90,9 @@ public function __construct()
 			->where('id','=',$id_order_view)
 			->get();			
 		}	
+
+
+
 
 		return view('all_views/main_pharma',compact('id_user','molecola','molecole_info','lista_articoli','packaging','pack_qty_id','lista_ordini','info_ordine','id_order_view','arr_user','country'));
 
