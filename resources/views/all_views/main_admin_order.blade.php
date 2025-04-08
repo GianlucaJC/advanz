@@ -67,6 +67,8 @@
                            <th>Postal Code</th>
                            <th>Email</th>
                            <th>Phone</th>                           
+                           <th>CodeLiof</th>
+                           <th>Description</th>
                            <th>Molecule</th>
                            <th>Packaging</th>  
                            <th>Quantity</th>
@@ -128,6 +130,10 @@
                            <td>{{$postal_code}}</td>
                            <td>{{$email_ref}}</td>
                            <td>{{$phone}}</td>
+                           <td>{{$articolo->cod_liof}}</td>
+                           <td>{{$articolo->descrizione}}</td>
+                           
+
                           <td>
                               <?php
                                  if (isset($molecola[$articolo->id_molecola]))
@@ -140,7 +146,7 @@
                                  if (isset($packaging[$articolo->id_pack]))
                                     echo $packaging[$articolo->id_pack];
                               ?>
-                             
+                           </td>  
                              
                            <td>
                                  <?php

@@ -14,6 +14,7 @@ use Mail;
 use App\Models\carrello;
 use App\Models\ordini;
 use App\Models\ordini_ref;
+use App\Models\allestimento;
 
 class mainAdminController extends AjaxController
 {
@@ -63,6 +64,19 @@ public function __construct()
 		return json_encode($risp);					
 	}
 	
+	public function update_art_liof(Request $request) {
+		$id_art=$request->input('id_art');
+		
+		$allestimento = allestimento::find($id_art);
+		$allestimento->cod_liof = $request->input('lotto');
+		$allestimento->descrizione = $request->input('description');
+		$allestimento->save();
+
+		$risp=array();
+		$risp['header']="OK";
+		return json_encode($risp);					
+	}
+
 	public function update_order(Request $request) {
 		$id_ordine=$request->input('id_ordine');
 		$stato=$request->input('stato');
@@ -110,7 +124,7 @@ public function __construct()
 		if ($id_order_view>0) {
 			$lista_articoli=DB::table('ordini as o')
 			->join('allestimento as a','o.id_articolo','a.id')
-			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
+			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.id_molecola','a.id_pack','a.id_pack_qty','a.cod_liof','a.descrizione','o.created_at')
 			->where('o.id_ordine','=',$id_order_view)
 			->get();	
 
@@ -124,6 +138,20 @@ public function __construct()
 		return view('all_views/main_admin_order',compact('id_user','molecola','molecole_info','lista_articoli','info_ordine','packaging','pack_qty_id','lista_ordini','id_order_view','arr_user','country'));
         
     }
+
+    public function main_admin_articoli(Request $request) {
+		$molecola=$this->molecola;
+		$molecole_info=$this->molecole_info;		
+		$pack_qty_id=$this->pack_qty_id;
+		$packaging=$this->packaging;
+
+		$allestimento=allestimento::from('allestimento as a')
+		->select('a.id','a.id_molecola','a.id_pack','a.id_pack_qty','a.cod_liof','a.descrizione')
+		->get();	
+
+		return view('all_views/main_admin_articoli',compact('molecola','molecole_info','packaging','pack_qty_id','allestimento'));
+        
+    }	
 
 
 

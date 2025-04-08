@@ -217,6 +217,17 @@
                         </div>   
                      </div>
                 
+                     <div class="col-md-3">
+                        <div class='custom_lnk'>
+                           <?php   
+                              $act="normal_m";
+                              if ($route=="main_admin_articoli") $act="active_m";
+                           ?>
+                           <span class='{{$act}}''>
+                              <a href="main_admin_articoli">Liofilchem Products <i class="fas fa-cog"></i></a>
+                           </span>   
+                        </div>   
+                     </div>                     
                   
                   </div> 
                </div>  

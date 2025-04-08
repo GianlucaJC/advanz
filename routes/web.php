@@ -45,9 +45,16 @@ Route::middleware('auth')->group(function () {
     Route::get('main_admin_order', [ 'as' => 'main_admin_order', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_order']);
 	Route::post('main_admin_order', [ 'as' => 'main_admin_order', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_order']);
 
+
+    Route::get('main_admin_articoli', [ 'as' => 'main_admin_articoli', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_articoli']);
+	Route::post('main_admin_articoli', [ 'as' => 'main_admin_articoli', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_articoli']);
+
+
     Route::post('update_order', [ 'as' => 'update_order', 'uses' => 'App\Http\Controllers\mainAdminController@update_order']);
         
     Route::post('update_art', [ 'as' => 'update_art', 'uses' => 'App\Http\Controllers\mainAdminController@update_art']);
+
+    Route::post('update_art_liof', [ 'as' => 'update_art_liof', 'uses' => 'App\Http\Controllers\mainAdminController@update_art_liof']);    
 
 });      
 
