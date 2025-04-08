@@ -229,7 +229,26 @@ public function __construct()
 				$ordini->id_user=$id_user;
 				$ordini->save();
 
+				//calcolo remaining (stock - 1 (sempre fisso...non ci sono quantità specifiche))
 				//svuota carrello
+
+				$info_all=allestimento::select('stock','remaining')->where('id','=',$articolo)->first();
+				if($info_all) {
+					$stock=$info_all->stock;
+					if ($stock!=null) {
+						$remaining=$info_all->remaining;
+						$allestimento = allestimento::find($articolo);	
+						if ($remaining==null) {
+							$remaining=$stock-1;
+							$allestimento->remaining=$remaining;
+							$allestimento->save();
+						}	
+						else 
+							$allestimento->decrement('remaining',1);
+					}
+				}
+
+				
 				$dele_carrello=DB::table('carrello')->where('id_user','=',$id_user)->delete();
 
 				$count=0;

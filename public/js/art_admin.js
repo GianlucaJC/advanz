@@ -48,6 +48,7 @@ function save_art_liof(id_art) {
   spin.removeAttribute("hidden");
   cod_liof=$("#cod_liof"+id_art).val()
   description=$("#description"+id_art).val()
+  stock=$("#stock"+id_art).val()
 
 
   base_path = $("#url").val();
@@ -58,7 +59,7 @@ function save_art_liof(id_art) {
         headers: {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
         },
-        body: "_token="+ CSRF_TOKEN+"&id_art="+id_art+"&cod_liof="+cod_liof+"&description="+description,
+        body: "_token="+ CSRF_TOKEN+"&id_art="+id_art+"&cod_liof="+cod_liof+"&description="+description+"&stock="+stock,
     })
     .then(response => {
         if (response.ok) {

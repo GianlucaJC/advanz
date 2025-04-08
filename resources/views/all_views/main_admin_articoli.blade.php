@@ -46,7 +46,7 @@
 
       <div class="appointment_section mt-3">
             <div class="container">
-               <div class="appointment_box">
+               <div class="appointment_box" style='overflow-x:scroll'>
                     <table id='tbl_art_liof' class="display nowrap">
                         <thead>
                             <tr>
@@ -55,6 +55,8 @@
                                 <th>Pack Quantity</th>    
                                 <th>Liofilchem Code</th>
                                 <th>Description</th>
+                                <th>Stock</th>
+                                <th>Remaining</th>
                                 <th>Operation</th>
                             </tr>   
                         </thead> 
@@ -92,6 +94,15 @@
                                  <td>
                                     <input type='text' placeholder='Description' class='form-control' id='description{{$art->id}}' style='width:150px' value="{{$art->descrizione}}"
                                  </td>
+
+                                 </td>
+                                 <td>
+                                    <input type='text' placeholder='Stock' class='form-control' id='stock{{$art->id}}' style='width:100px' maxlength=20 value="{{$art->stock}}"> 
+
+                                 </td>
+                                 <td>
+                                    {{$art->remaining}}
+                                 </td>                                 
                                  <td>
                                     <span id='spin_art{{$art->id}}' style='display:inline;' hidden>
                                     <i class='fas fa-spinner fa-spin'></i>

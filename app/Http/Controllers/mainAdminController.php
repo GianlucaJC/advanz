@@ -70,6 +70,7 @@ public function __construct()
 		$allestimento = allestimento::find($id_art);
 		$allestimento->cod_liof = $request->input('lotto');
 		$allestimento->descrizione = $request->input('description');
+		$allestimento->stock = $request->input('stock');
 		$allestimento->save();
 
 		$risp=array();
@@ -146,7 +147,7 @@ public function __construct()
 		$packaging=$this->packaging;
 
 		$allestimento=allestimento::from('allestimento as a')
-		->select('a.id','a.id_molecola','a.id_pack','a.id_pack_qty','a.cod_liof','a.descrizione')
+		->select('a.id','a.id_molecola','a.id_pack','a.id_pack_qty','a.cod_liof','a.descrizione','a.stock','a.remaining')
 		->get();	
 
 		return view('all_views/main_admin_articoli',compact('molecola','molecole_info','packaging','pack_qty_id','allestimento'));
