@@ -98,23 +98,24 @@ public function __construct()
 
 	}
 
-	public function stat() {
+	public function stat(Request $request) {
+		$year_stat=$request->input('year_stat');
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;	
 
 		$paesi=$this->country;
-		$year=date("Y");
+		
 		$lista_ordini=DB::table('ordini as o')
 		->join('users as u','o.id_user','u.id')
 		->select(DB::raw('count(*) as total'),'u.country')
-		->where(DB::raw('YEAR(o.created_at)'), '=', $year )
+		->where(DB::raw('YEAR(o.created_at)'), '=', $year_stat )
 		->groupBy('u.country')
 		->get();
 
 		$lista_prod=DB::table('ordini as o')
 		->join('allestimento as a','o.id_articolo','a.id')
 		->select(DB::raw('count(*) as total'),'a.id_molecola')
-		->where(DB::raw('YEAR(o.created_at)'), '=', $year )
+		->where(DB::raw('YEAR(o.created_at)'), '=', $year_stat )
 		->groupBy('a.id_molecola')
 		->get();
 
@@ -137,7 +138,7 @@ public function __construct()
 			$arr[$sca][]=(int)$total;
 		}
 
-		$resp['stat_mole']['title']="Molecule $year";
+		$resp['stat_mole']['title']="";
 		$resp['stat_mole']['data']=$arr;
 
 		//////
@@ -160,7 +161,7 @@ public function __construct()
 			$arr[$sca][]=(int)$total;
 		}
 		
-		$resp['stat_gen']['title']="Orders $year";
+		$resp['stat_gen']['title']="Orders $year_stat";
 		$resp['stat_gen']['data']=$arr;
 		$table = json_encode($resp);
 		echo $table;		

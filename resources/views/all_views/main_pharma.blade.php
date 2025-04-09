@@ -80,14 +80,21 @@
 @section('content_main')
 
    <div  id='div_stat' style="display:none">
-      <div class="appointment_section mt-3" style='display:flex;'>
+      <div class="appointment_section mt-3">
             <div class="container">
                <div class="appointment_box">
                   <div>
                      <button type="button" onclick="$('#div_stat').hide(100)" class="btn btn-outline-dark">Close Statistics</button>
                   </div>
                   <hr>
-              
+                  <?php $Y=date("Y"); ?>
+                  <div style='width:200px'>
+                     <input type='number' class='form-control' id='year_stat' placeholder='Year' value='{{$Y}}'>
+                     <label for='year'>Year</year>
+                  </div>
+                  <div style='width:200px' class='mt-2'>
+                     <button type="button" id='btn_graph' onclick="stat()" class="btn btn-success">Redraw Graph</button>
+                  </div>              
                </div>  
             </div> 
       </div>

@@ -16,21 +16,35 @@ $(document).ready( function () {
   function stat() {
     let CSRF_TOKEN = $("#token_csrf").val();
     base_path = $("#url").val();
-
+    year_stat=$("#year_stat").val()
+    $("#regions_div").empty()
+    $("#myChart1").empty()
+    $("#myChart2").empty()
+    $("#btn_graph").prop('disabled',true)
+    $("#btn_graph").text('Pleas wait...')
+    
+    if (year_stat.length==0) {
+      $("#btn_graph").prop('disabled',false)
+      $("#btn_graph").text('Redraw Graph')
+      return false
+    }
     timer = setTimeout(function() {	
       fetch(base_path+"/stat", {
           method: 'post',
           headers: {
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
           },
-          body: "_token="+ CSRF_TOKEN+"&id=1"
+          body: "_token="+ CSRF_TOKEN+"&year_stat="+year_stat
       })
       .then(response => {
           if (response.ok) {
             return response.json();
           }
       })
-      .then(obj=>{        
+      .then(obj=>{   
+        $("#btn_graph").prop('disabled',false)
+        $("#btn_graph").text('Redraw Graph')
+
         //grafico GEO
         title=obj['stat_gen']['title'];
         dati=obj['stat_gen']['data'];
@@ -68,7 +82,7 @@ $(document).ready( function () {
           bar: {groupWidth: "95%"},           
         };          
         var data = google.visualization.arrayToDataTable(dati);
-        var chart = new google.visualization.BarChart(document.getElementById('myChart2'));
+        var chart = new google.visualization.PieChart(document.getElementById('myChart2'));
         chart.draw(data, options);
 
       })
@@ -76,7 +90,7 @@ $(document).ready( function () {
           return console.log(status, err);
       })     
 
-    }, 800)	    
+    }, 1800)	    
 
 
   }
