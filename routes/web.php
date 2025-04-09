@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('main_pharma', [ 'as' => 'main_pharma', 'uses' => 'App\Http\Controllers\mainPharmaController@main_pharma']);
 	Route::post('main_pharma', [ 'as' => 'main_pharma', 'uses' => 'App\Http\Controllers\mainPharmaController@main_pharma']);
 
+	Route::post('stat', [ 'as' => 'stat', 'uses' => 'App\Http\Controllers\mainPharmaController@stat']);
+
     Route::get('send_result_pharma', [ 'as' => 'send_result_pharma', 'uses' => 'App\Http\Controllers\resultControllerPharma@send_result_pharma']);
 	Route::post('send_result_pharma', [ 'as' => 'send_result_pharma', 'uses' => 'App\Http\Controllers\resultControllerPharma@send_result_pharma']);
 

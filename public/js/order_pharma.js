@@ -1,11 +1,83 @@
 ismobile=false
 
+$(document).ready( function () {
+  LoadGoogle();
 
-function LoadGoogle(){
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    ismobile=true
+  else
+    ismobile=false
+  
+   set_table()
+})
+
+
+
+  function stat() {
+    let CSRF_TOKEN = $("#token_csrf").val();
+    base_path = $("#url").val();
+
+    timer = setTimeout(function() {	
+      fetch(base_path+"/stat", {
+          method: 'post',
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+          },
+          body: "_token="+ CSRF_TOKEN+"&id=1"
+      })
+      .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+      })
+      .then(obj=>{        
+        //grafico GEO
+        title=obj['stat_gen']['title'];
+        dati=obj['stat_gen']['data'];
+        var data = google.visualization.arrayToDataTable(dati);
+        var options = {
+          sizeAxis: { minValue: 0, maxValue: 100 },
+          region: '155', // Western Europe
+       
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        var container = document.getElementById('regions_div');
+        if (container) container.style.display = 'block';
+        chart.draw(data, options);
+
+        //Grafico istogrammi
+        // Set Options
+        var options = {
+          title: title
+        };        
+        var data = google.visualization.arrayToDataTable(dati);
+        // Draw1
+        var chart = new google.visualization.BarChart(document.getElementById('myChart1'));
+        chart.draw(data, options);
+
+      })
+      .catch(status, err => {
+          return console.log(status, err);
+      })     
+
+    }, 800)	    
+
+
+  }
+
+function LoadGoogle() {
+  google.charts.load('current', {'packages':['corechart','table','geochart']});
+  stat();
+}
+
+function LoadGoogle_old(){
   google.charts.load('current', {
     callback: drawChart,
     packages:['corechart']
   });
+
+
 
 
   function drawChart() {
@@ -55,16 +127,6 @@ function LoadGoogle(){
     }
    
 } 
-$(document).ready( function () {
-  LoadGoogle();
-
-  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
-    ismobile=true
-  else
-    ismobile=false
-  
-   set_table()
-})
 
 function check_choice(id_molecola,id,value) {
     $(".molecola"+id_molecola).prop('disabled',false);

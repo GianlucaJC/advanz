@@ -98,5 +98,40 @@ public function __construct()
 
 	}
 
+	public function stat() {
+		$paesi=$this->country;
+		$year=date("Y");
+		$lista_ordini=DB::table('ordini as o')
+		->join('users as u','o.id_user','u.id')
+		->select(DB::raw('count(*) as total'),'u.country')
+		->where(DB::raw('YEAR(o.created_at)'), '=', $year )
+		->groupBy('u.country')
+		->get();
+
+		$arr=array();
+	
+		$arr[0]=Array();		
+		$arr[0][]="Country";
+		$arr[0][]="Units";
+		
+
+		$paese="";
+		$sca=0;
+		foreach($lista_ordini as $ordine) {
+			$sca++;
+			$total=$ordine->total;
+			$country=$ordine->country;
+			$paese="Not defined";
+			if (isset($paesi[$country])) $paese=$paesi[$country];
+			$arr[$sca][]=$paese;		
+			$arr[$sca][]=(int)$total;
+		}
+		
+		$resp['stat_gen']['title']="Orders $year";
+		$resp['stat_gen']['data']=$arr;
+		$table = json_encode($resp);
+		echo $table;		
+	}
+
 
 }
