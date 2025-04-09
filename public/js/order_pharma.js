@@ -36,9 +36,9 @@ $(document).ready( function () {
         dati=obj['stat_gen']['data'];
         var data = google.visualization.arrayToDataTable(dati);
         var options = {
-          sizeAxis: { minValue: 0, maxValue: 100 },
           region: '150', // Western Europe
-       
+          width: 1200,
+          height: 800,
         };
 
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
@@ -46,14 +46,29 @@ $(document).ready( function () {
         if (container) container.style.display = 'block';
         chart.draw(data, options);
 
-        //Grafico istogrammi
+        //Grafico istogrammi 
         // Set Options
         var options = {
-          title: title
+          title: title,
+          width: 600,
+          height: 400,
+          bar: {groupWidth: "95%"},           
         };        
         var data = google.visualization.arrayToDataTable(dati);
-        // Draw1
         var chart = new google.visualization.BarChart(document.getElementById('myChart1'));
+        chart.draw(data, options);
+
+        title=obj['stat_mole']['title'];
+        dati=obj['stat_mole']['data'];
+
+        var options = {
+          title: title,
+          width: 600,
+          height: 400,
+          bar: {groupWidth: "95%"},           
+        };          
+        var data = google.visualization.arrayToDataTable(dati);
+        var chart = new google.visualization.BarChart(document.getElementById('myChart2'));
         chart.draw(data, options);
 
       })

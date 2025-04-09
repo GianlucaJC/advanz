@@ -99,6 +99,9 @@ public function __construct()
 	}
 
 	public function stat() {
+		$molecola=$this->molecola;
+		$molecole_info=$this->molecole_info;	
+
 		$paesi=$this->country;
 		$year=date("Y");
 		$lista_ordini=DB::table('ordini as o')
@@ -108,6 +111,36 @@ public function __construct()
 		->groupBy('u.country')
 		->get();
 
+		$lista_prod=DB::table('ordini as o')
+		->join('allestimento as a','o.id_articolo','a.id')
+		->select(DB::raw('count(*) as total'),'a.id_molecola')
+		->where(DB::raw('YEAR(o.created_at)'), '=', $year )
+		->groupBy('a.id_molecola')
+		->get();
+
+		$arr=array();
+	
+		$arr[0]=Array();		
+		$arr[0][]="Molecule";
+		$arr[0][]="Units";
+		
+
+		$paese="";
+		$sca=0;
+		foreach($lista_prod as $prod) {
+			$sca++;
+			$total=$prod->total;
+			$mole=$prod->id_molecola;
+			$info_m="Not defined";
+			if (isset($molecola[$mole])) $info_m=$molecola[$mole];
+			$arr[$sca][]=$info_m;		
+			$arr[$sca][]=(int)$total;
+		}
+
+		$resp['stat_mole']['title']="Molecule $year";
+		$resp['stat_mole']['data']=$arr;
+
+		//////
 		$arr=array();
 	
 		$arr[0]=Array();		

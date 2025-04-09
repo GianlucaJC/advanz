@@ -93,7 +93,7 @@
       </div>
       <div class="appointment_section mt-3" style='display:flex;'>
             <div class="container">
-               <div class="appointment_box" >
+               <div class="appointment_box" style='overflow-x:scroll'>
                   <div id='regions_div' style="width: auto; display: block;margin-bottom:20px"></div>
                   <div id="myChart1" style="max-width:auto; height:auto;display:inline-block"></div> 
                   <div id="myChart2" style="max-width:auto; height:auto;display:inline-block"></div> 
