@@ -37,7 +37,7 @@ $(document).ready( function () {
         var data = google.visualization.arrayToDataTable(dati);
         var options = {
           sizeAxis: { minValue: 0, maxValue: 100 },
-          region: '155', // Western Europe
+          region: '150', // Western Europe
        
         };
 
