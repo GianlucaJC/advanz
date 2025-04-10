@@ -143,7 +143,12 @@
       <div class="appointment_section mt-3 ordini" id='div_detail_order'>
          <div class="container">
             <div class="appointment_box">
-               <h3>Order detail #{{$id_order_view}}</h3>
+               @if ($id_order_view!="all")
+                  <h3>Order detail #{{$id_order_view}}</h3>
+               @endif   
+               @if ($id_order_view!="all")
+                  <h3>View all</h3>               
+               @endif
                   <button type="button" onclick="$('#div_detail_order').hide()" class="btn btn-outline-dark">Close detail</button><hr>
                </hr>
                <div id='order_detail' style='max-width:auto;overflow-x: scroll'>
