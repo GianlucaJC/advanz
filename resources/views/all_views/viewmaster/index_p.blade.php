@@ -233,6 +233,15 @@
                            </span>   
                         </div>   
                      </div>
+                     @if ($route=="main_pharma") 
+                     <div class="col-md-3">
+                        <div class='custom_lnk'>
+                           <span class='normal_m'>
+                              <a href="#" onclick="$('#div_stat').show(100);$('.ordini').hide()">Statistics <i class="fa-solid fa-chart-pie"></i></a>
+                           </span>
+                        </div>   
+                     </div>                     
+                     @endif                     
                      <div class="col-md-3">
                         <div class='custom_lnk'>
                            <?php   
@@ -244,15 +253,7 @@
                            </span>
                         </div>   
                      </div>       
-                     @if ($route=="main_pharma") 
-                     <div class="col-md-3">
-                        <div class='custom_lnk'>
-                           <span class='normal_m'>
-                              <a href="#" onclick="$('#div_stat').show(100);$('.ordini').hide()">Statistics <i class="fa-solid fa-chart-pie"></i></a>
-                           </span>
-                        </div>   
-                     </div>                     
-                     @endif
+
                   
                   </div> 
                </div>  

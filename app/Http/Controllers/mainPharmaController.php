@@ -79,23 +79,37 @@ public function __construct()
 
 		$lista_articoli=array();
 		$info_ordine=array();
-		if ($id_order_view>0) {
+		$orders=array();
+
+		if ($id_order_view>0 || $id_order_view=="all") {
+
 			$lista_articoli=DB::table('ordini as o')
 			->join('allestimento as a','o.id_articolo','a.id')
 			->select('o.id','o.id_ordine','o.id_user','o.lotto','o.expiration_date','o.id_articolo','a.remaining','a.id_molecola','a.id_pack','a.id_pack_qty','o.created_at')
-			->where('o.id_ordine','=',$id_order_view)
+			->when($id_order_view!="all", function ($lista_articoli) use ($id_order_view) {			
+				return $lista_articoli->where('o.id_ordine','=',$id_order_view);
+			})		
 			->get();	
+			
 			
 			$info_ordine=DB::table('ordini_ref as o')
 			->select('o.id','o.stato','o.id_user','o.ship_date','tracker','o.ship_date_estimated','o.created_at')
-			->where('id','=',$id_order_view)
-			->get();			
+			->when($id_order_view!="all", function ($info_ordine) use ($id_order_view) {			
+				return $info_ordine->where('id','=',$id_order_view);
+			})			
+			->get();	
+			
+			foreach ($info_ordine as $order) {
+				$id_o=$order->id;
+				$orders[$id_o]=$order;
+			}
+
 		}	
 
 
 
 
-		return view('all_views/main_pharma',compact('id_user','molecola','molecole_info','lista_articoli','packaging','pack_qty_id','lista_ordini','info_ordine','id_order_view','arr_user','country'));
+		return view('all_views/main_pharma',compact('id_user','molecola','molecole_info','lista_articoli','packaging','pack_qty_id','lista_ordini','orders','id_order_view','arr_user','country'));
 
 	}
 

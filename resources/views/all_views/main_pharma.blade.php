@@ -120,6 +120,8 @@
             <div class="container">
                <div class="appointment_box" style='overflow-x:scroll'>
                <center>
+                  <h1>STATS<h1>
+
                   <div id='regions_div' style="max-width:auto; height:auto;display:inline-block"></div>
                   <div id="myChart2" style="max-width:auto; height:auto;display:inline-block"></div> 
                   <div id="myChart1" style="max-width:auto; height:auto;display:inline-block"></div> 
@@ -137,11 +139,13 @@
 
    
    <input type='hidden' name='id_order_view' id='id_order_view' value='{{$id_order_view}}'>
-      @if ($id_order_view>0)
+      @if ($id_order_view>0 || $id_order_view=="all")
       <div class="appointment_section mt-3 ordini" id='div_detail_order'>
          <div class="container">
             <div class="appointment_box">
-               <h3>Order detail #{{$id_order_view}}</h3></hr>
+               <h3>Order detail #{{$id_order_view}}</h3>
+                  <button type="button" onclick="$('#div_detail_order').hide()" class="btn btn-outline-dark">Close detail</button><hr>
+               </hr>
                <div id='order_detail' style='max-width:auto;overflow-x: scroll'>
                   <table id='tbl_articoli' class="display nowrap">
                      <thead>
@@ -165,11 +169,15 @@
                      </thead>
                      <?php
                         $fl_upload=array();
+                        
                      ?>  
                      <tbody>
+
                      @foreach($lista_articoli as $articolo)
                         <?php
+
                             $id_ordine_ref=$articolo->id_ordine;
+
                             $id_user_ref=$articolo->id_user;
                             $name="";$istituto="";$shipping_address1="";$shipping_address2="";
                             $data_ordine=$articolo->created_at;
@@ -241,21 +249,23 @@
                            </td>
                            <td>
                              <?php 
-                              if (count($info_ordine)>0 && $info_ordine[0]->ship_date) {
-                                    $ship=$info_ordine[0]->ship_date;
+                             
+                              if (isset($orders[$id_order_view])) {
+                                    $ship=$orders[$id_order_view]->ship_date;
                                     echo  $ship;
                               }
+                              
                               ?>   
                            </td>
                            <td>
                            <?php 
-                                 if (count($info_ordine)>0 && $info_ordine[0]->tracker) {
-                                    $track=$info_ordine[0]->tracker;
+                              if (isset($orders[$id_order_view])) {
+                                    $track=$orders[$id_order_view]->tracker;
                                     if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
                                     echo  $track;
                                     if (substr($track,0,4)=="http") echo "</a>";
-                                 }
-                              ?>   
+                              }
+                           ?>   
                            </td>
                            <td>{{$data_ordine}}</td>
                            <td></td>                          
@@ -282,7 +292,9 @@
             <div class="container">
                <div class="appointment_box">
                   <div id='orders' style='max-width:auto;overflow-x: scroll'>
-                  <table id='tbl_order' class="display nowrap">
+                  <button type="submit" onclick="$('#id_order_view').val('all')" class="btn btn-outline-dark">Detail all orders</button><hr>
+
+                  <table id='tbl_order' class="display nowrap mt">
                      <thead>
                         <tr>
                            <th>ID</th>
