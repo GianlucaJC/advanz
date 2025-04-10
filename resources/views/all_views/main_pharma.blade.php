@@ -293,6 +293,8 @@
          </div>
       </div> 
       @endif     
+
+      @if (strlen($id_order_view)==0)
       <div class="appointment_section mt-3 ordini" id='div_ordini'>
             <div class="container">
                <div class="appointment_box">
@@ -395,6 +397,7 @@
                </div>
             </div>
       </div>
+      @endif
       
 
 
