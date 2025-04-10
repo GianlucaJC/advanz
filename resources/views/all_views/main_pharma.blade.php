@@ -146,7 +146,7 @@
                @if ($id_order_view!="all")
                   <h3>Order detail #{{$id_order_view}}</h3>
                @endif   
-               @if ($id_order_view!="all")
+               @if ($id_order_view=="all")
                   <h3>View all</h3>               
                @endif
                   <button type="button" onclick="$('#div_detail_order').hide()" class="btn btn-outline-dark">Close detail</button><hr>
@@ -297,7 +297,7 @@
             <div class="container">
                <div class="appointment_box">
                   <div id='orders' style='max-width:auto;overflow-x: scroll'>
-                  <button type="submit" onclick="$('#id_order_view').val('all')" class="btn btn-outline-dark">Detail all orders</button><hr>
+                  <button type="submit" onclick="$('#id_order_view').val('all')" class="btn btn-outline-dark">View all</button><hr>
 
                   <table id='tbl_order' class="display nowrap mt">
                      <thead>
