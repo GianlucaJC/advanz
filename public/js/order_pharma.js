@@ -49,27 +49,30 @@ $(document).ready( function () {
         //grafico GEO
         title=obj['stat_gen']['title'];
         dati=obj['stat_gen']['data'];
-        var data = google.visualization.arrayToDataTable(dati);
-        var options = {
-          region: '150', // Western Europe
-          width: 300,
-          height: 200,
-        };
+        if (dati.length>1) {
+            var data = google.visualization.arrayToDataTable(dati);
+            var options = {
+              region: '150', // Western Europe
+              width: 300,
+              height: 200,
+            };
 
-        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-        chart.draw(data, options);
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            chart.draw(data, options);
+        
 
-        //Grafico istogrammi 
-        // Set Options
-        var options = {
-          title: title,
-          width: 300,
-          height: 300,
-          bar: {groupWidth: "95%"},           
-        };        
-        var data = google.visualization.arrayToDataTable(dati);
-        var chart = new google.visualization.BarChart(document.getElementById('myChart1'));
-        chart.draw(data, options);
+          //Grafico istogrammi 
+          // Set Options
+          var options = {
+            title: title,
+            width: 300,
+            height: 300,
+            bar: {groupWidth: "95%"},           
+          };        
+          var data = google.visualization.arrayToDataTable(dati);
+          var chart = new google.visualization.BarChart(document.getElementById('myChart1'));
+          chart.draw(data, options);
+        } else $("#regions.div").html("<h3><font color='red'>no data</font></h3>")
 
         title=obj['stat_mole']['title'];
         dati=obj['stat_mole']['data'];
