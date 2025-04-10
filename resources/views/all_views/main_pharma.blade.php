@@ -84,13 +84,31 @@
             <div class="container">
                <div class="appointment_box">
                   <div>
-                     <button type="button" onclick="$('#div_stat').hide(100)" class="btn btn-outline-dark">Close Statistics</button>
+                     <button type="button" onclick="$('#div_stat').hide(100);$('.ordini').show()" class="btn btn-outline-dark">Close Statistics</button>
                   </div>
                   <hr>
                   <?php $Y=date("Y"); ?>
-                  <div style='width:200px'>
-                     <input type='number' class='form-control' id='year_stat' placeholder='Year' value='{{$Y}}'>
-                     <label for='year'>Year</year>
+                  <div style='display:flex'>
+                     <table>
+                        <tbody>
+                        <tr>
+                           <td>
+                              <label for='year_stat'>Year</label>
+                              <input type='number' class='form-control' id='year_stat' placeholder='Year' value='{{$Y}}'>
+                              
+                           </td>   
+                           <td>
+                              <label for='molec'>Molecule</label>                              
+                              <select class='form-select' name='molec' id='molec'>
+                                 <option value='all'>All</option>
+                                 @foreach ($molecola as $km=>$vm)
+                                    <option value='{{$km}}'>{{$vm}}</option>
+                                 @endforeach
+                              </select>
+                              
+                           </td>   
+                        </tbody> 
+                     </table>
                   </div>
                   <div style='width:200px' class='mt-2'>
                      <button type="button" id='btn_graph' onclick="stat()" class="btn btn-success">Redraw Graph</button>
@@ -101,9 +119,11 @@
       <div class="appointment_section mt-3" style='display:flex;'>
             <div class="container">
                <div class="appointment_box" style='overflow-x:scroll'>
-                  <div id='regions_div' style="width: auto; display: block;margin-bottom:20px"></div>
-                  <div id="myChart1" style="max-width:auto; height:auto;display:inline-block"></div> 
+               <center>
+                  <div id='regions_div' style="max-width:auto; height:auto;display:inline-block"></div>
                   <div id="myChart2" style="max-width:auto; height:auto;display:inline-block"></div> 
+                  <div id="myChart1" style="max-width:auto; height:auto;display:inline-block"></div> 
+               </center>   
                </div>
             </div>
       </div>
@@ -118,7 +138,7 @@
    
    <input type='hidden' name='id_order_view' id='id_order_view' value='{{$id_order_view}}'>
       @if ($id_order_view>0)
-      <div class="appointment_section mt-3">
+      <div class="appointment_section mt-3 ordini" id='div_detail_order'>
          <div class="container">
             <div class="appointment_box">
                <h3>Order detail #{{$id_order_view}}</h3></hr>
@@ -258,7 +278,7 @@
          </div>
       </div> 
       @endif     
-      <div class="appointment_section mt-3">
+      <div class="appointment_section mt-3 ordini" id='div_ordini'>
             <div class="container">
                <div class="appointment_box">
                   <div id='orders' style='max-width:auto;overflow-x: scroll'>

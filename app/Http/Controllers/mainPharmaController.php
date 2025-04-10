@@ -57,6 +57,7 @@ public function __construct()
 
 
 		$molecola=$this->molecola;
+		
 		$molecole_info=$this->molecole_info;		
 		$pack_qty_id=$this->pack_qty_id;
 		$packaging=$this->packaging;
@@ -99,16 +100,22 @@ public function __construct()
 	}
 
 	public function stat(Request $request) {
+		//via ajax
 		$year_stat=$request->input('year_stat');
+		$molec=$request->input('molec');
 		$molecola=$this->molecola;
 		$molecole_info=$this->molecole_info;	
 
 		$paesi=$this->country;
 		
 		$lista_ordini=DB::table('ordini as o')
+		->join('allestimento as a','o.id_ordine','a.id')
 		->join('users as u','o.id_user','u.id')
 		->select(DB::raw('count(*) as total'),'u.country')
 		->where(DB::raw('YEAR(o.created_at)'), '=', $year_stat )
+		->when($molec!="all", function ($lista_ordini) use ($molec) {			
+			return $lista_ordini->where('a.id_molecola', "=", $molec);
+		})		
 		->groupBy('u.country')
 		->get();
 
@@ -116,6 +123,9 @@ public function __construct()
 		->join('allestimento as a','o.id_articolo','a.id')
 		->select(DB::raw('count(*) as total'),'a.id_molecola')
 		->where(DB::raw('YEAR(o.created_at)'), '=', $year_stat )
+		->when($molec!="all", function ($lista_prod) use ($molec) {			
+			return $lista_prod->where('a.id_molecola', "=", $molec);
+		})			
 		->groupBy('a.id_molecola')
 		->get();
 

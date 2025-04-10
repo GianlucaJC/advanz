@@ -17,6 +17,7 @@ $(document).ready( function () {
     let CSRF_TOKEN = $("#token_csrf").val();
     base_path = $("#url").val();
     year_stat=$("#year_stat").val()
+    molec=$("#molec").val()
     $("#regions_div").empty()
     $("#myChart1").empty()
     $("#myChart2").empty()
@@ -34,7 +35,7 @@ $(document).ready( function () {
           headers: {
             "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
           },
-          body: "_token="+ CSRF_TOKEN+"&year_stat="+year_stat
+          body: "_token="+ CSRF_TOKEN+"&year_stat="+year_stat+"&molec="+molec
       })
       .then(response => {
           if (response.ok) {
@@ -51,21 +52,19 @@ $(document).ready( function () {
         var data = google.visualization.arrayToDataTable(dati);
         var options = {
           region: '150', // Western Europe
-          width: 1200,
-          height: 800,
+          width: 300,
+          height: 200,
         };
 
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-        var container = document.getElementById('regions_div');
-        if (container) container.style.display = 'block';
         chart.draw(data, options);
 
         //Grafico istogrammi 
         // Set Options
         var options = {
           title: title,
-          width: 600,
-          height: 400,
+          width: 300,
+          height: 300,
           bar: {groupWidth: "95%"},           
         };        
         var data = google.visualization.arrayToDataTable(dati);
@@ -77,8 +76,8 @@ $(document).ready( function () {
 
         var options = {
           title: title,
-          width: 600,
-          height: 400,
+          width: 300,
+          height: 200,
           bar: {groupWidth: "95%"},           
         };          
         var data = google.visualization.arrayToDataTable(dati);

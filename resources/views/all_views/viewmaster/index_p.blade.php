@@ -248,7 +248,7 @@
                      <div class="col-md-3">
                         <div class='custom_lnk'>
                            <span class='normal_m'>
-                              <a href="#" onclick="$('#div_stat').toggle(150)">Statistics <i class="fa-solid fa-chart-pie"></i></a>
+                              <a href="#" onclick="$('#div_stat').show(100);$('.ordini').hide()">Statistics <i class="fa-solid fa-chart-pie"></i></a>
                            </span>
                         </div>   
                      </div>                     
