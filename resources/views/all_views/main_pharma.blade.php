@@ -294,8 +294,12 @@
       </div> 
       @endif     
 
-      @if (strlen($id_order_view)==0)
-      <div class="appointment_section mt-3 ordini" id='div_ordini'>
+      <?php
+         $st="";
+         if (strlen($id_order_view)!=0) $st="display:none";
+      ?>
+      
+      <div class="appointment_section mt-3 ordini" id='div_ordini' style='{{$st}}'>
             <div class="container">
                <div class="appointment_box">
                   <div id='orders' style='max-width:auto;overflow-x: scroll'>
