@@ -581,7 +581,7 @@
                            <label for="email">User Email*</label>
                      </div>
                      <font color='red'><x-input-error :messages="$errors->get('email')" class="mt-2" /></font>
-
+                     <div style='text-align: left;'><a href='forgot-password'   class='link-underline-primary'><font color='gray'>Forgot password</font></a></div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating">
@@ -589,12 +589,13 @@
                         <label for="password">Password*</label>
                      </div>
                      <font color='red'><x-input-error :messages="$errors->get('password')" class="mt-2" /></font>
+                     
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="view_pw">
                         <label class="form-check-label" for="view_pw">
                            View Password
                         </label>
-                  </div>                  
+                     </div>                  
 
                   </div>
                                      
