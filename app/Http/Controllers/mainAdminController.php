@@ -68,7 +68,7 @@ public function __construct()
 		$id_art=$request->input('id_art');
 		
 		$allestimento = allestimento::find($id_art);
-		$allestimento->cod_liof = $request->input('lotto');
+		$allestimento->cod_liof = $request->input('cod_liof');
 		$allestimento->descrizione = $request->input('description');
 		$allestimento->stock = $request->input('stock');
 		$allestimento->save();
