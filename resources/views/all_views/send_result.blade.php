@@ -119,7 +119,7 @@
                            <div class="col-md-4">
                               <div class="form-floating mb-3 mb-md-0">
                                  <input class="form-control" id="testo_ref" name='testo_ref' type="text" placeholder="Custom text for attachment" required value=""  />
-                                 <label for="testo_ref">Associated text*</label>
+                                 <label for="testo_ref">Description*</label>
                               </div>
                            </div> 
 
