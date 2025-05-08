@@ -141,7 +141,7 @@ $(document).ready( function () {
   function set_table() {
     scroll=false;
     if (ismobile==true)  scroll=true
-
+/*
   $('#tbl_articoli tfoot th').each(function () {
       var title = $(this).text();
       if (title.length!=0) {
@@ -151,8 +151,8 @@ $(document).ready( function () {
         $(this).html('<input class="form-control" '+style+' type="text"  />');
       }
   });
-
-  $('#tbl_articoli').DataTable({
+*/
+  var table =$('#tbl_articoli').DataTable({
     pageLength: 10,
     "scrollX": scroll,
     pagingType: 'full_numbers',
@@ -160,20 +160,10 @@ $(document).ready( function () {
     buttons: [
       'excel'
     ],		
-    initComplete: function () {
-      // Apply the search
-      this.api()
-          .columns()
-          .every(function () {
-              var that = this;
+    
 
-              $('input', this.footer()).on('keyup change clear', function () {
-                  if (that.search() !== this.value) {
-                      that.search(this.value).draw();
-                  }
-              });
-          });
-    },
+// #column3_search is a <input type="text"> element
+  
       /*
       language: {
           lengthMenu: 'Visualizza _MENU_ records per pagina',
@@ -184,7 +174,26 @@ $(document).ready( function () {
       },
       */
   });	
-    
+
+    $('#tbl_articoli thead th').each( function () {
+        var title = $(this).text();
+        if (title.length!=0) {
+            
+          $(this).html( title+'<br><input type="text" class="form-control" placeholder="Search" />' );
+        }
+    } );
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+        $( 'input', this.header() ).on( 'keyup change clear', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );    
 }
 
 function set_um(value) {

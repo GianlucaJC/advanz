@@ -70,7 +70,8 @@
                            <th>Species name</th>  
                            <th>Infection source</th>  
                            <th>Test method</th>  
-                           <th>Test result</th>  
+                           <th>Test result</th> 
+                           <th>Description</th> 
                            <th>Attachments</th>
                         </tr>
                      </thead>
@@ -136,7 +137,9 @@
                            </td>  
                            
                         
-
+                           <td>
+                              {{$testo_ref}}
+                           </td>
    
 
                            <td>
@@ -163,7 +166,8 @@
                            <th>Species name</th>  
                            <th>Infection source</th>  
                            <th>Test method</th>  
-                           <th>Test result</th>  
+                           <th>Test result</th>
+                           <th>Description</th>
                            <th>Attachments</th>
                         </tr>
                         </tfoot>

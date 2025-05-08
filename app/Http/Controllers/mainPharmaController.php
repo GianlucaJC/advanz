@@ -96,7 +96,10 @@ public function __construct()
 			->select('o.id','o.stato','o.id_user','o.ship_date','tracker','o.ship_date_estimated','o.created_at')
 			->when($id_order_view!="all", function ($info_ordine) use ($id_order_view) {			
 				return $info_ordine->where('id','=',$id_order_view);
-			})			
+			})	
+			->when($id_order_view=="all", function ($info_ordine) {			
+				return $info_ordine;
+			})						
 			->get();	
 			
 			foreach ($info_ordine as $order) {

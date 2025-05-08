@@ -51,7 +51,8 @@
 
 
 
-<?php if (1==2) {?>
+<?php 
+if (1==2) {?>
    @section('top')
       @include('all_views.components.top')
    @endsection
@@ -255,21 +256,24 @@
                            <td>
                              <?php 
                              
-                              if (isset($orders[$id_order_view])) {
-                                    $ship=$orders[$id_order_view]->ship_date;
-                                    echo  $ship;
-                              }
-                              
+                              if (isset($orders[$id_order_view])) 
+                                 $id_ref=$id_order_view;
+                              else    
+                                 $id_ref=$articolo->id_ordine;
+
+                              $ship=$orders[$id_ref]->ship_date;
+                              echo  $ship;
+
                               ?>   
                            </td>
                            <td>
                            <?php 
-                              if (isset($orders[$id_order_view])) {
-                                    $track=$orders[$id_order_view]->tracker;
-                                    if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
-                                    echo  $track;
-                                    if (substr($track,0,4)=="http") echo "</a>";
-                              }
+                              
+                              $track=$orders[$id_ref]->tracker;
+                              if (substr($track,0,4)=="http") echo "<a href='$track' target='_blank'>";
+                              echo  $track;
+                              if (substr($track,0,4)=="http") echo "</a>";
+                        
                            ?>   
                            </td>
                            <td>{{$data_ordine}}</td>
