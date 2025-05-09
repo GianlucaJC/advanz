@@ -138,7 +138,11 @@
                            
                         
                            <td>
-                              {{$testo_ref}}
+                            <?php
+                              if (strlen($file_ref)==0) {
+                                 echo $testo_ref;
+                              }
+                              ?>   
                            </td>
    
 

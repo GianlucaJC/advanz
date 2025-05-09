@@ -199,7 +199,8 @@
                            <th>Species name</th>  
                            <th>Infection source</th>  
                            <th>Test method</th>  
-                           <th>Test result</th>  
+                           <th>Test result</th>
+                           <th>Description</th>  
                            <th>Attachments</th>
                         </tr>
                      </thead>
@@ -273,8 +274,13 @@
                                  ?>
                            </td>  
                            
-                        
-
+                           <td>
+                              <?php
+                              if (strlen($file_ref)==0) {
+                                  echo "$testo_ref";
+                              }
+                              ?>
+                           </td>
    
 
                            <td>
@@ -337,6 +343,7 @@
                            <th>Infection source</th>  
                            <th>Test method</th>  
                            <th>Test result</th>  
+                           <th>Description</th>
                            <th>Attachments</th>
                         </tr>
                         </tfoot>
