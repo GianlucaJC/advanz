@@ -158,7 +158,7 @@
                            <td>
                               
                               <input type='text' placeholder='Batch Num.' class='form-control' id='lotto{{$articolo->id}}' style='width:auto' value="{{$articolo->lotto}}"> 
-                                                        
+                              <span style='opacity: 0;'>{{$articolo->lotto}}</span>
                            </td>  
 
 
@@ -166,7 +166,7 @@
                            <td>
 
                            <input type='date' class='form-control' id='exp_date{{$articolo->id}}' style='width:auto' value="{{$articolo->expiration_date}}"> 
-
+                           <span style='opacity: 0;'>{{$articolo->expiration_date}}</span>
                            </td>
                            <td>
                               <?php 
@@ -279,19 +279,21 @@
                                ?> 
                            </td> 
                            <td>
-                                <input type='text' placeholder='Tracker code or link' class='form-control' id='tracker{{$ordine->id}}' style='width:180px' value="{{$ordine->tracker}}">    
+                              <input type='text' placeholder='Tracker code or link' class='form-control' id='tracker{{$ordine->id}}' style='width:180px' value="{{$ordine->tracker}}">    
+                              <span style='opacity: 0;'>{{$ordine->tracker}}</span>
                            </td>
                            <td>
                               
                               <input type='date' class='form-control' id='ship_date{{$ordine->id}}' style='width:auto' value="{{$ordine->ship_date}}"> 
+                              <span style='opacity: 0;'>{{$ordine->ship_date}}</span>
 
                            </td> 
                            <td>
                               
-                               <small>
-
-                                 <input type='date' class='form-control' id='ship_date_estimated{{$ordine->id}}' style='width:auto' value="{{$ordine->ship_date_estimated}}">                                
-                               </small>
+                       
+                                 <input type='date' class='form-control' id='ship_date_estimated{{$ordine->id}}' style='width:auto' value="{{$ordine->ship_date_estimated}}">                    
+                                 <span style='opacity: 0;'>{{$ordine->ship_date_estimated}}</span>
+                             
 
                            </td> 
                            <td style='text-align:center'>
