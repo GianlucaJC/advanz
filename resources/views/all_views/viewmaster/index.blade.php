@@ -327,7 +327,7 @@
                               <span class="padding_15">Direct: +39 (085) 8930745</span></a>
                            </li>
                            <li>
-                              <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
+                              <a href="mailto:enquiries@advanz-astip.com"><i class="fa fa-envelope" aria-hidden="true"></i>
                               <span class="padding_15">Email : enquiries@advanz-astip.com</span></a>
                            </li>
                         </ul>
@@ -369,7 +369,12 @@
                   </div>
                   <div class="col-lg-3 col-sm-6">
                      <h3 class="footer_taital">Help & Support</h3>
-                     <p class="ipsum_text">To obtain support on using the services, contact enquiries@advanz-astip.com</p>
+                     <p class="ipsum_text">To obtain support on using the services, contact 
+                        <a href="mailto:enquiries@advanz-astip.com">
+                           enquiries@advanz-astip.com
+                        </a>
+                     </p>
+                     Healthcare professionals are asked to report any suspected adverse reactions via the national reporting system. Adverse events and product quality complaints should also be reported to Advanz Pharma at medicalinformation@advanzpharma.com
                   </div>
 
                </div>
