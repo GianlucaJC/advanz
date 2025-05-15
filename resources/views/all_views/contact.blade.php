@@ -130,7 +130,7 @@
                                 <div class="col-lg-8">
                                     <textarea name="txtMessage" rows="2" cols="20" id="txtMessage" class="form-control" placeholder="Message" required>
                                     </textarea>
-                                    <span class="help-block">Please allow up to 48 hours for a reply.</span>
+                                    <span class="help-block">Please allow up to 48 hours for a reply where possible.</span>
                                 </div>
                                 </div>
                                 
