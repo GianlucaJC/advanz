@@ -344,7 +344,7 @@
                   
                   <div class="col-md-3" style='display:none'>
                         <div class="form-floating">
-                           <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State" required value=""  />
+                           <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State"  value=""  />
                            <label for="state">State *</label>
                         </div>
                         <div class="invalid-feedback">
