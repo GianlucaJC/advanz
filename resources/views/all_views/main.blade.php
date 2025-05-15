@@ -89,6 +89,17 @@
       </div>
 
       <div class="appointment_section mt-2">
+         <div class="container">
+            <div class="appointment_box">
+                  <p style='text-align:justify'>            
+                     After receipt of the material ordered on ADVANZ ASTIP,  you will have the possibility to upload in your personal space the results of the individual isolates tested. This offers you the opportunity to understand the susceptibility profile at your institution and support ADVANZ PHARMA to collate surveillance information on local susceptibility
+                  </p>
+               </div>
+         </div>
+      </div>
+
+
+      <div class="appointment_section mt-2">
             <div class='container'>
                <div class="appointment_box">
                   <div class="jumbotron">
