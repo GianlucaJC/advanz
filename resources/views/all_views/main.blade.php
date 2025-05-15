@@ -64,7 +64,7 @@
                   <div class="jumbotron">
                      <p style='text-align:justify'>
                        <h3>
-                        Welcome to the ADVANZ PHARMA <b>A</b>ntimicrobial <b>S</b>usceptibility <b>T</b>esting <b>I</b>nvestigational Program
+                        Welcome to the ADVANZ PHARMA <b>A</b>ntimicrobial <b>S</b>usceptibility <b>T</b>esting <b>I</b>nvestigational <b>P</b>rogram
                        </h3>
                      </p>
                      <h1>(ADVANZ PHARMA ASTIP)</h1>
