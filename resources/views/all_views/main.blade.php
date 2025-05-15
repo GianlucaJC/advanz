@@ -445,8 +445,8 @@
                <div class="row mb-2">
                   <div class="col-md-12">
                      <h3>Testing <span style="color: #0cb7d6;"> Material Selection</span></h3>
-                     <h5><i>To display the selection pannel, select your country in the user information section.</i></h5>
-                     <h5<i>Please select the testing materials you wish to receive.</i></h5>
+                     To display the selection pannel, select your country in the user information section.</br>
+                     Please select the testing materials you wish to receive.
                      
                   </div>
                </div>
