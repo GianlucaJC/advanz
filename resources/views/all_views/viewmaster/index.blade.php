@@ -153,7 +153,7 @@
                         <li><a href="javascript:void(0)" onclick="$('#about').hide();$('#div_intro').hide();$('#div_sign').show(200);">Register</a></li>
                        
                         <li><a href="contact">Contact Us</a></li>
-                        <li><a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
+                        <li><a  href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a></li>
 
                      </ul>
                      @endif
@@ -362,7 +362,7 @@
                               <a href="contact">Contact Us</a>
                            </li>
                            <li>
-                           <a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
+                           <a onclick="if (!confirm('Dear user, you are leaving the ASTIP website, are you sure?')) event.preventDefault();" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                            </li>
                         </ul>
                      </div>
