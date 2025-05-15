@@ -87,7 +87,7 @@
                         <a class="nav-link" href="">About</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
+                        <a onclick="if (!confirm('Dear user, you are leaving the ASTIP website, are you sure?')) event.preventDefault();" class="nav-link" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="contact">Contact Us</a>
@@ -228,7 +228,7 @@
                               <a href="contact">Contact Us</a>
                            </li>
                            <li>
-                           <a href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
+                           <a onclick="if (!confirm('Dear user, you are leaving the ASTIP website, are you sure?')) event.preventDefault();" href="https://www.advanzpharma.com/privacy-policy" target='_blank'>Privacy Policies</a>
                            </li>
                         </ul>
                      </div>
