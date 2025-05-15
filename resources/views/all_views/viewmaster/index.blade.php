@@ -324,7 +324,7 @@
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>
-                              <span class="padding_15">Direct: +44 (0) 208 588 9100</span></a>
+                              <span class="padding_15">Direct: +39 (085) 8930745</span></a>
                            </li>
                            <li>
                               <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>
