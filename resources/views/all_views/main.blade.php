@@ -403,7 +403,7 @@
                         </div>
                   </div>                   
                </div>  
-
+                  * Required Field
                <div class="row mb-2 g-2">
                   <div class="col-md-12">
                      <center>
