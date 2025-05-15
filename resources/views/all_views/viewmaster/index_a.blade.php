@@ -343,7 +343,11 @@
                   </div>
                   <div class="col-lg-3 col-sm-6">
                      <h3 class="footer_taital">Help & Support</h3>
-                     <p class="ipsum_text">To obtain support on using the services, contact enquiries@advanz-astip.com</p>
+                     <p class="ipsum_text">To obtain support on using the services, contact 
+                      <a style='color:#0cb6d5' href="mailto:enquiries@advanz-astip.com">
+                           enquiries@advanz-astip.com
+                        </a>
+                    </p>
                   </div>
 
                </div>
