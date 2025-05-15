@@ -302,7 +302,7 @@
                   if (isset($post['country'])) $country=$post['country'];
                ?>
                <div class="row mb-3 g-2">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                      <div class="form-floating mb-3 mb-md-0">
                         <select class="form-select nice" name='country' id='country' required onchange="select_terms(this.value)">
                            <option value=""
@@ -342,7 +342,7 @@
                  
 
                   
-                  <div class="col-md-3">
+                  <div class="col-md-3" style='display:none'>
                         <div class="form-floating">
                            <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State" required value=""  />
                            <label for="state">State *</label>
@@ -352,7 +352,7 @@
                         </div>                        
                   </div> 
                   
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="city" name='city' value="{{$post['city'] ?? ''}}" type="text" placeholder="City" required value=""  />
                            <label for="state">City *</label>
@@ -362,7 +362,7 @@
                         </div>                        
                   </div> 
                   
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="postal_code" value="{{$post['postal_code'] ?? ''}}" name='postal_code' type="text" placeholder="Postal Code" required value=""  />
                            <label for="state">Postal Code *</label>
@@ -375,7 +375,7 @@
                
                <div class="row mb-3 g-2">
 
-               <div class="col-md-4">
+               <div class="col-md-8">
                         <div class="form-floating">
                            <input class="form-control" id="email_ref" value="{{$post['email_ref'] ?? ''}}" name='email_ref' type="email" placeholder="Your Email" required value=""  />
                            <label for="email_ref">Your Email *</label>
@@ -395,7 +395,8 @@
                         </div>                        
                   </div> 
                   
-                  <div class="col-md-4">
+
+                  <div class="col-md-4" style='display:none'>
                         <div class="form-floating">
                            <input class="form-control" id="fax" value="{{$post['fax'] ?? ''}}" name='fax' type="text" placeholder="Fax"  value=""  />
                            <label for="state">Fax</label>
