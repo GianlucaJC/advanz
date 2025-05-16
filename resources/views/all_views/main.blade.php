@@ -331,7 +331,7 @@
                            <?php if ($country==8) echo " selected "; ?>
                            >United Kingdom</option>
                         </select>
-                        <label for="country">Country</label>
+                        <label for="country">Country *</label>
                      
                      <div class="invalid-feedback">
                            Country is required.
@@ -419,7 +419,7 @@
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="read_terms" name="read_terms" required disabled>
                         <label class="form-check-label" for="read_terms">
-                              I have read and agree to the Terms & Conditions
+                              I have read and agree to the Terms & Conditions *
                         </label>
                      </div>
                   </div>
@@ -429,7 +429,7 @@
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="purpose" name="purpose" required>
                         <label class="form-check-label" for="purpose">
-                        I hereby confirm that the ordered materials will only be used for the purpose of general epidemiological research.
+                        I hereby confirm that the ordered materials will only be used for the purpose of general epidemiological research. *
                         </label>
                      </div> 
                   </div>               
@@ -519,7 +519,7 @@
                         <div id="html_element" class='mb-2'></div>
                         <button 
                            class="btn btn-primary" type="submit" id='btn_reg' name='btn_reg' 
-                           disabled
+                           
                            >Submit Registration</button>                        
                      </center>   
                   </div>
