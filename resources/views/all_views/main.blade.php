@@ -344,7 +344,7 @@
                   
                   <div class="col-md-3" style='display:none'>
                         <div class="form-floating">
-                           <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State"  value=""  />
+                           <input class="form-control" id="state" name='state' value="{{$post['state'] ?? ''}}" type="text" placeholder="State"  value="--"  />
                            <label for="state">State *</label>
                         </div>
                         <div class="invalid-feedback">
@@ -355,7 +355,7 @@
                   <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="city" name='city' value="{{$post['city'] ?? ''}}" type="text" placeholder="City" required value=""  />
-                           <label for="state">City *</label>
+                           <label for="city">City *</label>
                         </div>
                         <div class="invalid-feedback">
                            City is required.
@@ -365,7 +365,7 @@
                   <div class="col-md-4">
                         <div class="form-floating">
                            <input class="form-control" id="postal_code" value="{{$post['postal_code'] ?? ''}}" name='postal_code' type="text" placeholder="Postal Code" required value=""  />
-                           <label for="state">Postal Code *</label>
+                           <label for="postal_code">Postal Code *</label>
                         </div>
                         <div class="invalid-feedback">
                            Postal Code is required.
@@ -398,7 +398,7 @@
 
                   <div class="col-md-4" style='display:none'>
                         <div class="form-floating">
-                           <input class="form-control" id="fax" value="{{$post['fax'] ?? ''}}" name='fax' type="text" placeholder="Fax"  value=""  />
+                           <input class="form-control" id="fax" value="{{$post['fax'] ?? ''}}" name='fax' type="text" placeholder="Fax"  value="--"  />
                            <label for="state">Fax</label>
                         </div>
                   </div>                   
