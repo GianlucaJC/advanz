@@ -41,6 +41,7 @@
       </div>
       <div class="modal-body">
         <p>Check the fields highlighted in red</p>
+        <p>and be sure to read and check your country related terms and conditions</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
