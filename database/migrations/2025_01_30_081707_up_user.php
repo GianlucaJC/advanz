@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('shipping_address1')->after('department');
             $table->string('shipping_address2')->after('shipping_address1');
             $table->integer('country')->after('shipping_address2')->nullable();
-            $table->string('state')->after('country');
+            $table->string('state')->after('country')->nullable();
             $table->string('city')->after('state');
             $table->string('postal_code')->after('city');
             $table->string('email_ref')->after('postal_code');
