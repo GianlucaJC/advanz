@@ -39,7 +39,7 @@
         
 
         form.classList.add('was-validated')
-        if (form.checkValidity() && check==false) $("#btn_reg").text('Please wait...')
+        if (form.checkValidity() && check==true) $("#btn_reg").text('Please wait...')
 
       }, false)
     })
@@ -158,7 +158,8 @@ function select_terms(value) {
 
     $("#a_terms").removeAttr("target");
     $("#a_terms").removeAttr("href");
-    $('#read_terms').prop('disabled',true);$('#btn_reg').prop('disabled',true);
+    $('#read_terms').prop('disabled',true);
+    //$('#btn_reg').prop('disabled',true);
     
     if (value.length>0) {
       $("#a_terms").prop("target", "_blank");

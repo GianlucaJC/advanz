@@ -408,7 +408,7 @@
                   <div class="col-md-12">
                      <center>
                         <a href='javascript:void(0)' id='a_terms'> 
-                           <button type="button" class="btn btn-info" onclick="$('#read_terms').prop('disabled',false);$('#btn_reg').prop('disabled',false);">Click to view Terms & Conditions</button>
+                           <button type="button" class="btn btn-info" onclick="$('#read_terms').prop('disabled',false);">Click to view Terms & Conditions</button>
                         </a>   
                      </center>   
                   </div>
