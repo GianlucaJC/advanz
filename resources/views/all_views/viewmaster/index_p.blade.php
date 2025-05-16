@@ -348,7 +348,7 @@
                            </li>
                            !-->   
                            <li>
-                              <a href="https://www.linkedin.com/company/advanz-pharma/about/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+                              <a onclick="if (!confirm('Dear user, you are leaving the ASTIP website, are you sure?')) event.preventDefault();" href="https://www.linkedin.com/company/advanz-pharma/about/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
                            </li>
                         </ul>
                      </div>

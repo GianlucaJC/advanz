@@ -82,7 +82,7 @@
             <div class="appointment_box">
                <h2>Goal of ASTIP</h2>
                   <p style='text-align:justify'>            
-                     ADVANZ PHARMA offers you the opportunity to join the Antimicrobial Susceptibility Testing Investigational Programme (ASTIP). The ASTIP provides In Vitro Diagnostics (IVD) materials for susceptibility testing at no cost. The goal is to help healthcare institutions to better understand the susceptibility of pathogens, the appropriate use of antibiotics and the prevention of antimicrobial resistances in your healthcare institution. By registering to ASTIP you can order a limited quantity of in vitro testing material for research use only and upload anonymised results. <i>Healthcare Organisation are allowed to order one type of testing material per year per product.</i> Disks and Strips are manufactured by Liofilchem® s.r.l. (<a href='https://www.liofilchem.com' class='link-info'>https://www.liofilchem.com</a>) and automated testing plates by Thermo Fisher Scientific (<a href='https://www.thermofisher.com' class='link-info'>https://www.thermofisher.com</a>)
+                     ADVANZ PHARMA offers you the opportunity to join the Antimicrobial Susceptibility Testing Investigational Programme (ASTIP). The ASTIP provides In Vitro Diagnostics (IVD) materials for susceptibility testing at no cost. The goal is to help healthcare institutions to better understand the susceptibility of pathogens, the appropriate use of antibiotics and the prevention of antimicrobial resistances in your healthcare institution. By registering to ASTIP you can order a limited quantity of in vitro testing material for research use only and upload anonymised results. <i>Healthcare Organisation are allowed to order one type of testing material per year per product.</i> Disks and Strips are manufactured by Liofilchem® s.r.l. (<a href='https://www.liofilchem.com' class='link-info'>https://www.liofilchem.com</a>) and automated testing plates by Thermo Fisher Scientific (<a href='https://www.thermofisher.com' class='link-info'>https://www.thermofisher.com</a>).
                   </p>
                </div>
          </div>
@@ -144,7 +144,10 @@
                @if ($save_user==1)
                <div class="alert alert-success" role="alert">
                      <h4><b>Good! </b></h4>
-                     <h5>Your account has been created successfully. To log in <a href='#' onclick="$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);">click here</a></h5>
+                     <h5>Your account has been created successfully.</h5>
+                     <h5>You will receive a confirmation email.</h5>
+                     <h5>If you do not receive it, check your spam folder.</h5>
+                     <h5>To log in <a href='#' onclick="$('#div_reg_log').hide(100);$('#div_sign').hide();$('#div_log').show(250);">click here</a></h5>
                </div>     
                @endif
                @if ($save_user==2)
