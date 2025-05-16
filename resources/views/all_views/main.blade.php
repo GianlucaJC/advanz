@@ -419,7 +419,7 @@
                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="read_terms" name="read_terms" required disabled>
                         <label class="form-check-label" for="read_terms">
-                              I have read and agree to the Terms & Conditions (you must select count and terms & conditions to select this box) *
+                              I have read and agree to the Terms & Conditions (you must select country and terms & conditions to select this box) *
                         </label>
                      </div>
                   </div>
