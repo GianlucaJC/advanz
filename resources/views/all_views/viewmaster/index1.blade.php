@@ -41,7 +41,7 @@
       <!-- header section start -->
        
       <div class="header_section">
-         <div class='mb-5' style='text-align:center'>
+         <div class='mb-3' style='text-align:center'>
                <a class="navbar-brand"href="#">
                      <img src="images/logo_p.png" style='width:30%'>
                </a>                   
@@ -51,7 +51,7 @@
     
 
 
-         <div class="container">
+         <div class="container" style='margin-top:90px'>
     
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
