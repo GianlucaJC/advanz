@@ -330,9 +330,13 @@
                            <option value="7"
                            <?php if ($country==7) echo " selected "; ?>
                            >Spain</option>
-                           <option value="8"
-                           <?php if ($country==8) echo " selected "; ?>
-                           >United Kingdom</option>
+                           <?php
+                           if (1==2) {
+                              echo "<option value='8' ";
+                              if ($country==8) echo " selected ";
+                              echo ">United Kingdom</option>";
+                           }   
+                           ?>
                         </select>
                         <label for="country">Country *</label>
                      
