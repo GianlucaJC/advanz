@@ -47,7 +47,7 @@ public function __construct()
 		$paesi['5']="Germany";
 		$paesi['6']="Ireland";
 		$paesi['7']="Spain";
-		$paesi['8']="United Kingdom";
+		//$paesi['8']="United Kingdom";
 		return $paesi;
 
 	}
