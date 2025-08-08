@@ -117,8 +117,15 @@
       </div>
 
       <div class="appointment_section mt-3">
+      
             <div class='container'>
+            
             <div class="appointment_box">
+               <div class="card-body">
+                  <p class="card-text" style='color:black'>
+                      ASTIP is available to test susceptibility for the drugs listed below.
+                  </p>
+               </div>
                @foreach($molecole_info as $k=>$v)
                   <div class="card mt-2">
                      <div class="card-header">
