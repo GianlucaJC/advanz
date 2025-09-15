@@ -376,7 +376,7 @@
       <!-- copyright section start -->
       <div class="copyright_section">
          <div class="container">
-            <p class="copyright_text">Copyright 2025 Liofilchem®. All Rights Reserved.</p>
+            <p class="copyright_text">Copyright 2025 Liofilchem®. All Rights Reserved. AT/MISC/NP/0005.</p>
          </div>
       </div>
       <!-- copyright section end -->
