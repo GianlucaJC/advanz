@@ -152,7 +152,8 @@ public function __construct()
 			$txtPhone=$request->input('txtPhone');
 			$ddlTopic=$request->input('ddlTopic');
 			$txtMessage=$request->input('txtMessage');
-			$email=$request->input('txtEmail');
+			$email_input=$request->input('txtEmail');
+			$email=$email_input;
 		
 			
 			$status=array();
@@ -166,7 +167,7 @@ public function __construct()
 					$dx["txtInstitution"]=$txtInstitution;
 					$dx["txtName"]=$txtName;
 					$dx["txtPhone"]=$txtPhone;
-					$dx["txtEmail"]=$email;
+					$dx["txtEmail"]=$email_input;
 					$dx["ddlTopic"]=$ddlTopic;
 					$dx["txtMessage"]=$txtMessage;
 					$data['dati']=$dx;
@@ -255,11 +256,13 @@ public function __construct()
 			}
 			if ($new_ord==true) {
 				$info_mail=DB::table('users')
-				->select('email','name','istituto','shipping_address1','shipping_address2','state','city','postal_code')
+				->select('email','name','first_name','last_name','istituto','shipping_address1','shipping_address2','state','city','postal_code')
 				->where('id','=',$id_user)->first();
 				if($info_mail) {
 					$info_order['material']=$material;
 					$info_order['name']=$info_mail->name;
+					$info_order['first_name']=$info_mail->first_name;
+					$info_order['last_name']=$info_mail->last_name;
 					$info_order['istituto']=$info_mail->istituto;
 					$info_order['shipping_address1']=$info_mail->shipping_address1;
 					$info_order['shipping_address2']=$info_mail->shipping_address2;
@@ -344,9 +347,10 @@ public function __construct()
 						$template="emails.conferma_registrazione_admin";
 						$data["title"] = "ADVANZ ASTIP Registration Confirmation";
 						$name="New User";
-						if ($request->has("first_name")) $name=$request->input("first_name");
-						$data["name"]=$name;
-					}
+						if ($request->has("first_name")) 
+							$name=$request->input("istituto")." (".$request->input("first_name")." ".$request->input("last_name").")";
+							$data["name"]=$name;
+						}
 
 				}
 				if ($type=="2")	{

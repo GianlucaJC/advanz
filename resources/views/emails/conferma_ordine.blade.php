@@ -4,6 +4,8 @@
     <title></title>
 </head>
 <?php
+    $first_name=$info_order['first_name'];
+    $last_name=$info_order['last_name'];
     $name=$info_order['name'];
     $material=$info_order['material'];
     $art_in_order=$info_order['art_in_order'];
@@ -53,7 +55,7 @@
 
 
 ?>
-
+Name: {{$first_name}} {{$last_name}}<br>
 Delivery Address: {{$address}}<br><br>
 
 Estimated Delivery Date: <b>{{$estim}}</b><br><br>

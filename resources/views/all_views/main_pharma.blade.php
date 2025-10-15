@@ -169,7 +169,7 @@ if (1==2) {?>
                            <th>Expiration date</th>
                            <th>Shipping date</th>
                            <th>Shipping AWB</th>
-                           <th>Receipt date at site</th>
+                           <th>Order date</th>
                            <th>Comments</th>
                         </tr>
                      </thead>
@@ -189,8 +189,12 @@ if (1==2) {?>
                             $data_ordine=$articolo->created_at;
                            
                             $city="";$country_view="";
+                            $name_global="";
                             if (isset($arr_user[$id_user_ref])) {
                               $name=$arr_user[$id_user_ref]->name;
+                              $first_name=$arr_user[$id_user_ref]->first_name;
+                              $last_name=$arr_user[$id_user_ref]->last_name;
+                              $name_global=$first_name." ".$last_name;
                               $istituto=$arr_user[$id_user_ref]->istituto;
                               $shipping_address1=$arr_user[$id_user_ref]->shipping_address1;
                               $shipping_address2=$arr_user[$id_user_ref]->shipping_address2;
@@ -203,7 +207,7 @@ if (1==2) {?>
                         <tr>
                         
                            <td>
-                              {{$name}}
+                              {{$name_global}}
                            </td>
                            <td>
                               {{$istituto}}
