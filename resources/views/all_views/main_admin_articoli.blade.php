@@ -5,6 +5,7 @@
 
 @section('extra_style') 
    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 
@@ -46,7 +47,7 @@
 
       <div class="appointment_section mt-3">
             <div class="container">
-               <div class="appointment_box" style='overflow-x:scroll'>
+               <div class="appointment_box" style='overflow-x:scroll;width:110%'>
                     <table id='tbl_art_liof' class="display nowrap">
                         <thead>
                             <tr>
@@ -56,6 +57,7 @@
                                 <th>Liofilchem Code</th>
                                 <th>Description</th>
                                 <th>Stock</th>
+                                <th>Refill</th>
                                 <th>Remaining</th>
                                 <th>Operation</th>
                             </tr>   
@@ -97,18 +99,23 @@
 
                                  </td>
                                  <td>
-                                    <input type='text' placeholder='Stock' class='form-control' id='stock{{$art->id}}' style='width:100px' maxlength=20 value="{{$art->stock}}"> 
-
+                                    <span id='stock_val{{$art->id}}'>{{$art->stock}}</span>
                                  </td>
                                  <td>
-                                    {{$art->remaining}}
+                                    <input type='number' placeholder='Refill Qty' class='form-control' id='refill{{$art->id}}' style='width:100px' value="0"> 
+                                 </td>
+                                 <td>
+                                    <span id='remaining_val{{$art->id}}'>{{$art->remaining}}</span>
                                  </td>                                 
                                  <td>
                                     <span id='spin_art{{$art->id}}' style='display:inline;' hidden>
                                     <i class='fas fa-spinner fa-spin'></i>
                                     </span>
 
-                                    <button type="button" onclick="save_art_liof({{$art->id}})" class="btn btn-success">Save</button>                              
+                                    <button type="button" onclick="refill_art({{$art->id}})" class="btn btn-primary">Refill</button>
+
+                                    <button type="button" onclick="save_art_liof({{$art->id}})" class="btn btn-success">Save</button>
+
                                  </td>                                 
                               </tr>  
                             @endforeach 
@@ -143,4 +150,3 @@
     <!-- fine DataTables !-->
    <script src="{{ URL::asset('/') }}js/art_admin.js?ver=<?= time() ?>"></script>
 @endsection
-

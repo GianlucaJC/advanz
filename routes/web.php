@@ -56,7 +56,9 @@ Route::middleware('auth')->group(function () {
         
     Route::post('update_art', [ 'as' => 'update_art', 'uses' => 'App\Http\Controllers\mainAdminController@update_art']);
 
-    Route::post('update_art_liof', [ 'as' => 'update_art_liof', 'uses' => 'App\Http\Controllers\mainAdminController@update_art_liof']);    
+    Route::post('update_art_liof', [ 'as' => 'update_art_liof', 'uses' => 'App\Http\Controllers\mainAdminController@update_art_liof']);
+
+    Route::post('refill_art', [ 'as' => 'refill_art', 'uses' => 'App\Http\Controllers\mainAdminController@refill_art']);
 
 });      
 

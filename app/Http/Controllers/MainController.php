@@ -37,6 +37,10 @@ public function __construct()
 			}
 			return $next($request);	
 		});
+	
+		//per passare manualmente tutti i carrelli in ordini!
+		//$this->process_all_carts();
+
 		
 	}
 	public function save_user($request) {
@@ -380,5 +384,50 @@ public function __construct()
 			}
 		}
 	}	
+
+	public function process_all_carts() {
+		// Get all distinct users from the cart
+		$users_in_cart = DB::table('carrello')->distinct()->pluck('id_user');
+
+		foreach ($users_in_cart as $id_user) {
+			// Get all cart items for the current user
+			$cart_items = DB::table('carrello')->where('id_user', $id_user)->get();
+
+			if ($cart_items->isEmpty()) {
+				continue;
+			}
+
+			// Find the oldest item in the cart to determine the estimated shipping date
+			$oldest_cart_item = DB::table('carrello')
+				->where('id_user', $id_user)
+				->orderBy('created_at', 'asc')
+				->first();
+			
+			$estimated_ship_date = date('Y-m-d', strtotime($oldest_cart_item->created_at . ' +14 days'));
+
+			// Create the order reference
+			$ordini_ref = new ordini_ref;
+			$ordini_ref->id_user = $id_user;
+			$ordini_ref->ship_date_estimated = $estimated_ship_date;
+			$ordini_ref->save();
+			$id_ordine = $ordini_ref->id;
+
+			// Move items from cart to orders
+			foreach ($cart_items as $item) {
+				$ordini = new ordini;
+				$ordini->id_ordine = $id_ordine;
+				$ordini->id_articolo = $item->id_articolo;
+				$ordini->id_user = $id_user;
+				$ordini->save();
+			}
+
+			// Clear the user's cart
+			DB::table('carrello')->where('id_user', '=', $id_user)->delete();
+		}
+
+		// You might want to return a response, for example:
+		return response()->json(['status' => 'success', 'message' => 'All carts have been processed.']);
+	}
+
 
 }

@@ -1,128 +1,98 @@
-ismobile=false
-
 $(document).ready( function () {
- 
-  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
-    ismobile=true
-  else
-    ismobile=false
-  
-   set_table()
-})
-
-
-  
-  function set_table() {
-    scroll=false;
-    if (ismobile==true)  scroll=true
-
-
-  $('#tbl_art_liof').DataTable({
-    order: [[0, 'desc']],
-    pageLength: 10,
-    "scrollX": scroll,
-    pagingType: 'full_numbers',
-    dom: 'Bfrtip',
-    buttons: [
-      'excel'
-    ],		
-     		 
-      /*
-      language: {
-          lengthMenu: 'Visualizza _MENU_ records per pagina',
-          zeroRecords: 'Nessuna urgenza trovata',
-          info: 'Pagina _PAGE_ di _PAGES_',
-          infoEmpty: 'Non sono disponibili urgenze',
-          infoFiltered: '(Filtrati da _MAX_ urgenze totali)',
-      },
-      */
-  });	
-      
-    
-}
+    $('#tbl_art_liof').DataTable({
+		dom: 'Bfrtip',
+		buttons: [
+			'excel'
+		]
+	});
+} );
 
 function save_art_liof(id_art) {
-  let CSRF_TOKEN = $("#token_csrf").val();
-  $("#spin_art"+id_art).show(100)
-  let spin = document.getElementById("spin_art"+id_art);
-  spin.removeAttribute("hidden");
-  cod_liof=$("#cod_liof"+id_art).val()
-  description=$("#description"+id_art).val()
-  stock=$("#stock"+id_art).val()
+    Swal.fire({
+        title: 'Confermi il salvataggio?',
+        text: "Stai per salvare le modifiche all'articolo.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì, salva!',
+        cancelButtonText: 'Annulla'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let cod_liof = $("#cod_liof" + id_art).val();
+            let description = $("#description" + id_art).val();
+            // Note: stock is now read-only and not sent. The backend doesn't expect it for update_art_liof anymore.
 
+            $("#spin_art" + id_art).show();
+            let base_path = $("#url").val() || ''; // Fallback for base_path
+            let token = $('#token_csrf').val();
 
-  base_path = $("#url").val();
-
-  timer = setTimeout(function() {	
-    fetch(base_path+"/update_art_liof", {
-        method: 'post',
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
-        body: "_token="+ CSRF_TOKEN+"&id_art="+id_art+"&cod_liof="+cod_liof+"&description="+description+"&stock="+stock,
-    })
-    .then(response => {
-        if (response.ok) {
-          return response.json();
+            $.ajax({
+                type: "POST",
+                url: base_path + "/update_art_liof",
+                data: {
+                    _token: token,
+                    id_art: id_art,
+                    cod_liof: cod_liof,
+                    description: description
+                },
+                success: function (data) {
+                    $("#spin_art" + id_art).hide();
+                    Swal.fire('Salvato!', 'Le modifiche sono state salvate.', 'success');
+                },
+                error: function() {
+                    $("#spin_art" + id_art).hide();
+                    Swal.fire('Errore!', 'Si è verificato un errore durante il salvataggio.', 'error');
+                }
+            });
         }
-    })
-    .then(resp=>{
-        spin.setAttribute("hidden", "hidden");
-        if (resp.header=="OK") {
-          
-        }
-        else {
-          alert("Error occurred while deleting file")
-        }
-
-    })
-    .catch(status, err => {
-        return console.log(status, err);
-    })     
-
-  }, 800)	    
-  
+    });
 }
 
-function save_info(id_ordine) {
-    let CSRF_TOKEN = $("#token_csrf").val();
-    $("#spin"+id_ordine).show(100)
-    let spin = document.getElementById("spin"+id_ordine);
-    spin.removeAttribute("hidden");
-    stato=$("#stato"+id_ordine).val()
-    tracker=$("#tracker"+id_ordine).val()
-    ship_date=$("#ship_date"+id_ordine).val()
-    ship_date_estimated=$("#ship_date_estimated"+id_ordine).val()
+function refill_art(id_art) {
+    let refill_qty = $("#refill" + id_art).val();
+    if (refill_qty == 0) {
+        Swal.fire('Attenzione!', 'Inserire una quantità di refill valida.', 'warning');
+        return;
+    }
 
-    base_path = $("#url").val();
-
-    timer = setTimeout(function() {	
-      fetch(base_path+"/update_order", {
-          method: 'post',
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-          },
-          body: "_token="+ CSRF_TOKEN+"&id_ordine="+id_ordine+"&stato="+stato+"&tracker="+tracker+"&ship_date="+ship_date+"&ship_date_estimated="+ship_date_estimated,
-      })
-      .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-      })
-      .then(resp=>{
-          spin.setAttribute("hidden", "hidden");
-          if (resp.header=="OK") {
-            
-          }
-          else {
-            alert("Error occurred while deleting file")
-          }
-
-      })
-      .catch(status, err => {
-          return console.log(status, err);
-      })     
-
-    }, 800)	    
-    
+    Swal.fire({
+        title: 'Confermi il refill?',
+        text: `Stai aggiuntendo ${refill_qty} quantità allo stock ed al remaining.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $("#spin_art" + id_art).show();
+            let token = $('#token_csrf').val();
+            $.ajax({
+                type: "POST",
+                url: "refill_art",
+                data: {
+                    _token: token,
+                    id_art: id_art,
+                    refill_qty: refill_qty
+                },
+                success: function (data) {
+                    let response = JSON.parse(data);
+                    if (response.header === "OK") {
+                        $("#stock_val" + id_art).text(response.new_stock);
+                        $("#remaining_val" + id_art).text(response.new_remaining);
+                        $("#refill" + id_art).val(0);
+                        Swal.fire('Success!', 'Stock è stato refillato.', 'success');
+                    } else {
+                        Swal.fire('Error!', 'Qualcosa non è andato bene', 'error');
+                    }
+                    $("#spin_art" + id_art).hide();
+                },
+                error: function() {
+                    Swal.fire('Error!', 'Errore occorso durante il refill.', 'error');
+                    $("#spin_art" + id_art).hide();
+                }
+            });
+        }
+    });
 }

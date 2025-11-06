@@ -78,6 +78,22 @@ public function __construct()
 		return json_encode($risp);					
 	}
 
+	public function refill_art(Request $request) {
+		$id_art=$request->input('id_art');
+		$refill_qty=$request->input('refill_qty');
+		
+		$allestimento = allestimento::find($id_art);
+		$allestimento->stock += $refill_qty;
+		$allestimento->remaining += $refill_qty;
+		$allestimento->save();
+
+		$risp=array();
+		$risp['header']="OK";
+		$risp['new_stock']=$allestimento->stock;
+		$risp['new_remaining']=$allestimento->remaining;
+		return json_encode($risp);					
+	}
+
 	public function update_order(Request $request) {
 		$id_ordine=$request->input('id_ordine');
 		$stato=$request->input('stato');
