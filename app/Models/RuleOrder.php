@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Uploads extends Model
+class RuleOrder extends Model
 {
+    protected $table="rule_order";
     use HasFactory;
 }
