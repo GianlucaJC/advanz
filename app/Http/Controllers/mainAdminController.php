@@ -11,10 +11,10 @@ use DB;
 use Users;
 use Mail;
 
-use App\Models\carrello;
-use App\Models\ordini;
-use App\Models\ordini_ref;
-use App\Models\allestimento;
+use App\Models\Carrello;
+use App\Models\Ordini;
+use App\Models\Ordini_ref;
+use App\Models\Allestimento;
 
 class mainAdminController extends AjaxController
 {
@@ -67,7 +67,7 @@ public function __construct()
 	public function update_art_liof(Request $request) {
 		$id_art=$request->input('id_art');
 		
-		$allestimento = allestimento::find($id_art);
+		$allestimento = Allestimento::find($id_art);
 		$allestimento->cod_liof = $request->input('cod_liof');
 		$allestimento->descrizione = $request->input('description');
 		//$allestimento->stock = $request->input('stock');
@@ -82,7 +82,7 @@ public function __construct()
 		$id_art=$request->input('id_art');
 		$refill_qty=$request->input('refill_qty');
 		
-		$allestimento = allestimento::find($id_art);
+		$allestimento = Allestimento::find($id_art);
 		$allestimento->stock += $refill_qty;
 		$allestimento->remaining += $refill_qty;
 		$allestimento->save();
@@ -162,7 +162,7 @@ public function __construct()
 		$pack_qty_id=$this->pack_qty_id;
 		$packaging=$this->packaging;
 
-		$allestimento=allestimento::from('allestimento as a')
+		$allestimento=Allestimento::from('allestimento as a')
 		->select('a.id','a.id_molecola','a.id_pack','a.id_pack_qty','a.cod_liof','a.descrizione','a.stock','a.remaining')
 		->get();	
 

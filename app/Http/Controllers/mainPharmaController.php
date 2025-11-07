@@ -11,10 +11,10 @@ use DB;
 use Users;
 use Mail;
 
-use App\Models\carrello;
-use App\Models\ordini;
-use App\Models\ordini_ref;
-use App\Models\allestimento;
+use App\Models\Carrello;
+use App\Models\Ordini;
+use App\Models\Ordini_ref;
+use App\Models\Allestimento;
 
 class mainPharmaController extends AjaxController
 {

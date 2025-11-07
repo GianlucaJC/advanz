@@ -11,8 +11,8 @@ use DB;
 use Users;
 use Mail;
 
-use App\Models\carrello;
-use App\Models\ordini;
+use App\Models\Carrello;
+use App\Models\Ordini;
 
 class orderController extends AjaxController
 {

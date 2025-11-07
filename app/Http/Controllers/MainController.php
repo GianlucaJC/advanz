@@ -11,10 +11,10 @@ use DB;
 use Users;
 use Mail;
 
-use App\Models\allestimento;
-use App\Models\carrello;
-use App\Models\ordini;
-use App\Models\ordini_ref;
+use App\Models\Allestimento;
+use App\Models\Carrello;
+use App\Models\Ordini;
+use App\Models\Ordini_ref;
 
 class mainController extends AjaxController
 {
@@ -77,7 +77,7 @@ public function __construct()
 					$entr=true;
 					$articolo=$material[$sca];
 					if (strlen($articolo)==0) continue;
-					$carrello=new carrello;
+					$carrello=new Carrello;
 					$carrello->id_articolo=$articolo;
 					$carrello->id_user=$id_user;
 					$carrello->save();
@@ -217,7 +217,7 @@ public function __construct()
 			$material=$request->input('material'); 
 			
 
-			$ordini_ref=new ordini_ref;
+			$ordini_ref=new Ordini_ref;
 			$ordini_ref->id_user=$id_user;
 			$estim=date('Y-m-d', strtotime("+14 days"));
 			$ordini_ref->ship_date_estimated=$estim;
@@ -228,7 +228,7 @@ public function __construct()
 				$new_ord=true;
 				$articolo=$material[$sca];
 				if (strlen($articolo)==0) continue;
-				$ordini=new ordini;
+				$ordini=new Ordini;
 				$ordini->id_ordine=$id_ordine;
 				$ordini->id_articolo=$articolo;
 				$ordini->id_user=$id_user;
@@ -406,7 +406,7 @@ public function __construct()
 			$estimated_ship_date = date('Y-m-d', strtotime($oldest_cart_item->created_at . ' +14 days'));
 
 			// Create the order reference
-			$ordini_ref = new ordini_ref;
+			$ordini_ref = new Ordini_ref;
 			$ordini_ref->id_user = $id_user;
 			$ordini_ref->ship_date_estimated = $estimated_ship_date;
 			$ordini_ref->save();
@@ -414,7 +414,7 @@ public function __construct()
 
 			// Move items from cart to orders
 			foreach ($cart_items as $item) {
-				$ordini = new ordini;
+				$ordini = new Ordini;
 				$ordini->id_ordine = $id_ordine;
 				$ordini->id_articolo = $item->id_articolo;
 				$ordini->id_user = $id_user;
