@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AllestimentoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,6 +53,15 @@ Route::middleware('auth')->group(function () {
     Route::get('main_admin_articoli', [ 'as' => 'main_admin_articoli', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_articoli']);
 	Route::post('main_admin_articoli', [ 'as' => 'main_admin_articoli', 'uses' => 'App\Http\Controllers\mainAdminController@main_admin_articoli']);
 
+    Route::get('/manage-categories', [CategoryController::class, 'manage'])->name('categories.manage');
+    Route::get('/categories/get-packaging', [CategoryController::class, 'getPackagingForMolecule'])->name('categories.getPackaging');
+    Route::get('/categories/get-pack-qty', [CategoryController::class, 'getPackQtyForPackaging'])->name('categories.getPackQty');
+    Route::post('/categories/associate-packaging', [CategoryController::class, 'associatePackaging'])->name('categories.associatePackaging');
+    Route::post('/categories/dissociate-packaging', [CategoryController::class, 'dissociatePackaging'])->name('categories.dissociatePackaging');
+    Route::post('/categories/associate-pack-qty', [CategoryController::class, 'associatePackQty'])->name('categories.associatePackQty');
+    Route::post('/categories/dissociate-pack-qty', [CategoryController::class, 'dissociatePackQty'])->name('categories.dissociatePackQty');
+    Route::post('/categories/store-packaging', [CategoryController::class, 'storePackaging'])->name('categories.storePackaging');
+    Route::post('/categories/store-pack-qty', [CategoryController::class, 'storePackQty'])->name('categories.storePackQty');
 
     Route::post('update_order', [ 'as' => 'update_order', 'uses' => 'App\Http\Controllers\mainAdminController@update_order']);
         
@@ -78,3 +89,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+// Rotte per la gestione dell'allestimento
+Route::middleware('auth')->group(function () {
+    Route::get('allestimento', [AllestimentoController::class, 'index'])->name('allestimento.index');
+    Route::post('allestimento/get-packaging', [AllestimentoController::class, 'getPackaging'])->name('allestimento.getPackaging');
+    Route::post('allestimento/get-pack-qty', [AllestimentoController::class, 'getPackQty'])->name('allestimento.getPackQty');
+    Route::post('allestimento/get-data', [AllestimentoController::class, 'getAllestimentoData'])->name('allestimento.getData');
+    Route::post('allestimento/refill', [AllestimentoController::class, 'refillAllestimento'])->name('allestimento.refill');
+    Route::post('allestimento/save', [AllestimentoController::class, 'saveAllestimento'])->name('allestimento.save');
+});

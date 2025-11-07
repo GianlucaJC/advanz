@@ -46,9 +46,10 @@
    <div id='div_sign' style='' >
 
       <div class="appointment_section mt-3">
-            <div class="container">
-               <div class="appointment_box" style='overflow-x:scroll;width:110%'>
-                    <table id='tbl_art_liof' class="display nowrap">
+            <div class="container-fluid">
+               <div class="appointment_box">
+                  <div class="table-responsive">
+                    <table id='tbl_art_liof' class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Molecola</th>
@@ -121,6 +122,7 @@
                             @endforeach 
                         </tbody>
                     </table>
+                  </div>
                </div>
             </div>
       </div>

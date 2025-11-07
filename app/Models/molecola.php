@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class molecola extends Model
+class Molecola extends Model
 {
-    protected $table="molecola";
     use HasFactory;
+
+    protected $table = 'molecola';
+    protected $fillable = ['descrizione', 'info'];
 }

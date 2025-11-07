@@ -215,9 +215,9 @@
       </div> 
       @endif     
       <div class="appointment_section mt-3">
-            <div class="container">
+            <div class="container-fluid">
                <div class="appointment_box">
-                  <div id='orders' style='max-width:auto;overflow-x: scroll'>
+                  <div id='orders' style='max-width:auto;'>
                   <table id='tbl_order' class="display nowrap">
                      <thead>
                         <tr>
@@ -358,4 +358,3 @@
     <!-- fine DataTables !-->
    <script src="{{ URL::asset('/') }}js/order_admin.js?ver=<?= time() ?>"></script>
 @endsection
-
