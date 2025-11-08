@@ -5,9 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()) {
+                $id_user = Auth::user()->id;
+                $info = User::select("is_admin")->where('id', '=', $id_user)->first();
+                $is_admin = $info ? $info->is_admin : 0;
+                if ($is_admin == 0) return response()->view('all_views.viewmaster.error', compact('id_user'));
+            }
+            return $next($request);
+        });
+    }
     /**
      * Mostra la pagina di gestione degli utenti.
      */
