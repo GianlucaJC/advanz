@@ -1,7 +1,4 @@
 $(document).ready(function() {
-    // Inizializzazione Select2
-    $('#molecola_select, #packaging_to_add_select, #pack_qty_to_add_select').select2();
-
     let selectedMolecolaId = null;
     let selectedPackId = null;
 

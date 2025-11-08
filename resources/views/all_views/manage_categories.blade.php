@@ -3,21 +3,27 @@
 @section('title', 'Gestione Categorie')
 
 @section('extra_style')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        .select2-container--default .select2-selection--multiple {
-            border: 1px solid #ced4da;
-            border-radius: .25rem;
-            padding: .375rem .75rem;
+        /*
+         * Ripristina la freccia del dropdown per gli elementi select
+         * che potrebbero averla persa a causa di stili globali (es. appearance: none).
+        */
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right .75rem center;
+            background-size: 16px 12px;
+            padding-right: 2.25rem; /* Aggiunge spazio per non sovrapporre il testo alla freccia */
         }
-        .loading-spinner {
-            display: none;
-            margin-left: 10px;
-            color: #007bff;
-        }
-        .card-body {
-            min-height: 150px;
+
+        /* Mantiene il bordo visibile anche quando la select è in focus */
+        select.form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
         }
     </style>
 @endsection
@@ -66,7 +72,7 @@
                                 <div class="form-group mt-3">
                                     <label for="packaging_to_add_select">Aggiungi Packaging Esistente:</label>
                                     <div class="input-group">
-                                        <select class="form-control" id="packaging_to_add_select" style="width: 80%;">
+                                        <select class="form-control" id="packaging_to_add_select">
                                             <!-- Opzioni caricate via AJAX -->
                                         </select>
                                         <button type="button" class="btn btn-primary" id="associate_packaging_btn">Aggiungi</button>
@@ -105,7 +111,7 @@
                                     <div class="form-group mt-3">
                                         <label for="pack_qty_to_add_select">Aggiungi Quantità Esistente:</label>
                                         <div class="input-group">
-                                            <select class="form-control" id="pack_qty_to_add_select" style="width: 80%;">
+                                            <select class="form-control" id="pack_qty_to_add_select">
                                                 <!-- Opzioni caricate via AJAX -->
                                             </select>
                                             <button type="button" class="btn btn-primary" id="associate_pack_qty_btn">Aggiungi</button>
@@ -132,7 +138,6 @@
 @endsection
 
 @section('content_plugin')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     // Pass constants to JavaScript
     const CSRF_TOKEN = "{{ csrf_token() }}";

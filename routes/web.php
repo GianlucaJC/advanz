@@ -3,6 +3,7 @@
 use App\Http\Controllers\AllestimentoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,6 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/categories/dissociate-pack-qty', [CategoryController::class, 'dissociatePackQty'])->name('categories.dissociatePackQty');
     Route::post('/categories/store-packaging', [CategoryController::class, 'storePackaging'])->name('categories.storePackaging');
     Route::post('/categories/store-pack-qty', [CategoryController::class, 'storePackQty'])->name('categories.storePackQty');
+
+
+    // Rotte per la gestione utenti (Admin)
+    Route::get('/manage-users', [UserController::class, 'manageUsers'])->name('admin.manage_users');
+    Route::post('/users/update', [UserController::class, 'updateUser'])->name('admin.update_user');
+    Route::post('/users/update-role', [UserController::class, 'updateUserRole'])->name('admin.update_user_role');
+
 
     Route::post('update_order', [ 'as' => 'update_order', 'uses' => 'App\Http\Controllers\mainAdminController@update_order']);
         

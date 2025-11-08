@@ -192,7 +192,7 @@
                     <h3>
                     <div class="row g-4 justify-content-center"> {{-- Added justify-content-center for better spacing --}}
 
-                       <div class="col-md-4"> {{-- Changed to col-md-4 for 3 items --}}
+                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="main_admin_order" class="admin-nav-item {{ $route == 'main_admin_order' ? 'active' : '' }}">
                                 Customer requests <i class="fas fa-clipboard-list"></i>
@@ -200,7 +200,7 @@
                           </div>
                        </div>
 
-                       <div class="col-md-4"> {{-- Changed to col-md-4 for 3 items --}}
+                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="main_admin_articoli" class="admin-nav-item {{ $route == 'main_admin_articoli' ? 'active' : '' }}">
                                 Liofilchem Products <i class="fas fa-cog"></i>
@@ -208,10 +208,18 @@
                           </div>
                        </div>
 
-                       <div class="col-md-4"> {{-- Changed to col-md-4 for 3 items --}}
+                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="{{ route('categories.manage') }}" class="admin-nav-item {{ $route == 'categories.manage' ? 'active' : '' }}">
                                 Gestione Categorie <i class="fas fa-boxes"></i>
+                             </a>
+                          </div>
+                       </div>
+
+                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
+                          <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
+                             <a href="{{ route('admin.manage_users') }}" class="admin-nav-item {{ $route == 'admin.manage_users' ? 'active' : '' }}">
+                                Gestione Utenti <i class="fas fa-users"></i>
                              </a>
                           </div>
                        </div>
