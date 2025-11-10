@@ -173,6 +173,7 @@
 @section('content_plugin')
 <!-- TinyMCE -->
 <script src="https://cdn.tiny.cloud/1/e7nmdbjjd7ottq9gh2b6eiafpymt5tywdawssgbc6rm3071b/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+<script>
     // Pass constants to JavaScript
     const CSRF_TOKEN = "{{ csrf_token() }}";
     const GET_PACKAGING_URL = "{{ route('categories.getPackaging') }}"; // This should be a GET route
