@@ -18,6 +18,7 @@ class Allestimento extends Model
         'descrizione',
         'stock',
         'remaining',
+        'dele',
     ];
 
     public function molecola()

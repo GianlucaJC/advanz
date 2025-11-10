@@ -46,14 +46,23 @@ class CategoryController extends Controller
 
         // Packaging già associati alla molecola
         $associatedPackagingIds = Allestimento::where('id_molecola', $request->molecola_id)
+            ->where('dele', 0)
             ->distinct()
             ->pluck('id_pack');
 
-        $associatedPackaging = Packaging::whereIn('id', $associatedPackagingIds)->orderBy('descrizione')->get();
-        
+        $associatedPackaging = Packaging::whereIn('id', $associatedPackagingIds)
+            ->where('active', 1)
+            ->orderBy('descrizione')->get();
 
-        // Packaging non ancora associati, per il dropdown di aggiunta
-        $availablePackaging = Packaging::where('active', 1)->whereNotIn('id', $associatedPackagingIds)->orderBy('descrizione')->get();
+        // Packaging disponibili: quelli non ancora associati E quelli che sono associati ma con dele=1
+        // 1. Prendo tutti i packaging attivi
+        $allActivePackagingIds = Packaging::where('active', 1)->pluck('id');
+        // 2. Prendo tutti i packaging (anche dele=1) per la molecola
+        $allMoleculePackagingIds = Allestimento::where('id_molecola', $request->molecola_id)->distinct()->pluck('id_pack');
+        // 3. Gli ID disponibili sono quelli attivi che NON sono tra gli associati (dele=0)
+        $availablePackagingIds = $allActivePackagingIds->diff($associatedPackagingIds);
+        // 4. Recupero i modelli
+        $availablePackaging = Packaging::whereIn('id', $availablePackagingIds)->orderBy('descrizione')->get();
 
         return response()->json(['associated' => $associatedPackaging, 'available' => $availablePackaging]);
     }
@@ -66,14 +75,21 @@ class CategoryController extends Controller
         ]);
 
         $associatedPackQtyIds = Allestimento::where('id_molecola', $request->molecola_id)
+            ->where('dele', 0)
             ->where('id_pack', $request->pack_id)
             ->distinct()
             ->pluck('id_pack_qty');
-        
+
+        // Escludiamo il record segnaposto (ID 0) se presente
+        $associatedPackQtyIds = $associatedPackQtyIds->filter(fn($id) => $id > 0);
 
         $associatedPackQty = PackQty::whereIn('id', $associatedPackQtyIds)->orderBy('descrizione')->get();
-        $availablePackQty = PackQty::whereNotIn('id', $associatedPackQtyIds)->orderBy('descrizione')->get();
 
+        // Le quantità disponibili sono tutte quelle che NON sono già associate attivamente
+        $availablePackQty = PackQty::whereNotIn('id', $associatedPackQtyIds)
+            ->orderBy('descrizione')
+            ->get();
+        
         return response()->json(['associated' => $associatedPackQty, 'available' => $availablePackQty]);
     }
 
@@ -90,32 +106,34 @@ class CategoryController extends Controller
         // NOTA: Assicurati che la colonna `id_pack_qty` possa accettare NULL o 0.
         // Se non può, questa logica va rivista (es. creando una tabella pivot separata solo per molecola-packaging).
         // Assumiamo che 0 sia un valore accettabile e non usato per quantità reali.
-        
-        Allestimento::firstOrCreate(
+        // Usiamo updateOrCreate per riattivare un record con dele=1 se esiste.
+        Allestimento::updateOrCreate(
             [
                 'id_molecola' => $request->molecola_id,
                 'id_pack' => $request->pack_id,
                 'id_pack_qty' => 0 // Usiamo 0 come segnaposto per l'associazione packaging-molecola
-            ]
+            ], ['dele' => 0]
         );
 
         return response()->json(['success' => true, 'message' => 'Packaging associato con successo.']);
     }
 
-    public function dissociatePackaging(Request $request)
-    {
-        $request->validate([
-            'molecola_id' => 'required|exists:molecola,id',
-            'pack_id' => 'required|exists:packaging,id',
-        ]);
+    // public function dissociatePackaging(Request $request)
+    // {
+    //     // Funzionalità rimossa su richiesta. L'associazione Packaging-Molecola è permanente.
+    //     // La cancellazione soft è gestita solo a livello di PackQty.
+    //     $request->validate([
+    //         'molecola_id' => 'required|exists:molecola,id',
+    //         'pack_id' => 'required|exists:packaging,id',
+    //     ]);
 
-        // Rimuove tutte le associazioni (incluse tutte le quantità) per questa molecola e packaging
-        Allestimento::where('id_molecola', $request->molecola_id)
-            ->where('id_pack', $request->pack_id)
-            ->delete();
+    //     // Rimuove tutte le associazioni (incluse tutte le quantità) per questa molecola e packaging
+    //     Allestimento::where('id_molecola', $request->molecola_id)
+    //         ->where('id_pack', $request->pack_id)
+    //         ->update(['dele' => 1]);
 
-        return response()->json(['success' => true, 'message' => 'Packaging disassociato con successo.']);
-    }
+    //     return response()->json(['success' => true, 'message' => 'Packaging disassociato con successo.']);
+    // }
 
     public function associatePackQty(Request $request)
     {
@@ -125,15 +143,15 @@ class CategoryController extends Controller
             'pack_qty_id' => 'required|exists:pack_qty,id',
         ]);
 
-        // Crea il record di allestimento specifico
-        Allestimento::firstOrCreate([
+        // Crea o riattiva il record di allestimento specifico
+        Allestimento::updateOrCreate([
             'id_molecola' => $request->molecola_id,
             'id_pack' => $request->pack_id,
             'id_pack_qty' => $request->pack_qty_id,
-        ]);
+        ], ['dele' => 0]);
 
         // Potrebbe esserci un record segnaposto (con id_pack_qty=0), lo rimuoviamo se esiste.
-        $this->dissociatePackQtyPlaceholder($request->molecola_id, $request->pack_id); // This now does a hard delete
+        $this->dissociatePackQtyPlaceholder($request->molecola_id, $request->pack_id);
 
         return response()->json(['success' => true, 'message' => 'Quantità associata con successo.']);
     }
@@ -149,18 +167,23 @@ class CategoryController extends Controller
         Allestimento::where('id_molecola', $request->molecola_id)
             ->where('id_pack', $request->pack_id)
             ->where('id_pack_qty', $request->pack_qty_id) // Target the specific quantity
-            ->delete();
+            ->update(['dele' => 1]);
 
         // Se non ci sono più quantità associate a questo packaging per questa molecola,
         // potremmo voler reinserire il record segnaposto per mantenere l'associazione packaging-molecola.
         $remaining = Allestimento::where('id_molecola', $request->molecola_id)
                                 ->where('id_pack', $request->pack_id)
+                                ->where('dele', 0)
                                 ->where('id_pack_qty', '!=', 0)
                                 ->count();
 
         if ($remaining === 0) {
-            // Riattiva o crea il segnaposto
-            $this->associatePackaging($request);
+            // Se non ci sono più quantità attive, "cancella" anche il record segnaposto
+            // per far sparire il packaging dalla lista degli associati.
+            Allestimento::where('id_molecola', $request->molecola_id)
+                ->where('id_pack', $request->pack_id)
+                ->where('id_pack_qty', 0)
+                ->update(['dele' => 1]);
         }
 
         return response()->json(['success' => true, 'message' => 'Quantità disassociata con successo.']);
@@ -171,7 +194,7 @@ class CategoryController extends Controller
         Allestimento::where('id_molecola', $molecola_id)
             ->where('id_pack', $pack_id)
             ->where('id_pack_qty', 0)
-            ->delete();
+            ->update(['dele' => 1]);
     }
 
     public function storePackaging(Request $request)

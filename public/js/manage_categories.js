@@ -40,9 +40,10 @@ $(document).ready(function() {
                                 <span class="packaging-name">${pack.descrizione}</span>
                                 <div>
                                     <button class="btn btn-sm btn-outline-primary manage-qty-btn">Gestisci Quantità</button>
-                                    <button class="btn btn-sm btn-danger dissociate-pack-btn"><i class="fas fa-trash-alt"></i></button>
+                                    
                                 </div>
                             </li>`;
+                            //<button class="btn btn-sm btn-danger dissociate-pack-btn"><i class="fas fa-trash-alt"></i></button>                            
                         $('#associated_packaging_list').append(listItem);
                     });
                 } else {
@@ -185,7 +186,16 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 performAjax(DISSOCIATE_PACK_QTY_URL, { molecola_id: selectedMolecolaId, pack_id: selectedPackId, pack_qty_id: qtyId }, function() {
+                    // Ricarica la lista delle quantità
                     loadPackQty(selectedMolecolaId, selectedPackId);
+
+                    // Controlla se, dopo l'aggiornamento, la lista delle quantità è vuota.
+                    // Se sì, significa che abbiamo rimosso l'ultima quantità, quindi dobbiamo aggiornare anche la lista dei packaging a sinistra.
+                    if ($('#associated_pack_qty_list').children().length === 0) {
+                        loadPackaging(selectedMolecolaId);
+                        $('#pack_qty_form').hide();
+                        $('#pack_qty_placeholder').show();
+                    }
                 });
             }
         });
