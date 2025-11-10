@@ -143,15 +143,31 @@ class CategoryController extends Controller
             'pack_qty_id' => 'required|exists:pack_qty,id',
         ]);
 
-        // Crea o riattiva il record di allestimento specifico
-        Allestimento::updateOrCreate([
-            'id_molecola' => $request->molecola_id,
-            'id_pack' => $request->pack_id,
-            'id_pack_qty' => $request->pack_qty_id,
-        ], ['dele' => 0]);
+        // 1. Assicura che il record per la quantità specifica sia attivo.
+        // `updateOrCreate` cerca un record con la combinazione di chiavi specificata.
+        // Se lo trova (anche se ha dele=1), lo aggiorna impostando dele=0.
+        // Se non lo trova, lo crea con dele=0. Questo previene la creazione di duplicati.
+        Allestimento::updateOrCreate(
+            [
+                'id_molecola' => $request->molecola_id,
+                'id_pack' => $request->pack_id,
+                'id_pack_qty' => $request->pack_qty_id,
+            ],
+            ['dele' => 0]
+        );
 
-        // Potrebbe esserci un record segnaposto (con id_pack_qty=0), lo rimuoviamo se esiste.
-        $this->dissociatePackQtyPlaceholder($request->molecola_id, $request->pack_id);
+        // 2. Assicura che anche il record "segnaposto" (id_pack_qty=0) sia attivo.
+        // Questo record serve a mantenere l'associazione tra Molecola e Packaging
+        // anche se non ci sono quantità specifiche, permettendo al packaging di essere
+        // visualizzato correttamente nella lista di sinistra.
+        Allestimento::updateOrCreate(
+            [
+                'id_molecola' => $request->molecola_id,
+                'id_pack' => $request->pack_id,
+                'id_pack_qty' => 0,
+            ],
+            ['dele' => 0]
+        );
 
         return response()->json(['success' => true, 'message' => 'Quantità associata con successo.']);
     }
@@ -159,27 +175,28 @@ class CategoryController extends Controller
     public function dissociatePackQty(Request $request)
     {
         $request->validate([
-            'molecola_id' => 'required|exists:molecola,id',
-            'pack_id' => 'required|exists:packaging,id',
-            'pack_qty_id' => 'required|exists:pack_qty,id',
+            'id_molecola' => $request->molecola_id,
+            'id_pack' => $request->pack_id,
+            'id_pack_qty' => $request->pack_qty_id,
         ]);
 
+        // Disattiva (soft delete) il record della quantità specifica.
         Allestimento::where('id_molecola', $request->molecola_id)
             ->where('id_pack', $request->pack_id)
             ->where('id_pack_qty', $request->pack_qty_id) // Target the specific quantity
             ->update(['dele' => 1]);
 
-        // Se non ci sono più quantità associate a questo packaging per questa molecola,
-        // potremmo voler reinserire il record segnaposto per mantenere l'associazione packaging-molecola.
-        $remaining = Allestimento::where('id_molecola', $request->molecola_id)
+        // Controlla se sono rimaste altre quantità ATTIVE per questo packaging.
+        // Se non ce ne sono più, disattiviamo anche il record segnaposto per far
+        // scomparire il packaging dalla lista degli associati.
+        $hasActiveQuantities = Allestimento::where('id_molecola', $request->molecola_id)
                                 ->where('id_pack', $request->pack_id)
                                 ->where('dele', 0)
-                                ->where('id_pack_qty', '!=', 0)
-                                ->count();
+                                ->where('id_pack_qty', '!=', 0) // Escludiamo il segnaposto stesso dal conteggio
+                                ->exists();
 
-        if ($remaining === 0) {
-            // Se non ci sono più quantità attive, "cancella" anche il record segnaposto
-            // per far sparire il packaging dalla lista degli associati.
+        if (!$hasActiveQuantities) {
+            // Non ci sono più quantità attive, quindi disattiviamo anche il segnaposto.
             Allestimento::where('id_molecola', $request->molecola_id)
                 ->where('id_pack', $request->pack_id)
                 ->where('id_pack_qty', 0)
@@ -187,14 +204,6 @@ class CategoryController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'Quantità disassociata con successo.']);
-    }
-
-    private function dissociatePackQtyPlaceholder($molecola_id, $pack_id)
-    {
-        Allestimento::where('id_molecola', $molecola_id)
-            ->where('id_pack', $pack_id)
-            ->where('id_pack_qty', 0)
-            ->update(['dele' => 1]);
     }
 
     public function storePackaging(Request $request)

@@ -211,6 +211,11 @@
             "time": "2024-07-08T12:26:09+00:00"
         },
         {
+            "name": "doctrine/dbal",
+            "version": "3.10.0",
+            "type": "library"
+        },
+        {
             "name": "doctrine/inflector",
             "version": "2.0.10",
             "source": {

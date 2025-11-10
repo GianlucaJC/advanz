@@ -119,14 +119,29 @@ $(document).ready(function() {
     // --- Funzioni di Associazione ---
 
     $('#associate_packaging_btn').on('click', function() {
-        const packId = $('#packaging_to_add_select').val();
-        if (!packId) {
+        const $select = $('#packaging_to_add_select');
+        const packId = $select.val();
+        const packName = $select.find('option:selected').text();
+
+        if (!packId || !packName) {
             Swal.fire('Attenzione', 'Seleziona un packaging da aggiungere.', 'warning');
             return;
         }
-        performAjax(ASSOCIATE_PACKAGING_URL, { molecola_id: selectedMolecolaId, pack_id: packId }, function() {
-            loadPackaging(selectedMolecolaId);
-        });
+
+        // Rimuove l'opzione dalla select
+        $select.find('option:selected').remove();
+
+        // Crea il nuovo elemento nella lista degli associati
+        const listItem = `
+            <li class="list-group-item d-flex justify-content-between align-items-center" data-pack-id="${packId}">
+                <span class="packaging-name">${packName}</span>
+                <div><button class="btn btn-sm btn-outline-primary manage-qty-btn">Gestisci Quantità</button></div>
+            </li>`;
+        $('#associated_packaging_list').append(listItem);
+        $('#no_packaging_message').hide();
+
+        // Simula il click per aprire subito la gestione quantità
+        $('#associated_packaging_list').find(`li[data-pack-id="${packId}"] .manage-qty-btn`).trigger('click');
     });
 
     $('#associate_pack_qty_btn').on('click', function() {
