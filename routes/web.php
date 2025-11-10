@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/categories/dissociate-pack-qty', [CategoryController::class, 'dissociatePackQty'])->name('categories.dissociatePackQty');
     Route::post('/categories/store-packaging', [CategoryController::class, 'storePackaging'])->name('categories.storePackaging');
     Route::post('/categories/store-pack-qty', [CategoryController::class, 'storePackQty'])->name('categories.storePackQty');
+    Route::post('/categories/update-molecule-info', [CategoryController::class, 'updateMoleculeInfo'])->name('categories.updateMoleculeInfo');
 
 
     // Rotte per la gestione utenti (Admin)

@@ -38,13 +38,24 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="molecola_select">Seleziona Molecola:</label>
-                        <select class="form-control" id="molecola_select">
-                            <option value="">-- Seleziona una Molecola --</option>
-                            @foreach ($molecole as $molecola)
-                                <option value="{{ $molecola->id }}">{{ $molecola->descrizione }}</option>
-                            @endforeach
-                        </select>
+                        <label for="molecola_select" class="form-label">Seleziona Molecola:</label>
+                        <div class="input-group">
+                            <select class="form-control" id="molecola_select">
+                                <option value="">-- Seleziona una Molecola --</option>
+                                @foreach ($molecole as $molecola)
+                                    <option value="{{ $molecola->id }}" data-info="{!! e($molecola->info) !!}">{{ $molecola->descrizione }}</option>
+                                @endforeach
+                            </select>
+                            <button class="btn btn-outline-info" id="show_info_btn" type="button" style="display: none;" title="Mostra/Nascondi Info"><i class="fas fa-info-circle"></i></button>
+                        </div>
+                        <div id="molecola_info_card" class="card mt-2" style="display: none;">
+                            <div class="card-body p-2">
+                                <small id="molecola_info_text" class="text-muted"></small>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-1 text-end" style="display: none;" id="molecola_info_actions">
+                                <button class="btn btn-sm btn-outline-secondary" id="edit_info_btn"><i class="fas fa-edit"></i> Modifica Info</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,9 +146,33 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Modifica Info Molecola -->
+<div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editInfoModalLabel">Modifica Informazioni Molecola</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editInfoForm">
+                    <input type="hidden" id="edit_molecola_id" name="molecola_id">
+                    <textarea id="info_editor" name="info"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" id="saveInfoBtn">Salva Modifiche</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('content_plugin')
+<!-- TinyMCE -->
+<script src="https://cdn.tiny.cloud/1/e7nmdbjjd7ottq9gh2b6eiafpymt5tywdawssgbc6rm3071b/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     // Pass constants to JavaScript
     const CSRF_TOKEN = "{{ csrf_token() }}";
@@ -149,6 +184,7 @@
     const ASSOCIATE_PACK_QTY_URL = "{{ route('categories.associatePackQty') }}";
     const DISSOCIATE_PACK_QTY_URL = "{{ route('categories.dissociatePackQty') }}";
     const STORE_PACK_QTY_URL = "{{ route('categories.storePackQty') }}";
+    const UPDATE_MOLECULE_INFO_URL = "{{ route('categories.updateMoleculeInfo') }}";
 </script>
 <script src="{{ URL::asset('/') }}js/manage_categories.js?ver=<?= time() ?>"></script>
 @endsection

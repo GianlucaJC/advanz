@@ -1,21 +1,43 @@
 $(document).ready(function() {
     let selectedMolecolaId = null;
     let selectedPackId = null;
+    let infoEditor = null;
+    const editInfoModal = new bootstrap.Modal(document.getElementById('editInfoModal'));
+
+    tinymce.init({
+        selector: '#info_editor',
+        plugins: 'code table lists link image',
+        toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table | link image',
+        height: 300,
+        menubar: false,
+    });
 
     // Event handler for molecule selection
     $('#molecola_select').on('change', function() {
         selectedMolecolaId = $(this).val();
         const molecolaName = $(this).find('option:selected').text();
-        
+        const molecolaInfo = $(this).find('option:selected').data('info');
+
         $('#pack_qty_form').hide();
         $('#pack_qty_placeholder').show();
         selectedPackId = null;
 
         if (selectedMolecolaId) {
+            $('#molecola_info_card').hide(); // Nascondi sempre la card al cambio
+            $('#show_info_btn').show(); // Mostra il pulsante info quando una molecola è selezionata
+
+            if (molecolaInfo) {
+                $('#molecola_info_text').html(molecolaInfo);
+            } else {
+                $('#molecola_info_text').html(''); // Pulisci il testo se non ci sono info
+            }
             $('#management_forms').show();
             $('#selected_molecola_name_pack').text(molecolaName);
             loadPackaging(selectedMolecolaId);
         } else {
+            $('#show_info_btn').hide();
+            $('#molecola_info_actions').hide();
+            $('#molecola_info_card').hide();
             $('#management_forms').hide();
         }
     });
@@ -290,6 +312,53 @@ $(document).ready(function() {
             }
         });
     }
+
+    // --- Gestione Visibilità Info Card ---
+    $('#show_info_btn').on('click', function() {
+        const infoCard = $('#molecola_info_card');
+        infoCard.toggle();
+
+        // Mostra le azioni (es. pulsante modifica) solo se la card è visibile
+        if (infoCard.is(':visible')) {
+            $('#molecola_info_actions').show();
+        } else {
+            $('#molecola_info_actions').hide();
+        }
+    });
+
+    // --- Gestione Modifica Info Molecola ---
+
+    $('#edit_info_btn').on('click', function() {
+        if (!selectedMolecolaId) return;
+
+        const currentInfo = $('#molecola_select').find('option:selected').data('info');
+        $('#edit_molecola_id').val(selectedMolecolaId);
+        
+        // Attendi che l'editor sia inizializzato
+        tinymce.get('info_editor').setContent(currentInfo || '');
+        
+        editInfoModal.show();
+    });
+
+    $('#saveInfoBtn').on('click', function() {
+        const molecolaId = $('#edit_molecola_id').val();
+        const newInfo = tinymce.get('info_editor').getContent();
+
+        performAjax(UPDATE_MOLECULE_INFO_URL, { molecola_id: molecolaId, info: newInfo }, function(response) {
+            if (response.success) {
+                // Aggiorna i dati nella pagina
+                const selectedOption = $('#molecola_select').find('option:selected');
+                selectedOption.data('info', newInfo);
+                $('#molecola_info_text').html(newInfo);
+
+                // Chiudi la modale
+                editInfoModal.hide();
+            }
+        });
+    });
+
+
+
 
     // Aggiungi uno stile per il cursore di caricamento
     $('head').append('<style>.ajax-loading { cursor: wait !important; }</style>');

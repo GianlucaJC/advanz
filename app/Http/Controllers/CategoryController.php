@@ -233,4 +233,23 @@ class CategoryController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Nuova quantità creata con successo.', 'packQty' => $packQty]);
     }
+
+    public function updateMoleculeInfo(Request $request)
+    {
+        $request->validate([
+            'molecola_id' => 'required|exists:molecola,id',
+            'info' => 'nullable|string',
+        ]);
+
+        $molecola = Molecola::find($request->molecola_id);
+
+        if (!$molecola) {
+            return response()->json(['success' => false, 'message' => 'Molecola non trovata.'], 404);
+        }
+
+        $molecola->info = $request->info;
+        $molecola->save();
+
+        return response()->json(['success' => true, 'message' => 'Informazioni sulla molecola aggiornate con successo.']);
+    }
 }
