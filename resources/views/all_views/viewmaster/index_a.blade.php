@@ -56,12 +56,15 @@
          }      
 
      .admin-nav-item {
-            display: block;
-            padding: 8px 15px;
+            display: flex; /* Usa flexbox per allineare icona e testo */
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra orizzontalmente */
+            padding: 6px 10px; /* Riduci il padding */
             border-radius: 5px;
             text-decoration: none;
             color: #6c757d; /* Bootstrap secondary color for subtle look */
             transition: all 0.3s ease;
+            font-size: 0.85em; /* Riduci la dimensione del font */
       }
      .admin-nav-item:hover {
             background-color: #e9ecef; /* Light gray background on hover */
@@ -75,7 +78,7 @@
       }
      .admin-nav-item.active i {
             color: white;
-     }
+      }
      .admin-nav-item i {
             margin-left: 5px;
       }
@@ -190,9 +193,9 @@
               <div class="container">
                  <div class="appointment_box">
                     <h3>
-                    <div class="row g-4 justify-content-center"> {{-- Added justify-content-center for better spacing --}}
+                    <div class="row g-3 justify-content-center flex-nowrap"> {{-- Added flex-nowrap to keep buttons on one line --}}
 
-                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
+                       <div class="col-md"> {{-- Using flexible columns --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="main_admin_order" class="admin-nav-item {{ $route == 'main_admin_order' ? 'active' : '' }}">
                                 Customer requests <i class="fas fa-clipboard-list"></i>
@@ -200,7 +203,7 @@
                           </div>
                        </div>
 
-                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
+                       <div class="col-md"> {{-- Using flexible columns --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="main_admin_articoli" class="admin-nav-item {{ $route == 'main_admin_articoli' ? 'active' : '' }}">
                                 Liofilchem Products <i class="fas fa-cog"></i>
@@ -208,7 +211,7 @@
                           </div>
                        </div>
 
-                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
+                       <div class="col-md"> {{-- Using flexible columns --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="{{ route('categories.manage') }}" class="admin-nav-item {{ $route == 'categories.manage' ? 'active' : '' }}">
                                 Gestione Categorie <i class="fas fa-boxes"></i>
@@ -216,10 +219,18 @@
                           </div>
                        </div>
 
-                       <div class="col-md-3"> {{-- Changed to col-md-3 for 4 items --}}
+                       <div class="col-md"> {{-- Using flexible columns --}}
                           <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
                              <a href="{{ route('admin.manage_users') }}" class="admin-nav-item {{ $route == 'admin.manage_users' ? 'active' : '' }}">
                                 Gestione Utenti <i class="fas fa-users"></i>
+                             </a>
+                          </div>
+                       </div>
+
+                       <div class="col-md"> {{-- Using flexible columns --}}
+                          <div class='custom_lnk text-center'> {{-- Added text-center for alignment --}}
+                             <a href="{{ route('rules.manage') }}" class="admin-nav-item {{ $route == 'rules.manage' ? 'active' : '' }}">
+                                Gestione Regole <i class="fas fa-gavel"></i>
                              </a>
                           </div>
                        </div>

@@ -94,6 +94,7 @@ class AjaxController extends Controller
 		->select('a.id','a.id_molecola','a.id_pack')
         ->where('r.id_country','=',$id_country)
         ->where('r.can_order','=',1)
+        ->where('a.dele', '=', 0)
 		->groupBy('a.id_molecola','a.id_pack')
 		->orderBy('a.id_molecola')
 		->orderBy('a.id_pack')
@@ -208,15 +209,19 @@ class AjaxController extends Controller
 			->select('id','id_pack_qty')
 			->where('id_molecola','=',$id_molecola)
 			->where('id_pack','=',$id_pack)
+			->where('dele', '=', 0)
 			->get();
 			$voci_conf=array();$indice=0;
 			foreach ($conf_in_all as $conf) {
-				$voci_conf[$indice]['id']=$conf->id;
-				//$voci_conf[$indice]['id_pack_qty']=$conf->id_pack_qty;
-				$voci_conf[$indice]['id_pack_qty']=$pack_qty_id[$conf->id_pack_qty];
-				$voci_conf[$indice]['molecola_descr']=$molecola_descr;
-				$voci_conf[$indice]['pack_descr']=$pack_descr;
-				$indice++;
+                // Controlla se la chiave esiste prima di creare l'array per questa voce
+                if (!isset($pack_qty_id[$conf->id_pack_qty])) {
+                    continue; // Salta questo allestimento se la quantità non è valida/definita
+                }
+                $voci_conf[$indice]['id'] = $conf->id;
+                $voci_conf[$indice]['id_pack_qty'] = $pack_qty_id[$conf->id_pack_qty];
+                $voci_conf[$indice]['molecola_descr'] = $molecola_descr;
+                $voci_conf[$indice]['pack_descr'] = $pack_descr;
+                $indice++;
 			}
 			$arr_info[$id_mole_pack]['voci_conf']=$voci_conf;
 		}

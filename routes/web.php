@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RuleOrderController;
 use App\Http\Controllers\AllestimentoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -70,6 +71,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/manage-users', [UserController::class, 'manageUsers'])->name('admin.manage_users');
     Route::post('/users/update', [UserController::class, 'updateUser'])->name('admin.update_user');
     Route::post('/users/update-role', [UserController::class, 'updateUserRole'])->name('admin.update_user_role');
+
+    // Rotte per la gestione delle regole di ordinabilità (Admin)
+    Route::get('/manage-rules', [RuleOrderController::class, 'manage'])->name('rules.manage');
+    Route::post('/manage-rules/update', [RuleOrderController::class, 'update'])->name('rules.update');
 
 
     Route::post('update_order', [ 'as' => 'update_order', 'uses' => 'App\Http\Controllers\mainAdminController@update_order']);
