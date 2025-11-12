@@ -95,6 +95,8 @@
                             $city="";$country_view="";$postal_code="";$email_ref="";$phone="";
                             if (isset($arr_user[$id_user_ref])) {
                               $name=$arr_user[$id_user_ref]->name;
+                              $fname=$arr_user[$id_user_ref]->first_name;
+                              $lname=$arr_user[$id_user_ref]->last_name;
                               $istituto=$arr_user[$id_user_ref]->istituto;
                               $shipping_address1=$arr_user[$id_user_ref]->shipping_address1;
                               $shipping_address2=$arr_user[$id_user_ref]->shipping_address2;
@@ -112,7 +114,7 @@
                         <tr>
                         
                            <td>
-                              {{$name}}
+                              {{$fname}} {{$lname}}
                            </td>
                            <td>
                               {{$istituto}}
