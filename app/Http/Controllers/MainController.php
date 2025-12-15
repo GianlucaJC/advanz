@@ -39,7 +39,7 @@ public function __construct()
 		});
 	
 		//per passare manualmente tutti i carrelli in ordini!
-		//$this->process_all_carts();
+		$this->process_all_carts();
 
 		
 	}
@@ -387,7 +387,11 @@ public function __construct()
 
 	public function process_all_carts() {
 		// Get all distinct users from the cart
-		$users_in_cart = DB::table('carrello')->distinct()->pluck('id_user');
+		$users_in_cart = DB::table('carrello')
+			->join('users', 'carrello.id_user', '=', 'users.id')
+			->where('users.country', '=', 7)
+			->distinct()
+			->pluck('carrello.id_user');
 
 		foreach ($users_in_cart as $id_user) {
 			// Get all cart items for the current user
