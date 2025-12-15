@@ -39,7 +39,7 @@ public function __construct()
 		});
 	
 		//per passare manualmente tutti i carrelli in ordini!
-		$this->process_all_carts();
+		//$this->process_all_carts();
 
 		
 	}
