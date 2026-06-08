@@ -191,7 +191,13 @@ public function __construct()
 					$status['status']="KO";
 					$status['message']="Errore occorso durante l'invio! $e";
 				}
-			}			
+			}
+
+			// Restore original mail config
+			config(['mail' => $originalConfig]);
+			if (app()->has('mailer')) {
+				app('mailer')->purge('smtp');
+			}
 			
 		}
 		return view('all_views/contact',compact('msg_send_mail'));
@@ -326,7 +332,37 @@ public function __construct()
 		$admin_ref_email = env("ADMIN_REF_EMAIL", "test@gmail.com");
 		$status=array();
 		$num=1;
+
+		// Backup original mail config
+		$originalConfig = config('mail');
+
 		if ($to=="send_customer_admin") $num=2;
+
+		$new_user = '';
+		$new_pass = '';
+		$from_name = 'ADVANZ ASTIP';
+
+		if ($type == "1") { // Registration
+			$new_user = env('MAIL_REGISTRATION_USERNAME', 'noreply.registration@advanz-astip.com');
+			$new_pass = env('MAIL_REGISTRATION_PASSWORD', '@Astip2026@');
+			$from_name = 'ADVANZ ASTIP Registration';
+		} elseif ($type == "2") { // Order
+			$new_user = env('MAIL_WEBORDER_USERNAME', 'noreply.weborder@advanz-astip.com');
+			$new_pass = env('MAIL_WEBORDER_PASSWORD', '@Astip2026@');
+			$from_name = 'ADVANZ ASTIP Web Order';
+		}
+
+		if ($new_user) {
+			config([
+				'mail.mailers.smtp.username' => $new_user,
+				'mail.mailers.smtp.password' => $new_pass,
+				'mail.from' => ['address' => $new_user, 'name' => $from_name],
+			]);
+			if (app()->has('mailer')) {
+				app('mailer')->purge('smtp');
+			}
+		}
+
 		for ($sca=1;$sca<=$num;$sca++) {
 			if ($sca==2) $email=$admin_ref_email;
 			try {
@@ -382,6 +418,12 @@ public function __construct()
 				$status['status']="KO";
 				$status['message']="Errore occorso durante l'invio! $e";
 			}
+		}
+
+		// Restore original mail config
+		config(['mail' => $originalConfig]);
+		if (app()->has('mailer')) {
+			app('mailer')->purge('smtp');
 		}
 	}	
 
