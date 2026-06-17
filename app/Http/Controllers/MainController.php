@@ -176,29 +176,23 @@ public function __construct()
 					$dx["txtMessage"]=$txtMessage;
 					$data['dati']=$dx;
 
-	
-					Mail::send("emails.contact", $data, function($message)use($email) {
+					Mail::send("emails.contact", $data, function($message)use($email, $admin_ref_email) {
 						$message->to($email, $email)
-						->subject("Request information advanz-astip.com");
+						->subject("Request information advanz-astip.com")
+						->replyTo($admin_ref_email, 'ADVANZ ASTIP Support');
 					});
 					
 					$status['status']="OK";
 					$status['message']="Mail inviata con successo";
 					
-					
-					
-				} catch (Throwable $e) {
+				} catch (\Throwable $e) {
+					// In caso di errore, lo registriamo senza bloccare l'utente
+					\Log::error("Errore invio email di contatto: " . $e->getMessage());
 					$status['status']="KO";
 					$status['message']="Errore occorso durante l'invio! $e";
 				}
 			}
 
-			// Restore original mail config
-			config(['mail' => $originalConfig]);
-			if (app()->has('mailer')) {
-				app('mailer')->purge('smtp');
-			}
-			
 		}
 		return view('all_views/contact',compact('msg_send_mail'));
 	}	
@@ -359,13 +353,17 @@ public function __construct()
 				'mail.from' => ['address' => $new_user, 'name' => $from_name],
 			]);
 			if (app()->has('mailer')) {
-				app('mailer')->purge('smtp');
+				Mail::purge('smtp');
 			}
 		}
 
 		for ($sca=1;$sca<=$num;$sca++) {
 			if ($sca==2) $email=$admin_ref_email;
 			try {
+				// DEBUG: Decommenta la riga seguente per verificare la configurazione della posta
+				// prima di tentare l'invio. Mostrerà username, password, host, porta, etc.
+				// dd(config('mail'));
+
 				$msg="";$template="emails.conferma_ordine";
 				$data["title"]="";$data["title"]="";
 				$data["email"] = $email;			
@@ -404,17 +402,25 @@ public function __construct()
 				
 
 
-				Mail::send($template, $data, function($message)use($data) {
+				Mail::send($template, $data, function($message)use($data, $admin_ref_email) {
 					$message->to($data["email"], $data["email"])
-					->subject($data["title"]);
+					->subject($data["title"])
+					->replyTo($admin_ref_email, 'ADVANZ ASTIP Support');
 				});
 				
 				$status['status']="OK";
 				$status['message']="Mail inviata con successo";
 				
-				
-				
-			} catch (Throwable $e) {
+			} catch (\Throwable $e) {
+				// In caso di errore, lo registriamo senza bloccare l'utente
+				// Puoi trovare il log in storage/logs/laravel.log
+				\Log::error("Errore invio email di registrazione/ordine: " . $e->getMessage(), [
+					'exception' => $e,
+					'mail_config' => config('mail')
+				]);
+				if ($e instanceof \Symfony\Component\Mailer\Exception\TransportExceptionInterface) {
+					\Log::error("SMTP Debug Log: " . $e->getDebug());
+				}
 				$status['status']="KO";
 				$status['message']="Errore occorso durante l'invio! $e";
 			}
@@ -423,7 +429,7 @@ public function __construct()
 		// Restore original mail config
 		config(['mail' => $originalConfig]);
 		if (app()->has('mailer')) {
-			app('mailer')->purge('smtp');
+			Mail::purge('smtp');
 		}
 	}	
 
