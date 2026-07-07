@@ -143,13 +143,19 @@ class AjaxController extends Controller
                        for ($sca=0;$sca<count($voci);$sca++) {						
 						  if (in_array($voci[$sca]['id'], $no_art)) continue;
 						  $render_art=true;
+
+						  //07.07.2026
+						  //prima era $id_check=$id_a; ma ora devo usare l'id della voce di allestimento
+						  $id_check=$voci[$sca]['id'];
+						  //$id_check=$id_a;
+
                           $view_art.="<option value='".$voci[$sca]['id']."' ";
-                          if (in_array($id_a, $arr_cart)) $view_art.=" selected ";
-						  //"$id_a - ".
-						  $descr_ref=$voci[$sca]['pack_descr'];
+                          if (in_array($id_check, $arr_cart)) $view_art.=" selected ";
+						  //"$id_check - ".
+						  $descr_ref="$id_check - ".$voci[$sca]['pack_descr'];
 						  
 						  //07.07.2026
-						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref="Disks in Canister pack";
+						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref="$id_check - Disks in Canister pack";
 						  
                           $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$descr_ref;
 
