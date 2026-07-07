@@ -95,10 +95,11 @@ class AjaxController extends Controller
         ->where('r.id_country','=',$id_country)
         ->where('r.can_order','=',1)
         ->where('a.dele', '=', 0)
-		->groupBy('a.id_molecola','a.id_pack')
+		->groupBy('a.id_molecola','a.id_pack','a.id_pack_qty')
 		->orderBy('a.id_molecola')
 		->orderBy('a.id_pack')
 		->get();
+		// 07.07.2026 aggiunto 'a.id_pack_qty' su group by
 
         $this->molecole_in_allestimento=$molecole_in_allestimento;
 		
@@ -113,6 +114,7 @@ class AjaxController extends Controller
         $view.="<div class='row mb-3'>";
         foreach ($molecole_in_allestimento as $mole_in_all) {            
            $id_a=$mole_in_all->id;
+
            $id_molecola=$mole_in_all->id_molecola;
            $id_pack=$mole_in_all->id_pack;
            if ($id_molecola!=$id_old_mole) {
@@ -143,7 +145,13 @@ class AjaxController extends Controller
 						  $render_art=true;
                           $view_art.="<option value='".$voci[$sca]['id']."' ";
                           if (in_array($id_a, $arr_cart)) $view_art.=" selected ";
-                          $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$voci[$sca]['pack_descr'];
+						
+						  $descr_ref="$id_a - ".$voci[$sca]['pack_descr'];
+						  
+						  //07.07.2026
+						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref="Disks in Canister pack";
+						  
+                          $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$descr_ref;
 
                           $view_art.=">".$voce;
                           $view_art.="</option>";
@@ -176,6 +184,7 @@ class AjaxController extends Controller
 
 	public function load_allestimento() {
 		$molecole_in_allestimento=$this->molecole_in_allestimento;
+		
 		$no_art=$this->no_art;
 		$molecola=$this->molecola;
 		$pack_qty_id=$this->pack_qty_id;
