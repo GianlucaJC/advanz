@@ -155,7 +155,7 @@ class AjaxController extends Controller
 						  $descr_ref=$voci[$sca]['pack_descr'];
 						  
 						  //07.07.2026
-						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref="$id_check - Disks in Canister pack";
+						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref=" Disks in Canister pack";
 						  
                           $voce=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$descr_ref;
 
