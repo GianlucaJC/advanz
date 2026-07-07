@@ -145,8 +145,8 @@ class AjaxController extends Controller
 						  $render_art=true;
                           $view_art.="<option value='".$voci[$sca]['id']."' ";
                           if (in_array($id_a, $arr_cart)) $view_art.=" selected ";
-						
-						  $descr_ref="$id_a - ".$voci[$sca]['pack_descr'];
+						  //"$id_a - ".
+						  $descr_ref=$voci[$sca]['pack_descr'];
 						  
 						  //07.07.2026
 						  if ($voci[$sca]['id']==4 || $voci[$sca]['id']==8) $descr_ref="Disks in Canister pack";
