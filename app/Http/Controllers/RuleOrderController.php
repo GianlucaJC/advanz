@@ -42,7 +42,10 @@ class RuleOrderController extends Controller
         $countries = $this->getCountries();
         $defaultReorderMonths = 12;
         $reorderMonthsByCountry = array_fill_keys(array_keys($countries), $defaultReorderMonths);
+        $defaultReorderMode = 'rolling_months';
+        $reorderModeByCountry = array_fill_keys(array_keys($countries), $defaultReorderMode);
         $hasReorderMonthsColumn = Schema::hasColumn('rule_order', 'reorder_months');
+        $hasReorderModeColumn = Schema::hasColumn('rule_order', 'reorder_mode');
 
         $allestimenti = DB::table('allestimento as a')
             ->join('molecola as m', 'a.id_molecola', '=', 'm.id')
@@ -80,7 +83,20 @@ class RuleOrderController extends Controller
             }
         }
 
-        return view('all_views.manage_rules', compact('countries', 'allestimenti', 'rules', 'reorderMonthsByCountry', 'hasReorderMonthsColumn'));
+        if ($hasReorderModeColumn) {
+            $modeRows = DB::table('rule_order')
+                ->select('id_country', DB::raw('MAX(reorder_mode) as reorder_mode'))
+                ->groupBy('id_country')
+                ->get();
+
+            foreach ($modeRows as $row) {
+                if (isset($reorderModeByCountry[$row->id_country]) && !empty($row->reorder_mode)) {
+                    $reorderModeByCountry[$row->id_country] = $row->reorder_mode;
+                }
+            }
+        }
+
+        return view('all_views.manage_rules', compact('countries', 'allestimenti', 'rules', 'reorderMonthsByCountry', 'hasReorderMonthsColumn', 'reorderModeByCountry', 'hasReorderModeColumn'));
     }
 
     public function update(Request $request)
@@ -91,17 +107,23 @@ class RuleOrderController extends Controller
             'rules.*' => 'nullable|array', // Allow empty/null values for countries with no selections
             'rules.*.*' => 'integer|exists:allestimento,id',
             'reorder_months' => 'nullable|array',
-            'reorder_months.*' => 'nullable|integer|min:1|max:120'
+            'reorder_months.*' => 'nullable|integer|min:1|max:120',
+            'reorder_mode' => 'nullable|array',
+            'reorder_mode.*' => 'nullable|in:rolling_months,calendar_year'
         ]);
 
         Log::info('RuleOrderController@update: Inizio processo di aggiornamento regole.');
         $allKnownCountries = $this->getCountries(); // Ottieni tutti i paesi che il sistema conosce
         $submittedRules = $request->input('rules', []); // Ottieni solo le regole inviate dal form
         $submittedReorderMonths = $request->input('reorder_months', []);
+        $submittedReorderMode = $request->input('reorder_mode', []);
         $defaultReorderMonths = 12;
+        $defaultReorderMode = 'rolling_months';
         $hasReorderMonthsColumn = Schema::hasColumn('rule_order', 'reorder_months');
+        $hasReorderModeColumn = Schema::hasColumn('rule_order', 'reorder_mode');
         Log::info('RuleOrderController@update: Regole sottomesse dal form:', $submittedRules);
         Log::info('RuleOrderController@update: Mesi di riacquisto sottomessi dal form:', $submittedReorderMonths);
+        Log::info('RuleOrderController@update: Modalita di riacquisto sottomesse dal form:', $submittedReorderMode);
 
         DB::beginTransaction();
 
@@ -123,8 +145,12 @@ class RuleOrderController extends Controller
                 // The `array_filter` removes any empty values that might come from the form.
                 $orderableIdsForCountry = isset($submittedRules[$countryId]) ? array_filter($submittedRules[$countryId]) : [];
                 $reorderMonthsForCountry = isset($submittedReorderMonths[$countryId]) ? (int) $submittedReorderMonths[$countryId] : $defaultReorderMonths;
+                $reorderModeForCountry = isset($submittedReorderMode[$countryId]) ? $submittedReorderMode[$countryId] : $defaultReorderMode;
                 if ($reorderMonthsForCountry < 1) {
                     $reorderMonthsForCountry = $defaultReorderMonths;
+                }
+                if (!in_array($reorderModeForCountry, ['rolling_months', 'calendar_year'])) {
+                    $reorderModeForCountry = $defaultReorderMode;
                 }
 
                 foreach ($allestimentoIds as $allestimentoId) {
@@ -140,12 +166,19 @@ class RuleOrderController extends Controller
                         $ruleData['reorder_months'] = $reorderMonthsForCountry;
                     }
 
+                    if ($hasReorderModeColumn) {
+                        $ruleData['reorder_mode'] = $reorderModeForCountry;
+                    }
+
                     $insertData[] = $ruleData;
                 }
             }
 
             if (!$hasReorderMonthsColumn) {
                 Log::warning("RuleOrderController@update: colonna 'reorder_months' non trovata su rule_order. Regole temporali non salvate.");
+            }
+            if (!$hasReorderModeColumn) {
+                Log::warning("RuleOrderController@update: colonna 'reorder_mode' non trovata su rule_order. Modalita riacquisto non salvata.");
             }
 
             // 4. Insert all the new rules in a single operation.

@@ -51,35 +51,50 @@ class AjaxController extends Controller
 		
 	}
 
-	private function getReorderMonthsForCountry($id_country)
+	private function getReorderRuleForCountry($id_country)
 	{
 		$defaultReorderMonths = 12;
+		$defaultReorderMode = 'rolling_months';
+		$hasReorderMonths = Schema::hasColumn('rule_order', 'reorder_months');
+		$hasReorderMode = Schema::hasColumn('rule_order', 'reorder_mode');
 
-		if (!Schema::hasColumn('rule_order', 'reorder_months')) {
-			return $defaultReorderMonths;
+		if (!$hasReorderMonths && !$hasReorderMode) {
+			return ['months' => $defaultReorderMonths, 'mode' => $defaultReorderMode];
 		}
 
-		$rule = DB::table('rule_order')
-			->select('reorder_months')
-			->where('id_country', '=', $id_country)
-			->whereNotNull('reorder_months')
-			->orderByDesc('reorder_months')
-			->first();
-
-		if ($rule && (int) $rule->reorder_months > 0) {
-			return (int) $rule->reorder_months;
+		$query = DB::table('rule_order')->where('id_country', '=', $id_country);
+		if ($hasReorderMonths) {
+			$query->whereNotNull('reorder_months');
+		}
+		if ($hasReorderMode) {
+			$query->whereNotNull('reorder_mode');
 		}
 
-		return $defaultReorderMonths;
+		$rule = $query->orderByDesc('updated_at')->first();
+
+		$months = $defaultReorderMonths;
+		if ($hasReorderMonths && $rule && isset($rule->reorder_months) && (int)$rule->reorder_months > 0) {
+			$months = (int)$rule->reorder_months;
+		}
+
+		$mode = $defaultReorderMode;
+		if ($hasReorderMode && $rule && isset($rule->reorder_mode) && in_array($rule->reorder_mode, ['rolling_months', 'calendar_year'])) {
+			$mode = $rule->reorder_mode;
+		}
+
+		return ['months' => $months, 'mode' => $mode];
 	}
 
     public function check_allestimento(Request $request) {
         $id_country=$request->input('id_country');
-		$reorderMonths = $this->getReorderMonthsForCountry($id_country);
+		$reorderRule = $this->getReorderRuleForCountry($id_country);
+		$reorderMonths = $reorderRule['months'];
+		$reorderMode = $reorderRule['mode'];
 		//in caso di sessione loggata:
 		//recupero l'eventuale carrello precedente per precaricare dati
 		$arr_cart=array();
 		$no_art=array();
+		$no_art_until=array();
 		if (Auth::user()) {
 			$id_user = Auth::user()->id;
 			//recupero il country e metto in un array tutti gli id del carrello
@@ -87,7 +102,9 @@ class AjaxController extends Controller
 			$info=DB::table('users')->select('country')->where('id','=',$id_user)->first();
 			if($info)  {
 				$id_country=$info->country;
-				$reorderMonths = $this->getReorderMonthsForCountry($id_country);
+				$reorderRule = $this->getReorderRuleForCountry($id_country);
+				$reorderMonths = $reorderRule['months'];
+				$reorderMode = $reorderRule['mode'];
 				//calcolo delle voci di confezionamento 
 				$cart=DB::table('carrello as c')
 				->select('id_articolo')
@@ -99,14 +116,32 @@ class AjaxController extends Controller
 			}	
 			//in caso di ordini già effettuati dall'utente loggato, elimino (secondo la regola imposta),
 			//gli articoli già ordinati nel periodo temporale di riacquisto configurato
-			$cutoffDate = now()->subMonths($reorderMonths);
-			$info=DB::table('ordini')
-			->select('id_articolo')
+			$queryOrdini=DB::table('ordini')
+			->select('id_articolo', DB::raw('MAX(created_at) as last_order_at'))
 			->where('id_user','=',$id_user)
-			->where('created_at', '>=', $cutoffDate)
-			->get();
+			->groupBy('id_articolo')
+			->orderByRaw('MAX(created_at) DESC');
+
+			if ($reorderMode=='calendar_year') {
+				$queryOrdini->where('created_at', '>=', now()->startOfYear());
+			} else {
+				$cutoffDate = now()->subMonths($reorderMonths);
+				$queryOrdini->where('created_at', '>=', $cutoffDate);
+			}
+
+			$info=$queryOrdini->get();
 			foreach ($info as $ord_prec) {
-				$no_art[]=$ord_prec->id_articolo;
+				$idArticolo=(int)$ord_prec->id_articolo;
+				$no_art[$idArticolo]=true;
+				$riordinabileDal = now()->format('d/m/Y');
+				if (!empty($ord_prec->last_order_at)) {
+					if ($reorderMode=='calendar_year') {
+						$riordinabileDal = date('d/m/Y', strtotime(date('Y-01-01', strtotime($ord_prec->last_order_at)).' +1 year'));
+					} else {
+						$riordinabileDal = date('d/m/Y', strtotime($ord_prec->last_order_at." +$reorderMonths months"));
+					}
+				}
+				$no_art_until[$idArticolo]=$riordinabileDal;
 			}
 			$this->no_art=$no_art;
 		}
@@ -165,21 +200,31 @@ class AjaxController extends Controller
               //creazione select di scelta riferita alla molecola/packaging
               $voci=$arr_info[$id_mole_pack]['voci_conf'];
 			   $render_art=false;
+			   $blocked_voci=array();
 			   $view_art="";	
                $view_art.="<div class='col-md-4 sm-12 div_allestimento' id='div_material$id_mole_pack' >";
                  $view_art.="<div class='form-floating mb-3 mb-md-0'>";
                     $view_art.="<select class='form-select molecola$id_molecola allestimento' name='material[]'  id='material$id_mole_pack'  onchange=\"check_choice($id_molecola,'material$id_mole_pack',this.value)\">";
                     $view_art.="<option value=''>None (0 ".$molecola[$id_molecola]." ".$packaging[$id_pack].")</option>";
                        for ($sca=0;$sca<count($voci);$sca++) {						
-						  if (in_array($voci[$sca]['id'], $no_art)) continue;
+						  $id_voce=(int)$voci[$sca]['id'];
+						  $descr_ref_blocked=$voci[$sca]['pack_descr'];
+						  if ($id_voce==4 || $id_voce==8) $descr_ref_blocked=" Disks in Canister pack";
+						  $voce_blocked=$voci[$sca]['id_pack_qty']." ".$voci[$sca]['molecola_descr']." ".$descr_ref_blocked;
+
+						  if (isset($no_art[$id_voce])) {
+							  $data_riordino=isset($no_art_until[$id_voce]) ? $no_art_until[$id_voce] : "n/d";
+							  $blocked_voci[]=$voce_blocked." (reorder available from ".$data_riordino.")";
+							  continue;
+						  }
 						  $render_art=true;
 
 						  //07.07.2026
 						  //prima era $id_check=$id_a; ma ora devo usare l'id della voce di allestimento
-						  $id_check=$voci[$sca]['id'];
+						  $id_check=$id_voce;
 						  //$id_check=$id_a;
 
-                          $view_art.="<option value='".$voci[$sca]['id']."' ";
+	                          $view_art.="<option value='".$id_voce."' ";
                           if (in_array($id_check, $arr_cart)) $view_art.=" selected ";
 						  //"$id_check - ".
 						  $descr_ref=$voci[$sca]['pack_descr'];
@@ -196,9 +241,15 @@ class AjaxController extends Controller
                     $view_art.="</select>";
                     $lbl=$arr_info[$id_mole_pack]['label'];
                     $view_art.="<label for='material$id_mole_pack'>$lbl</label>";
+					if (count($blocked_voci)>0) {
+						$view_art.="<div class='form-text text-warning mt-2'>";
+						$view_art.="Temporarily unavailable for reorder:<br>";
+						$view_art.=implode("<br>",$blocked_voci);
+						$view_art.="</div>";
+					}
                  $view_art.="</div>";
               $view_art.="</div>";
-			  if ($render_art==true) $view.=$view_art;
+			  if ($render_art==true || count($blocked_voci)>0) $view.=$view_art;
 
 
            }

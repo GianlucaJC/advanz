@@ -47,6 +47,12 @@
                                 Aggiungi la colonna <strong>reorder_months</strong> nella tabella <strong>rule_order</strong> per attivare la regola temporale.
                             </div>
                         @endif
+                        @if (!isset($hasReorderModeColumn) || !$hasReorderModeColumn)
+                            <div class="alert alert-warning">
+                                Il campo per la modalita di riacquisto non e' presente su database.
+                                Aggiungi la colonna <strong>reorder_mode</strong> nella tabella <strong>rule_order</strong> per attivare la regola anno solare.
+                            </div>
+                        @endif
 
                         <form action="{{ route('rules.update') }}" method="POST">
                             @csrf
@@ -61,6 +67,22 @@
                                         <div id="collapse{{ $countryId }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $countryId }}" data-bs-parent="#accordionCountries">
                                             <div class="accordion-body">
                                                 <div class="form-group mb-3">
+                                                    <label for="reorder_mode_{{ $countryId }}">Regola riacquisto:</label>
+                                                    <select
+                                                        class="form-control"
+                                                        id="reorder_mode_{{ $countryId }}"
+                                                        name="reorder_mode[{{ $countryId }}]"
+                                                    >
+                                                        <option value="rolling_months" @if (old('reorder_mode.'.$countryId, $reorderModeByCountry[$countryId] ?? 'rolling_months') == 'rolling_months') selected @endif>
+                                                            Rolling months (es. 6 o 12 mesi)
+                                                        </option>
+                                                        <option value="calendar_year" @if (old('reorder_mode.'.$countryId, $reorderModeByCountry[$countryId] ?? 'rolling_months') == 'calendar_year') selected @endif>
+                                                            Calendar year (riordino dal 1 gennaio anno successivo)
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group mb-3">
                                                     <label for="reorder_months_{{ $countryId }}">Tempo riacquisto (mesi):</label>
                                                     <input
                                                         type="number"
@@ -72,7 +94,7 @@
                                                         name="reorder_months[{{ $countryId }}]"
                                                         value="{{ old('reorder_months.'.$countryId, $reorderMonthsByCountry[$countryId] ?? 12) }}"
                                                     >
-                                                    <small class="text-muted">Usa 6 per sei mesi, 12 per un anno, oppure un valore personalizzato.</small>
+                                                    <small class="text-muted">Usato solo se la regola e' "Rolling months".</small>
                                                 </div>
 
                                                 {{-- Campo nascosto per forzare l'invio dell'array del paese anche se vuoto --}}
