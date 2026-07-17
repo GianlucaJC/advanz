@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\carrello;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 use DB;
 
@@ -50,8 +51,31 @@ class AjaxController extends Controller
 		
 	}
 
+	private function getReorderMonthsForCountry($id_country)
+	{
+		$defaultReorderMonths = 12;
+
+		if (!Schema::hasColumn('rule_order', 'reorder_months')) {
+			return $defaultReorderMonths;
+		}
+
+		$rule = DB::table('rule_order')
+			->select('reorder_months')
+			->where('id_country', '=', $id_country)
+			->whereNotNull('reorder_months')
+			->orderByDesc('reorder_months')
+			->first();
+
+		if ($rule && (int) $rule->reorder_months > 0) {
+			return (int) $rule->reorder_months;
+		}
+
+		return $defaultReorderMonths;
+	}
+
     public function check_allestimento(Request $request) {
         $id_country=$request->input('id_country');
+		$reorderMonths = $this->getReorderMonthsForCountry($id_country);
 		//in caso di sessione loggata:
 		//recupero l'eventuale carrello precedente per precaricare dati
 		$arr_cart=array();
@@ -63,6 +87,7 @@ class AjaxController extends Controller
 			$info=DB::table('users')->select('country')->where('id','=',$id_user)->first();
 			if($info)  {
 				$id_country=$info->country;
+				$reorderMonths = $this->getReorderMonthsForCountry($id_country);
 				//calcolo delle voci di confezionamento 
 				$cart=DB::table('carrello as c')
 				->select('id_articolo')
@@ -73,8 +98,13 @@ class AjaxController extends Controller
 				}
 			}	
 			//in caso di ordini già effettuati dall'utente loggato, elimino (secondo la regola imposta),
-			//gli articoli già ordinati
-			$info=DB::table('ordini')->select('id_articolo')->where('id_user','=',$id_user)->get();
+			//gli articoli già ordinati nel periodo temporale di riacquisto configurato
+			$cutoffDate = now()->subMonths($reorderMonths);
+			$info=DB::table('ordini')
+			->select('id_articolo')
+			->where('id_user','=',$id_user)
+			->where('created_at', '>=', $cutoffDate)
+			->get();
 			foreach ($info as $ord_prec) {
 				$no_art[]=$ord_prec->id_articolo;
 			}

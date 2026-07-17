@@ -41,6 +41,12 @@
                                 <ul> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
                             </div>
                         @endif
+                        @if (!isset($hasReorderMonthsColumn) || !$hasReorderMonthsColumn)
+                            <div class="alert alert-warning">
+                                Il campo per il tempo di riacquisto non e' presente su database.
+                                Aggiungi la colonna <strong>reorder_months</strong> nella tabella <strong>rule_order</strong> per attivare la regola temporale.
+                            </div>
+                        @endif
 
                         <form action="{{ route('rules.update') }}" method="POST">
                             @csrf
@@ -54,6 +60,21 @@
                                         </h2>
                                         <div id="collapse{{ $countryId }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $countryId }}" data-bs-parent="#accordionCountries">
                                             <div class="accordion-body">
+                                                <div class="form-group mb-3">
+                                                    <label for="reorder_months_{{ $countryId }}">Tempo riacquisto (mesi):</label>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        max="120"
+                                                        step="1"
+                                                        class="form-control"
+                                                        id="reorder_months_{{ $countryId }}"
+                                                        name="reorder_months[{{ $countryId }}]"
+                                                        value="{{ old('reorder_months.'.$countryId, $reorderMonthsByCountry[$countryId] ?? 12) }}"
+                                                    >
+                                                    <small class="text-muted">Usa 6 per sei mesi, 12 per un anno, oppure un valore personalizzato.</small>
+                                                </div>
+
                                                 {{-- Campo nascosto per forzare l'invio dell'array del paese anche se vuoto --}}
                                                 <input type="hidden" name="rules[{{ $countryId }}]" value="">
                                                 <div class="form-group">

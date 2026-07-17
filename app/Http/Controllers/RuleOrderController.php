@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log; // Assicurati che questa riga sia presente
+use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +40,9 @@ class RuleOrderController extends Controller
     public function manage()
     {
         $countries = $this->getCountries();
+        $defaultReorderMonths = 12;
+        $reorderMonthsByCountry = array_fill_keys(array_keys($countries), $defaultReorderMonths);
+        $hasReorderMonthsColumn = Schema::hasColumn('rule_order', 'reorder_months');
 
         $allestimenti = DB::table('allestimento as a')
             ->join('molecola as m', 'a.id_molecola', '=', 'm.id')
@@ -63,7 +67,20 @@ class RuleOrderController extends Controller
                 return $items->pluck('id_allestimento')->toArray();
             });
 
-        return view('all_views.manage_rules', compact('countries', 'allestimenti', 'rules'));
+        if ($hasReorderMonthsColumn) {
+            $reorderRows = DB::table('rule_order')
+                ->select('id_country', DB::raw('MAX(reorder_months) as reorder_months'))
+                ->groupBy('id_country')
+                ->get();
+
+            foreach ($reorderRows as $row) {
+                if (isset($reorderMonthsByCountry[$row->id_country]) && $row->reorder_months !== null) {
+                    $reorderMonthsByCountry[$row->id_country] = max(1, (int) $row->reorder_months);
+                }
+            }
+        }
+
+        return view('all_views.manage_rules', compact('countries', 'allestimenti', 'rules', 'reorderMonthsByCountry', 'hasReorderMonthsColumn'));
     }
 
     public function update(Request $request)
@@ -72,13 +89,19 @@ class RuleOrderController extends Controller
         $request->validate([
             'rules' => 'nullable|array',
             'rules.*' => 'nullable|array', // Allow empty/null values for countries with no selections
-            'rules.*.*' => 'integer|exists:allestimento,id'
+            'rules.*.*' => 'integer|exists:allestimento,id',
+            'reorder_months' => 'nullable|array',
+            'reorder_months.*' => 'nullable|integer|min:1|max:120'
         ]);
 
         Log::info('RuleOrderController@update: Inizio processo di aggiornamento regole.');
         $allKnownCountries = $this->getCountries(); // Ottieni tutti i paesi che il sistema conosce
         $submittedRules = $request->input('rules', []); // Ottieni solo le regole inviate dal form
+        $submittedReorderMonths = $request->input('reorder_months', []);
+        $defaultReorderMonths = 12;
+        $hasReorderMonthsColumn = Schema::hasColumn('rule_order', 'reorder_months');
         Log::info('RuleOrderController@update: Regole sottomesse dal form:', $submittedRules);
+        Log::info('RuleOrderController@update: Mesi di riacquisto sottomessi dal form:', $submittedReorderMonths);
 
         DB::beginTransaction();
 
@@ -99,16 +122,30 @@ class RuleOrderController extends Controller
                 // Get the submitted orderable items for the current country.
                 // The `array_filter` removes any empty values that might come from the form.
                 $orderableIdsForCountry = isset($submittedRules[$countryId]) ? array_filter($submittedRules[$countryId]) : [];
+                $reorderMonthsForCountry = isset($submittedReorderMonths[$countryId]) ? (int) $submittedReorderMonths[$countryId] : $defaultReorderMonths;
+                if ($reorderMonthsForCountry < 1) {
+                    $reorderMonthsForCountry = $defaultReorderMonths;
+                }
 
                 foreach ($allestimentoIds as $allestimentoId) {
-                    $insertData[] = [
+                    $ruleData = [
                         'id_country' => $countryId,
                         'id_allestimento' => $allestimentoId,
                         'can_order' => in_array($allestimentoId, $orderableIdsForCountry) ? 1 : 0,
                         'created_at' => $now,
                         'updated_at' => $now,
                     ];
+
+                    if ($hasReorderMonthsColumn) {
+                        $ruleData['reorder_months'] = $reorderMonthsForCountry;
+                    }
+
+                    $insertData[] = $ruleData;
                 }
+            }
+
+            if (!$hasReorderMonthsColumn) {
+                Log::warning("RuleOrderController@update: colonna 'reorder_months' non trovata su rule_order. Regole temporali non salvate.");
             }
 
             // 4. Insert all the new rules in a single operation.
